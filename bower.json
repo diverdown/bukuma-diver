@@ -1,0 +1,22 @@
+{
+  "name": "bukuma-diver",
+  "version": "0.0.0",
+  "authors": [
+    "en30 <en30.git@gmail.com>"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vue": "~0.11.4"
+  }
+}
