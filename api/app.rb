@@ -13,12 +13,18 @@ set :json_encoder, Oj
 
 helpers do
   def client
-    Hatena::Bookmark.new(user_agent: 'Bukuma Diver', log: settings.development?)
+    @client ||= Hatena::Bookmark.new(user_agent: 'Bukuma Diver', log: settings.development?)
   end
 end
 
-get '/hotentry/?:category?' do
-  json client.hotentry(params[:category])
+get '/hotentries' do
+  results = []
+  Hatena::Bookmark::Category.all.each_with_index.map do |(id, name), i|
+    Thread.new do
+      results[i] = { name: name, pages: client.hotentry(id) }
+    end
+  end.each(&:join)
+  json results
 end
 
 get '/domain/:domain/pages' do
