@@ -3,7 +3,6 @@ plumber = require 'gulp-plumber'
 jade = require 'gulp-jade'
 browserify = require 'browserify'
 concat = require 'gulp-concat'
-mainBowerFiles = require 'main-bower-files'
 source = require 'vinyl-source-stream'
 compass = require 'gulp-compass'
 rimraf = require 'rimraf'
@@ -30,17 +29,13 @@ gulp.task 'image', ->
   .pipe gulp.dest './build/image/'
 
 gulp.task 'js', ->
-  gulp.src(mainBowerFiles(filter: /\.js$/))
-    .pipe plumber()
-    .pipe connect.reload()
-    .pipe concat 'vendor.js'
-    .pipe gulp.dest './build/js/'
-
   browserify
-    entries: [ './source/js/main.coffee']
+    entries: [ './source/main.coffee']
     extensions: ['.coffee', '.js', '.jade']
   .transform 'coffeeify'
   .transform 'jadeify'
+  .transform 'debowerify'
+  .transform 'vueify'
   .bundle()
   .pipe plumber()
   .pipe connect.reload()
@@ -60,6 +55,7 @@ gulp.task 'css', ->
 
 gulp.task 'watch', ['connect', 'build'], ->
   gulp.watch 'source/js/**/*.{js,coffee}', ['js']
+  gulp.watch 'source/components/**/*.vue', ['js']
   gulp.watch 'source/**/*.jade', ['html', 'js']
   gulp.watch 'source/css/**/*.{s,}css', ['css']
   gulp.watch 'source/image/**/*.{png,jpeg,gif}', ['image']
