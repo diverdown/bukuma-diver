@@ -1,2 +1,38 @@
 @import 'compass';
 @import 'susy';
+$susy: (
+  global-box-sizing: border-box,
+  gutters: 0,
+  columns: 16
+);
+@include border-box-sizing;
+
+header { text-align: center; }
+footer { text-align: center; }
+
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+li { list-style: none; }
+
+.container {
+  @include container;
+}
+#app {
+  @include container(900px);
+}
+
+#side-bar {
+  @include span(4 of 16);
+  border: 1px solid #eee;
+  min-height: 400px;
+  @include box-shadow(1px 1px 3px 0px #999);
+}
+
+main {
+  @include span(12 of 16 last);
+  border: 1px solid #eee;
+  min-height: 500px;
+}

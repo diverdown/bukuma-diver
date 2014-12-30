@@ -21,6 +21,7 @@
     "insert-css": "^0.2.0",
     "jade": "^1.8.2",
     "jadeify": "^3.1.0",
+    "jsonp": "0.0.4",
     "node-sass": "^1.2.3",
     "rimraf": "^2.2.8",
     "superagent": "^0.21.0",
