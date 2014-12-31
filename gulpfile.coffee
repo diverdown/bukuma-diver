@@ -12,7 +12,16 @@ gulp.task 'connect', ->
   connect.server
     root: 'build'
     livereload: true
-
+    middleware: (connect, opt)->
+      console.log connect, opt
+      return [
+        do ->
+          url = require 'url'
+          proxy = require 'proxy-middleware'
+          options = url.parse('http://localhost:4567/')
+          options.route = '/api'
+          proxy(options)
+      ]
 gulp.task 'clean', (cb)->
   rimraf './build', cb
 

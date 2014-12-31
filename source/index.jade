@@ -2,9 +2,9 @@ doctype html
 html
   head
     title ブクマダイバー
-    script(src="js/vendor.js")
     script(src="js/main.js")
     link(rel="stylesheet", href="css/main.css")
+    link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet")
     meta(name="viewport", content="width=device-width, initial-scale=1")
 
   body
@@ -14,7 +14,6 @@ html
 
       .container
         nav#side-bar(v-component="side-bar")
-        main(v-component="{{currentView}}")
-
+        main(v-component="{{currentView}}" v-with="params: mainParams")
       footer
         | フッター

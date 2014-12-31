@@ -32,7 +32,7 @@ get '/domain/:domain/pages' do
 end
 
 get '/pages' do
-  json client.search(params[:q])
+  json client.search(params)
 end
 
 get '/pages/popular' do

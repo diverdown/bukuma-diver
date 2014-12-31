@@ -23,8 +23,8 @@ module Hatena
       api "/hotentry#{path}", params
     end
 
-    def search(query)
-      api '/search/text', q: query, mode: 'rss'
+    def search(params)
+      api '/search/text', params.merge(mode: 'rss')
     end
 
     def search_by_domain(domain, sort: 'count')

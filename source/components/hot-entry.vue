@@ -15,6 +15,7 @@ ul
 </template>
 
 <script lang="coffee">
+BukumaDiver = require '../bukuma_diver'
 module.exports =
   data: ->
     { categories: [] }
@@ -24,13 +25,9 @@ module.exports =
         @categories[i].pages = @categories[i].pages.concat(pages)
       e.target.parentNode.removeChild(e.target)
   created: ->
-    request = require 'superagent'
-    request
-      .get '/stub/hotentries.json'
-      .end (res)=>
-        categories = JSON.parse(res.text)
-        @_hiddenPages = []
-        for c, i in categories
-          @_hiddenPages[i] = c.pages.splice(5)
-        @categories = categories
+    BukumaDiver.hotEntries (err, categories)=>
+      @_hiddenPages = []
+      for c, i in categories
+        @_hiddenPages[i] = c.pages.splice(5)
+      @categories = categories
 </script>

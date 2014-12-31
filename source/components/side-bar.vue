@@ -1,9 +1,24 @@
 <style lang="scss">
+.search-box {
+  position: relative;
+  input {
+    width: 100%;
+  }
+  .fa-search {
+    position: absolute;
+    right: 3px;
+    top: 5px;
+    color: #999;
+    cursor: pointer;
+  }
+}
 </style>
 
 <template lang="jade">
 h2 ホットエントリー
-input(type="text" placeholder="キーワードではてブ検索")
+.search-box
+  input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: search | key enter")
+  i.fa.fa-search(v-on="click: search")
 div(v-repeat="navCategories")
   h2 {{name}}
   ul
@@ -37,4 +52,7 @@ module.exports =
         ]
       }
     ]
+  methods:
+    search: ->
+      @$dispatch('search', @query)
 </script>
