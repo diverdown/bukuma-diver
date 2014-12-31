@@ -7,13 +7,12 @@ html
     link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet")
     meta(name="viewport", content="width=device-width, initial-scale=1")
 
-  body
-    #app
+  body#app
+    #content
       header
         h1 ブクマダイバー
-
-      .container
-        nav#side-bar(v-component="side-bar")
+     .container
+        nav#side-bar(v-component="side-bar" v-events="search: search, searchBySite: searchBySite")
         main(v-component="{{currentView}}" v-with="params: mainParams")
       footer
         | フッター

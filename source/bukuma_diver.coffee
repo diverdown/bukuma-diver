@@ -1,12 +1,17 @@
 request = require 'superagent'
+_ = require 'lodash'
 module.exports = class BukumaDiver
-  @hotEntries = (callback)->
+  @_call = (path, params, callback)->
     request
-      .get '/stub/hotentries.json'
+      .get(path, params)
       .end (res)->
         callback(null, JSON.parse(res.text))
 
+  @hotEntries = (callback)->
+    @_call '/stub/hotentries.json', {}, callback
+
   @search = (params, callback)->
-    request.get '/api/pages', params
-      .end (res)->
-        callback(null, JSON.parse(res.text))
+    @_call '/api/pages', params, callback
+
+  @searchByDomain = (params, callback)->
+    @_call "/api/domain/#{encodeURIComponent params.domain}/pages", _.pick(params, 'sort', 'of'), callback

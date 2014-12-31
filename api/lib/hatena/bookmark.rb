@@ -27,8 +27,8 @@ module Hatena
       api '/search/text', params.merge(mode: 'rss')
     end
 
-    def search_by_domain(domain, sort: 'count')
-      api '/entrylist', url: domain, mode: 'rss', sort: sort
+    def search_by_domain(params)
+      api '/entrylist', params.merge(mode: 'rss')
     end
 
     private

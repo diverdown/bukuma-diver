@@ -22,37 +22,34 @@ h2 ホットエントリー
 div(v-repeat="navCategories")
   h2 {{name}}
   ul
-    li(v-repeat="domains")
-      a {{$value}}
+    li(v-repeat="site: sites")
+      a(v-on="click: searchBySite(site)") {{site.name}}
 </template>
 
 <script lang="coffee">
 module.exports =
   data: ->
+    dummySites = [
+      {name: 'YouTube', domain: 'youtube.com'},
+      {name: 'Exmample', domain: 'example.com'}
+    ]
     navCategories: [
       {
         name: 'お気に入りサイト',
-        domains: [
-          'example.com'
-          'test.example.com'
-        ]
+        sites: dummySites
       },
       {
         name: 'おすすめサイト',
-        domains: [
-          'example.com'
-          'test.example.com'
-        ]
+        sites: dummySites
       },
       {
         name: '人気サイト',
-        domains: [
-          'example.com'
-          'test.example.com'
-        ]
+        sites: dummySites
       }
     ]
   methods:
     search: ->
-      @$dispatch('search', @query)
+      @$emit('search', @query)
+    searchBySite: (site)->
+      @$emit('searchBySite', site)
 </script>

@@ -20,15 +20,14 @@ module.exports =
   data: ->
     { pages: [] }
   methods:
-    search: (params)->
+    search: (params = {})->
       @params[k] = v for k,v of params
-      BukumaDiver.search @params, (err, res)=>
-        @pages = res
+      BukumaDiver.search @params, (err, @pages)=>
     searchMore: ->
       BukumaDiver.search _.merge({of: @pages.length}, @params), (err, res)=>
         @pages = @pages.concat(res)
   created: ->
-    @$on 'search', @search
+    @$on 'searchAgain', @search
   compiled: ->
     @search(@params)
 </script>

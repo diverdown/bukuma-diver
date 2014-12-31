@@ -27,8 +27,8 @@ get '/hotentries' do
   json results
 end
 
-get '/domain/:domain/pages' do
-  json client.search_by_domain(params[:domain])
+get '/domain/:url/pages' do
+  json client.search_by_domain(params.select{ |k,v| %w{url sort of}.include? k })
 end
 
 get '/pages' do
