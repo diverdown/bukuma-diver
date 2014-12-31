@@ -7,7 +7,8 @@ html
     link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet")
     meta(name="viewport", content="width=device-width, initial-scale=1")
 
-  body#app
+  body#app(v-class="modal-open: isModalOpen" v-on="keyup: closeModal | key esc")
+    #modal(v-component="modal" v-if="isModalOpen" v-events="closeModal: closeModal")
     #content
       header
         h1 ブクマダイバー

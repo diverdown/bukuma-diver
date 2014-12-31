@@ -15,6 +15,7 @@ h3
 .bookmarks
   table
     tr(v-repeat="bookmarks" v-component="bookmark")
+a(v-on="click: openModal(domain)") このサイトの人気ページを見る
 </template>
 
 <script lang="coffee">
@@ -25,6 +26,9 @@ module.exports =
   computed:
     faviconUrl: ->
       "http://cdn-ak.favicon.st-hatena.com/?url=http%3A%2F%2F#{encodeURIComponent @domain}"
+  methods:
+    openModal: (domain)->
+      @$dispatch 'openModal', domain
   created: ->
     jsonp(
       "http://b.hatena.ne.jp/entry/jsonlite/?url=#{encodeURIComponent @url}",
