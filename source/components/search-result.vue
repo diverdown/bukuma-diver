@@ -27,7 +27,5 @@ module.exports =
       BukumaDiver.search _.merge({of: @pages.length}, @params), (err, res)=>
         @pages = @pages.concat(res)
   created: ->
-    @$on 'searchAgain', @search
-  compiled: ->
-    @search(@params)
+    @$watch 'params.q', @search, true
 </script>

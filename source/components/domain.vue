@@ -21,6 +21,8 @@ module.exports =
     search: (params = {})->
       @params[k] = v for k,v of params
       BukumaDiver.searchByDomain @params, (err, @pages)=>
-  compiled: ->
-    @search(@params)
+    onDomainChange: ->
+      @search(@params)
+  created: ->
+    @$watch 'params.domain', @onDomainChange, true
 </script>

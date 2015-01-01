@@ -15,10 +15,7 @@ window.onload = ->
     methods:
       search: (q)->
         @mainParams = {q: q}
-        if @currentView == 'search-result'
-          @$broadcast('searchAgain')
-        else
-          @currentView = 'search-result'
+        @currentView = 'search-result'
       searchBySite: (site)->
         @mainParams = site
         @currentView = 'domain'
