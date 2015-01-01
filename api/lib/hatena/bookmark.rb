@@ -20,21 +20,26 @@ module Hatena
 
     def hotentry(category = nil)
       path, params = Category.to_query category
-      api "/hotentry#{path}", params
+      items "/hotentry#{path}", params
     end
 
     def search(params)
-      api '/search/text', params.merge(mode: 'rss')
+      items '/search/text', params.merge(mode: 'rss')
     end
 
     def search_by_domain(params)
-      api '/entrylist', params.merge(mode: 'rss')
+      xml = request '/entrylist', params.merge(mode: 'rss')
+      title = xml.css('channel title').text
+      {
+        name: title.slice(/『(.*?)』/, 1) || title.slice(/[^\s]+\z/),
+        pages: extract_items(xml)
+      }
     end
 
     private
 
-    def api(path, params)
-      Nokogiri::XML(@connection.get(path, params).body).css('item').map do |elem|
+    def extract_items(nokogiri_xml)
+      nokogiri_xml.css('item').map do |elem|
         url = elem.css('link').text
         {
           title: elem.css('title').text,
@@ -43,6 +48,14 @@ module Hatena
           domain: PublicSuffix.parse(Addressable::URI.parse(url).host).domain
         }
       end
+    end
+
+    def request(path, params)
+      Nokogiri::XML(@connection.get(path, params).body)
+    end
+
+    def items(path, params)
+      extract_items request(path, params)
     end
   end
 end

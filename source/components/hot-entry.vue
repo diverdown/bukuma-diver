@@ -10,7 +10,7 @@ ul
   li(v-repeat="categories")
     h2.title-border {{name}}
     ul
-      li(v-repeat="pages" v-component="page")
+      li(v-repeat="pages" v-component="page" v-with="showPopularLink: 1")
     a(v-on="click: showMorePages") もっと見る...
 </template>
 

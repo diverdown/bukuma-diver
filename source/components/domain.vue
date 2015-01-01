@@ -20,7 +20,8 @@ module.exports =
   methods:
     search: (params = {})->
       @params[k] = v for k,v of params
-      BukumaDiver.searchByDomain @params, (err, @pages)=>
+      BukumaDiver.searchByDomain @params, (err, {name, @pages})=>
+        @params.name = name
     onDomainChange: ->
       @search(@params)
   created: ->

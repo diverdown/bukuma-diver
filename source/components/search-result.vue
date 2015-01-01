@@ -9,7 +9,7 @@ ul
     a(v-on="click: search({sort: 'recent', users: 3})") 新着順
     a(v-on="click: search({sort: 'recent', users: 1})") すべて
 ul
-  li(v-repeat="pages" v-component="page")
+  li(v-repeat="pages" v-component="page" v-with="showPopularLink: 1")
 a(v-on="click: searchMore") もっと見る...
 </template>
 

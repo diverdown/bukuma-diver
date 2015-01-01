@@ -32,5 +32,6 @@ window.onload = ->
       'modal': require './components/modal.vue'
       'domain': require './components/domain.vue'
     }
-  app.$on 'openModal', ->
+  app.$on 'openModal', (domain)->
     @isModalOpen = true
+    @$broadcast 'updateModal', domain

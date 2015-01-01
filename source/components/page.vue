@@ -15,7 +15,7 @@ h3
 .bookmarks
   table
     tr(v-repeat="bookmarks" v-component="bookmark")
-a(v-on="click: openModal(domain)") このサイトの人気ページを見る
+a(v-on="click: openModal(domain)" v-if="showPopularLink") このサイトの人気ページを見る
 </template>
 
 <script lang="coffee">

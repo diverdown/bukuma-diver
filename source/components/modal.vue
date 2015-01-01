@@ -12,7 +12,7 @@
 
 .wrapper {
   width: 600px;
-  height: 900px;
+  min-height: 300px;
   background-color: white;
   margin: 30px auto;
 }
@@ -21,14 +21,21 @@
 <template lang="jade">
 #overlay(v-on="click: closeModal")
   .wrapper(v-on="click: doNothing")
+    div(v-component="domain" v-with="params: modalParams" wait-for="updated")
 
 </template>
 
 <script lang="coffee">
 module.exports =
+  data: ->
+    modalParams: {}
   methods:
     doNothing: (event)->
       event.stopPropagation()
     closeModal: ->
       @$emit('closeModal')
+  created: ->
+    @$on 'updateModal', (domain)->
+      @modalParams = {domain: domain, name: '', sort: 'count'}
+      @$emit 'updated'
 </script>
