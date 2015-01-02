@@ -19,6 +19,10 @@ h2 ホットエントリー
 .search-box
   input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: search | key enter")
   i.fa.fa-search(v-on="click: search")
+h2 おすすめサイト
+ul
+  li(v-repeat="site: recommendedSites | orderBy 'count' -1")
+    a(v-on="click: searchBySite(site)") {{site.name}}
 div(v-repeat="navCategories")
   h2 {{name}}
   ul
@@ -27,6 +31,7 @@ div(v-repeat="navCategories")
 </template>
 
 <script lang="coffee">
+RecommendedSites = require '../recommended_sites'
 module.exports =
   data: ->
     dummySites = [
@@ -39,17 +44,18 @@ module.exports =
         sites: dummySites
       },
       {
-        name: 'おすすめサイト',
-        sites: dummySites
-      },
-      {
         name: '人気サイト',
         sites: dummySites
       }
     ]
+    recommendedSites: RecommendedSites.all
   methods:
     search: ->
       @$emit('search', @query)
     searchBySite: (site)->
       @$emit('searchBySite', site)
+    onRecommendedSiteChange: ->
+      RecommendedSites.save()
+  created: ->
+    @$watch 'recommendedSites', @onRecommendedSiteChange, true
 </script>

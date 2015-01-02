@@ -8,9 +8,9 @@
 
 <template lang="jade">
 h3
-  a(href="{{url}}" target="_blank")
+  a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)")
     img(v-attr="src: faviconUrl")
-  a(href="{{url}}" target="_blank") {{title | truncate 100}}
+  a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)") {{title | truncate 100}}
 .bookmark-count {{bookmark_count}}users
 .bookmarks
   table

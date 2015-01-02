@@ -1,5 +1,6 @@
 'use strict'
 Vue = require 'vue'
+RecommendedSites = require './recommended_sites'
 window.onload = ->
   Vue.filter 'truncate', (value, max)->
     if value.length > max
@@ -35,3 +36,5 @@ window.onload = ->
   app.$on 'openModal', (domain)->
     @isModalOpen = true
     @$broadcast 'updateModal', domain
+  app.$on 'openSite', (page)->
+    RecommendedSites.countUp(page)
