@@ -8,6 +8,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
+    hiredis (0.5.2)
     method_source (0.8.2)
     mini_portile (0.6.1)
     multi_json (1.10.1)
@@ -25,6 +26,7 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    redis (3.2.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -46,9 +48,11 @@ DEPENDENCIES
   addressable
   faraday
   faraday_middleware
+  hiredis
   nokogiri
   oj
   pry
   public_suffix
+  redis
   sinatra
   sinatra-contrib

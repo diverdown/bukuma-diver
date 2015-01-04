@@ -19,36 +19,32 @@ h2 ホットエントリー
 .search-box
   input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: search | key enter")
   i.fa.fa-search(v-on="click: search")
+
+h2 巡回リスト
+ul
+  li(v-repeat="site: favorites")
+    a(v-on="click: searchBySite(site)") {{site.name}}
+
+
 h2 おすすめサイト
 ul
   li(v-repeat="site: recommendedSites | orderBy 'count' -1")
     a(v-on="click: searchBySite(site)") {{site.name}}
-div(v-repeat="navCategories")
-  h2 {{name}}
-  ul
-    li(v-repeat="site: sites")
-      a(v-on="click: searchBySite(site)") {{site.name}}
+
+h2 人気サイト
+ul
+  li(v-repeat="site: popularSites")
+    a(v-on="click: searchBySite(site)") {{site.name}}
 </template>
 
 <script lang="coffee">
+BukumaDiver = require '../bukuma_diver'
 RecommendedSites = require '../recommended_sites'
 module.exports =
   data: ->
-    dummySites = [
-      {name: 'YouTube', domain: 'youtube.com'},
-      {name: 'Exmample', domain: 'example.com'}
-    ]
-    navCategories: [
-      {
-        name: 'お気に入りサイト',
-        sites: dummySites
-      },
-      {
-        name: '人気サイト',
-        sites: dummySites
-      }
-    ]
     recommendedSites: RecommendedSites.all
+    favorites: []
+    popularSites: []
   methods:
     search: ->
       @$emit('search', @query)
@@ -57,5 +53,7 @@ module.exports =
     onRecommendedSiteChange: ->
       RecommendedSites.save()
   created: ->
+    BukumaDiver.favorites (err, @favorites)=>
+    BukumaDiver.popularSites (err, @popularSites)=>
     @$watch 'recommendedSites', @onRecommendedSiteChange, true
 </script>

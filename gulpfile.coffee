@@ -63,7 +63,7 @@ gulp.task 'css', ->
     .pipe gulp.dest './build/css/'
 
 gulp.task 'watch', ['connect', 'build'], ->
-  gulp.watch 'source/js/**/*.{js,coffee}', ['js']
+  gulp.watch 'source/**/*.{js,coffee}', ['js']
   gulp.watch 'source/components/**/*.vue', ['js']
   gulp.watch 'source/**/*.jade', ['html', 'js']
   gulp.watch 'source/css/**/*.{s,}css', ['css']

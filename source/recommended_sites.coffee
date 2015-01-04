@@ -1,4 +1,5 @@
 _ = require 'lodash'
+Site = require './site'
 module.exports = class RecommendedSites
   DEFAULT_RECOMMENDED_SITES = [
     {name: 'はてな', domain: 'hatena.ne.jp', count: 1},
@@ -20,8 +21,8 @@ module.exports = class RecommendedSites
     {name: 'google', domain: 'google.com', count: 1},
   ]
 
-  sites = JSON.parse(localStorage.getItem(@name))
-  @all ||=  sites || DEFAULT_RECOMMENDED_SITES
+  sites = JSON.parse(localStorage.getItem(@name)).map(Site.find)
+  @all =  sites || DEFAULT_RECOMMENDED_SITES.map(Site.find)
 
   @countUp = (page)->
     domain = page.url.split('/')[2].replace(/^www\./, '')
@@ -29,7 +30,7 @@ module.exports = class RecommendedSites
     if site
       site.count++
     else
-      @all.push {name: domain, domain: domain, count: 1}
+      @all.push Site.find(name: domain, domain: domain, count: 1)
     @save()
 
   @save = ->
