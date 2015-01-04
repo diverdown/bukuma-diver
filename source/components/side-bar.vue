@@ -23,17 +23,20 @@ h2 ホットエントリー
 h2 巡回リスト
 ul
   li(v-repeat="favorite: favorites")
+    img(v-attr="src: favorite.domain | favicon" v-if="favorite.domain")
+    i.fa.fa-search(v-if="!favorite.domain")
     a(v-on="click: searchByFavorite(favorite)") {{favorite.name}}
-
 
 h2 おすすめサイト
 ul
   li(v-repeat="site: recommendedSites | orderBy 'count' -1")
+    img(v-attr="src: site.domain | favicon")
     a(v-on="click: searchBySite(site)") {{site.name}}
 
 h2 人気サイト
 ul
   li(v-repeat="site: popularSites")
+    img(v-attr="src: site.domain | favicon")
     a(v-on="click: searchBySite(site)") {{site.name}}
 </template>
 

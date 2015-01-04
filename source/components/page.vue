@@ -9,7 +9,7 @@
 <template lang="jade">
 h3
   a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)")
-    img(v-attr="src: faviconUrl")
+    img(v-attr="src: domain | favicon")
   a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)") {{title | truncate 100}}
 .bookmark-count {{bookmark_count}}users
 .bookmarks
@@ -23,9 +23,6 @@ jsonp = require 'jsonp'
 module.exports =
   data: ->
     bookmarks: []
-  computed:
-    faviconUrl: ->
-      "http://cdn-ak.favicon.st-hatena.com/?url=http%3A%2F%2F#{encodeURIComponent @domain}"
   methods:
     openModal: (domain)->
       @$dispatch 'openModal', domain

@@ -1,11 +1,17 @@
 <style lang="scss">
+h1 img {
+  width: 0.8em;
+  height: 0.8em;
+}
 .favorited {
   color: rgb(249,180, 197);
 }
 </style>
 
 <template lang="jade">
-h1 {{params.name}}
+h1
+  img(v-attr="src: params.domain | favicon")
+  {{params.name}}
 i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: favorited")
 ul
   li

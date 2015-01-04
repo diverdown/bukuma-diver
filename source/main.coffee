@@ -7,6 +7,9 @@ window.onload = ->
       value.substr(0, max) + "..."
     else
       value
+  Vue.filter 'favicon', (domain)->
+    "http://www.google.com/s2/favicons?domain=#{encodeURIComponent domain}"
+
   app = new Vue
     el: '#app'
     data:
