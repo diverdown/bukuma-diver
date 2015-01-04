@@ -2,6 +2,7 @@ request = require 'superagent'
 _ = require 'lodash'
 Fingerprint = require 'fingerprint'
 Site = require './site'
+Query = require './query'
 fingerprint = new Fingerprint(canvas: true).get()
 
 module.exports = class BukumaDiver
@@ -25,21 +26,24 @@ module.exports = class BukumaDiver
       res =  domains.map((domain)-> Site.find(domain: domain)) if domains
       callback(err, res)
 
-  @isFavorite: ({domain})->
-    !!_.find(@_favorites, domain: domain)
+  @isFavorite: (favorite)->
+    _.contains(@_favorites, favorite)
 
   @favorites = (callback)->
-    @_get "/api/users/#{fingerprint}/favorites", null, (err, domains)=>
-      @_favorites =  domains.map((domain)-> Site.find(domain: domain)) if domains
+    @_get "/api/users/#{fingerprint}/favorites", null, (err, favorites)=>
+      if favorites
+        @_favorites = favorites.map (favorite)->
+          [[type, value]] = _.pairs(favorite)
+          switch type
+            when 'Site' then Site.find(domain: value)
+            when 'Query' then Query.find(q: value)
       callback(err, @_favorites)
 
-  @favorite = (params)->
-    site = Site.find(params)
-    @_favorites.push(site) unless _.contains(@_favorites, site)
+  @favorite = (favorite)->
+    @_favorites.unshift(favorite) unless _.contains(@_favorites, favorite)
     request
       .post("/api/users/#{fingerprint}/favorites")
-      .type('form')
-      .send(params)
+      .send(favorite.toParams())
       .end()
 
   @unfavorite = (params)->

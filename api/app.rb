@@ -53,22 +53,26 @@ end
 # O(user.favorites.size)
 get '/users/:user_id/favorites' do
   content_type :json
-  json redis.lrange "favorites:#{params[:user_id]}", 0, -1
+  json redis.lrange("favorites:#{params[:user_id]}", 0, -1).map{|str| Oj.load(str) }
 end
 
 post '/users/:user_id/favorites' do
+  json = request.body.read
+  parsed = Oj.load(json)
   removed_count, _ = redis.pipelined do
-    redis.lrem "favorites:#{params[:user_id]}", 0, params[:domain]
-    redis.lpush "favorites:#{params[:user_id]}", params[:domain]
+    redis.lrem "favorites:#{params[:user_id]}", 0, json
+    redis.lpush "favorites:#{params[:user_id]}", json
   end
-  redis.zincrby 'popular_sites', 1, params[:domain] if removed_count == 0
+  redis.zincrby 'popular_sites', 1, parsed["Site"] if parsed["Site"] and removed_count == 0
   200
 end
 
-delete '/users/:user_id/favorites/:domain' do
+delete '/users/:user_id/favorites' do
+  json = request.body.read
+  parsed = Oj.load(json)
   redis.pipelined do
-    redis.lrem "favorites:#{params[:user_id]}", 0, params[:domain]
-    redis.zincrby 'popular_sites', -1, params[:domain]
+    redis.lrem "favorites:#{params[:user_id]}", 0, json
+    redis.zincrby 'popular_sites', -1, parsed["Site"] if parsed["Site"]
   end
   200
 end

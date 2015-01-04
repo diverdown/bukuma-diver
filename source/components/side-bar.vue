@@ -22,8 +22,8 @@ h2 ホットエントリー
 
 h2 巡回リスト
 ul
-  li(v-repeat="site: favorites")
-    a(v-on="click: searchBySite(site)") {{site.name}}
+  li(v-repeat="favorite: favorites")
+    a(v-on="click: searchByFavorite(favorite)") {{favorite.name}}
 
 
 h2 おすすめサイト
@@ -50,6 +50,12 @@ module.exports =
       @$emit('search', @query)
     searchBySite: (site)->
       @$emit('searchBySite', site)
+    searchByFavorite: (favorite)->
+      switch favorite.constructor.name
+        when 'Site' then @searchBySite(favorite)
+        when 'Query'
+          @query = favorite.query
+          @search()
     onRecommendedSiteChange: ->
       RecommendedSites.save()
   created: ->

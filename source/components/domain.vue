@@ -18,19 +18,20 @@ ul
 
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
+Site = require '../site'
 module.exports =
   data: ->
     { favorited: false, pages: [] }
   methods:
     search: (params = {})->
       @params[k] = v for k,v of params
-      @favorited = BukumaDiver.isFavorite(@params)
+      @favorited = BukumaDiver.isFavorite(Site.find @params)
       BukumaDiver.searchByDomain @params, (err, {name, @pages})=>
         @params.name = name
     onDomainChange: ->
       @search(@params)
     toggleFavorite: ->
-      BukumaDiver[(if @favorited then 'un' else '') + 'favorite'](@params)
+      BukumaDiver[(if @favorited then 'un' else '') + 'favorite'](Site.find @params)
       @favorited = !@favorited
   created: ->
     @$watch 'params.domain', @onDomainChange, true
