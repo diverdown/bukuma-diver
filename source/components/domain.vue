@@ -11,7 +11,7 @@ h1 img {
 <template lang="jade">
 h1
   img(v-attr="src: params.domain | favicon")
-  {{params.name}}
+  | {{params.name}}
 i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: favorited")
 ul
   li
@@ -24,6 +24,7 @@ ul
 
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
+FavoriteCollection = require '../favorite_collection'
 Site = require '../site'
 module.exports =
   data: ->
@@ -31,13 +32,13 @@ module.exports =
   methods:
     search: (params = {})->
       @params[k] = v for k,v of params
-      @favorited = BukumaDiver.isFavorite(Site.find @params)
+      @favorited = FavoriteCollection.doesInclude(Site.find(@params))
       BukumaDiver.searchByDomain @params, (err, {name, @pages})=>
         @params.name = name
     onDomainChange: ->
       @search(@params)
     toggleFavorite: ->
-      BukumaDiver[(if @favorited then 'un' else '') + 'favorite'](Site.find @params)
+      FavoriteCollection[if @favorited then 'remove' else 'add'](Site.find(@params))
       @favorited = !@favorited
   created: ->
     @$watch 'params.domain', @onDomainChange, true

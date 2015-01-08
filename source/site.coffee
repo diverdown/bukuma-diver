@@ -1,13 +1,27 @@
+request = require 'superagent'
 Favoritable = require './favoritable'
 _ = require 'lodash'
 module.exports = class Site extends Favoritable
-  @_collection = []
+  _collection = []
+
   constructor: ({@name, @domain, @count})->
     @name ||= @domain
-    @constructor._collection.push(this)
+    @count ||= 1
+    _collection.push(this)
 
   @find: ({domain})=>
-    _.find(@_collection, {domain: domain}) || new @(arguments[0])
+    _.find(_collection, {domain: domain}) || new @(arguments[0])
 
-  toParams: ->
-    super @domain
+  preprocess: -> {@name, @domain}
+
+  onFavorite: ->
+    super
+    request
+      .post("/api/favorites/#{@domain}")
+      .end()
+
+  onUnfavorite: ->
+    super
+    request
+      .del("/api/favorites/#{@domain}")
+      .end()

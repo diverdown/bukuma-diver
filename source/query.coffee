@@ -10,5 +10,8 @@ module.exports = class Query extends Favoritable
   @find: ({q})=>
     _.find(@_collection, {query: q}) || new @(arguments[0])
 
-  toParams: ->
-    super @query
+  preprocess: ->
+    {
+      type: @constructor.name
+      q: @query
+    }

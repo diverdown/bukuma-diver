@@ -17,6 +17,7 @@ a(v-on="click: searchMore") もっと見る...
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
 Query = require '../query'
+FavoriteCollection = require '../favorite_collection'
 _ = require 'lodash'
 module.exports =
   data: ->
@@ -24,13 +25,13 @@ module.exports =
   methods:
     search: (params = {})->
       @params[k] = v for k,v of params
-      @favorited = BukumaDiver.isFavorite(Query.find @params)
+      @favorited = FavoriteCollection.doesInclude(Query.find(@params))
       BukumaDiver.search @params, (err, @pages)=>
     searchMore: ->
       BukumaDiver.search _.merge({of: @pages.length}, @params), (err, res)=>
         @pages = @pages.concat(res)
     toggleFavorite: ->
-      BukumaDiver[(if @favorited then 'un' else '') + 'favorite'](Query.find @params)
+      FavoriteCollection[if @favorited then 'remove' else 'add'](Query.find(@params))
       @favorited = !@favorited
   created: ->
     @$watch 'params.q', @search, true

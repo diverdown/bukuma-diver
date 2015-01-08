@@ -13,7 +13,6 @@ gulp.task 'connect', ->
     root: 'build'
     livereload: true
     middleware: (connect, opt)->
-      console.log connect, opt
       return [
         do ->
           url = require 'url'

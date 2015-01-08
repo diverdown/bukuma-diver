@@ -42,11 +42,12 @@ ul
 
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
-RecommendedSites = require '../recommended_sites'
+FavoriteCollection = require '../favorite_collection'
+RecommendCollection = require '../recommend_collection'
 module.exports =
   data: ->
-    recommendedSites: RecommendedSites.all
-    favorites: []
+    recommendedSites: RecommendCollection.all()
+    favorites: FavoriteCollection.all()
     popularSites: []
   methods:
     search: ->
@@ -59,10 +60,6 @@ module.exports =
         when 'Query'
           @query = favorite.query
           @search()
-    onRecommendedSiteChange: ->
-      RecommendedSites.save()
   created: ->
-    BukumaDiver.favorites (err, @favorites)=>
     BukumaDiver.popularSites (err, @popularSites)=>
-    @$watch 'recommendedSites', @onRecommendedSiteChange, true
 </script>

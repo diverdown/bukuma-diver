@@ -1,5 +1,6 @@
 module.exports = class Favoritable
-  toParams: (value)->
-    params = {}
-    params[@constructor.name] = value
-    params
+  preprocess: -> JSON.parse(JSON.stringify(this))
+
+  onFavorite: ->
+
+  onUnfavorite: ->
