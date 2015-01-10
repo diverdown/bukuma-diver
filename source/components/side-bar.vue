@@ -20,7 +20,7 @@ h2 ホットエントリー
   input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: search | key enter")
   i.fa.fa-search(v-on="click: search")
 
-h2 巡回リスト
+h2 ウォッチリスト
 ul
   li(v-repeat="favorite: favorites")
     img(v-attr="src: favorite.domain | favicon" v-if="favorite.domain")
@@ -29,15 +29,11 @@ ul
 
 h2 おすすめサイト
 ul
-  li(v-repeat="site: recommendedSites | orderBy 'count' -1")
-    img(v-attr="src: site.domain | favicon")
-    a(v-on="click: searchBySite(site)") {{site.name}}
+  li(v-repeat="site: recommendedSites | orderBy 'count' -1", v-component="_site")
 
 h2 人気サイト
 ul
-  li(v-repeat="site: popularSites")
-    img(v-attr="src: site.domain | favicon")
-    a(v-on="click: searchBySite(site)") {{site.name}}
+  li(v-repeat="site: popularSites", v-component="_site")
 </template>
 
 <script lang="coffee">
@@ -45,6 +41,8 @@ BukumaDiver = require '../bukuma_diver'
 FavoriteCollection = require '../favorite_collection'
 RecommendCollection = require '../recommend_collection'
 module.exports =
+  components:
+    _site: require './_site.vue'
   data: ->
     recommendedSites: RecommendCollection.all()
     favorites: FavoriteCollection.all()
@@ -52,8 +50,6 @@ module.exports =
   methods:
     search: ->
       @$emit('search', @query)
-    searchBySite: (site)->
-      @$emit('searchBySite', site)
     searchByFavorite: (favorite)->
       switch favorite.constructor.name
         when 'Site' then @searchBySite(favorite)

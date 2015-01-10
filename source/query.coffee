@@ -3,6 +3,7 @@ _ = require 'lodash'
 module.exports = class Query extends Favoritable
   @_collection: []
   constructor: ({q})->
+    super
     @query = q
     @name = "「#{@query}」"
     @constructor._collection.push(this)

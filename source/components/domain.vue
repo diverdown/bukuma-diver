@@ -3,16 +3,13 @@ h1 img {
   width: 0.8em;
   height: 0.8em;
 }
-.favorited {
-  color: rgb(249,180, 197);
-}
 </style>
 
 <template lang="jade">
 h1
-  img(v-attr="src: params.domain | favicon")
-  | {{params.name}}
-i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: favorited")
+  img(v-attr="src: site.domain | favicon")
+  | {{site.name}}
+i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 ul
   li
     a(v-on="click: search({sort: 'count'})") 人気順
@@ -28,18 +25,16 @@ FavoriteCollection = require '../favorite_collection'
 Site = require '../site'
 module.exports =
   data: ->
-    { favorited: false, pages: [] }
+    { site: {favorited: false}, pages: [] }
   methods:
     search: (params = {})->
       @params[k] = v for k,v of params
-      @favorited = FavoriteCollection.doesInclude(Site.find(@params))
+      @site = Site.find(@params)
       BukumaDiver.searchByDomain @params, (err, {name, @pages})=>
-        @params.name = name
+        @site.name = name
     onDomainChange: ->
       @search(@params)
-    toggleFavorite: ->
-      FavoriteCollection[if @favorited then 'remove' else 'add'](Site.find(@params))
-      @favorited = !@favorited
+    toggleFavorite: -> @site.toggleFavorite()
   created: ->
     @$watch 'params.domain', @onDomainChange, true
 </script>

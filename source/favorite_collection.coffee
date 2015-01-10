@@ -5,7 +5,10 @@ _ = require 'lodash'
 module.exports = class FavoriteCollection extends LocalStorable
   TYPES = [Site, Query]
 
-  @_collection: (@restore() || []).map (obj)-> TYPES[obj.type].find(obj)
+  @_collection: (@restore() || []).map (obj)->
+    fav = TYPES[obj.type].find(obj)
+    fav.favorited = true
+    fav
 
   @save: ->
     collection = @_collection.map (favoritable)->
@@ -14,19 +17,23 @@ module.exports = class FavoriteCollection extends LocalStorable
       obj
     localStorage.setItem(@name, JSON.stringify(collection))
 
-  @add: (favoritable)->
+  add = (favoritable)->
     @_collection.unshift(favoritable) unless @doesInclude(favoritable)
-    favoritable.onFavorite()
     @save()
 
-  @remove: (favoritable)->
+  Site.on 'favorite', add, this
+  Query.on 'favorite', add, this
+
+  remove = (favoritable)->
     # need to use splice for Vue
     for e,i in @_collection
       if e == favoritable
         @_collection.splice(i, 1)
         break
-    favoritable.onUnfavorite()
     @save()
+
+  Site.on 'unfavorite', remove, this
+  Query.on 'unfavorite', remove, this
 
   @doesInclude: (favoritable)->
     _.contains(@_collection, favoritable)
