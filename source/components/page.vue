@@ -11,7 +11,7 @@ h3
   a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)")
     img(v-attr="src: domain | favicon")
   a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)") {{title | truncate 100}}
-.bookmark-count {{bookmark_count}}users
+  a.right.bookmark-count(href="{{url | hatebuEntry}}" target="_blank") {{bookmark_count}}users
 .bookmarks
   table
     tr(v-repeat="bookmarks" v-component="bookmark")

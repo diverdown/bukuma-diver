@@ -9,6 +9,8 @@ window.onload = ->
       value
   Vue.filter 'favicon', (domain)->
     "http://www.google.com/s2/favicons?domain=#{encodeURIComponent domain}"
+  Vue.filter 'hatebuEntry', (url)->
+    "http://b.hatena.ne.jp/entry/#{url.replace /^[a-z]+:\/\//, ''}"
 
   app = new Vue
     el: '#app'
