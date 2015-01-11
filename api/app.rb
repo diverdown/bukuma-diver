@@ -47,7 +47,8 @@ get '/pages' do
 end
 
 get '/domains/popular' do
-  json redis.zrevrange 'popular_sites', 0, -1
+  offset = (params[:offset] || 0).to_i
+  json redis.zrevrange 'popular_sites', offset, offset + 9
 end
 
 post '/favorites/:domain' do

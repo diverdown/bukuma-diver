@@ -35,8 +35,8 @@ module.exports = class BukumaDiver
   @searchByDomain: (params, callback)->
     get '/api/domain/:domain/pages', _.pick(params, 'domain', 'sort', 'of'), callback
 
-  @popularSites: (callback)->
-    get '/api/domains/popular', null, (err, domains)->
+  @popularSites: (params, callback)->
+    get '/api/domains/popular', params, (err, domains)->
       res =  domains.map((domain)-> Site.find(domain: domain)) if domains
       callback(err, res)
 

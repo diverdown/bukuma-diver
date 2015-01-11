@@ -31,6 +31,7 @@ ul
 h2 人気サイト
 ul
   li(v-repeat="site: popularSites", v-component="_site")
+a(v-on="click: addMorePopularSites" v-if="doesHaveMorePopularSites") もっと見る...
 </template>
 
 <script lang="coffee">
@@ -45,9 +46,18 @@ module.exports =
     recommends: RecommendCollection.all()
     favorites: FavoriteCollection.all()
     popularSites: []
+    doesHaveMorePopularSites: true
   methods:
     search: ->
       @$emit('search', @query)
+    addMorePopularSites: ->
+      BukumaDiver.popularSites(
+        offset: @popularSites.length
+        (err, sites)=>
+          @doesHaveMorePopularSites = sites.length == 10
+          @popularSites = @popularSites.concat(sites)
+      )
   created: ->
-    BukumaDiver.popularSites (err, @popularSites)=>
+    BukumaDiver.popularSites(null, (err, @popularSites)=>)
+
 </script>
