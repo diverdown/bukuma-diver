@@ -2,14 +2,19 @@
 </style>
 
 <template lang="jade">
-img(v-attr="src: site.domain | favicon")
-a(v-on="click: $dispatch('searchBySite', site)")
+div(v-on="click: $dispatch('searchBySite', site), mouseenter: isFavoritable = true, mouseleave: isFavoritable = false")
+  img(v-attr="src: site.domain | favicon")
   | {{site.name}}
-i.fa.fa-heart(v-on="click: toggleFavorite(site)" v-class="favorited: site.favorited")
+  i.fa.fa-heart.right(v-if="isFavoritable" v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 </template>
 
 <script lang="coffee">
 module.exports =
+  data: ->
+    isFavoritable: false
   methods:
-    toggleFavorite: (site)-> site.toggleFavorite()
+    toggleFavorite: (event)->
+      event.stopPropagation()
+      @site.toggleFavorite()
+    favoritable: (@isFavoritable)->
 </script>

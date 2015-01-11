@@ -22,14 +22,11 @@ h2 ホットエントリー
 
 h2 ウォッチリスト
 ul
-  li(v-repeat="favorite: favorites")
-    img(v-attr="src: favorite.domain | favicon" v-if="favorite.domain")
-    i.fa.fa-search(v-if="!favorite.domain")
-    a(v-on="click: searchByFavorite(favorite)") {{favorite.name}}
+  li(v-repeat="favorite: favorites", v-component="_favorite")
 
 h2 おすすめサイト
 ul
-  li(v-repeat="site: recommendedSites | orderBy 'count' -1", v-component="_site")
+  li(v-repeat="site: recommends | orderBy 'count' -1", v-component="_site")
 
 h2 人気サイト
 ul
@@ -43,19 +40,14 @@ RecommendCollection = require '../recommend_collection'
 module.exports =
   components:
     _site: require './_site.vue'
+    _favorite: require './_favorite.vue'
   data: ->
-    recommendedSites: RecommendCollection.all()
+    recommends: RecommendCollection.all()
     favorites: FavoriteCollection.all()
     popularSites: []
   methods:
     search: ->
       @$emit('search', @query)
-    searchByFavorite: (favorite)->
-      switch favorite.constructor.name
-        when 'Site' then @searchBySite(favorite)
-        when 'Query'
-          @query = favorite.query
-          @search()
   created: ->
     BukumaDiver.popularSites (err, @popularSites)=>
 </script>
