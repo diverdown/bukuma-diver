@@ -1,4 +1,5 @@
 <style lang="scss">
+.fa-close { cursor: pointer; }
 </style>
 
 <template lang="jade">

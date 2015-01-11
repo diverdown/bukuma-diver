@@ -20,9 +20,7 @@ h2 ホットエントリー
   input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: search | key enter")
   i.fa.fa-search(v-on="click: search")
 
-h2 ウォッチリスト
-ul
-  li(v-repeat="favorite: favorites", v-component="_favorite")
+my-favorites
 
 h2 おすすめサイト
 ul
@@ -36,15 +34,13 @@ a(v-on="click: addMorePopularSites" v-if="doesHaveMorePopularSites") もっと�
 
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
-FavoriteCollection = require '../favorite_collection'
 RecommendCollection = require '../recommend_collection'
 module.exports =
   components:
+    'my-favorites': require './favorites.vue'
     _site: require './_site.vue'
-    _favorite: require './_favorite.vue'
   data: ->
     recommends: RecommendCollection.all()
-    favorites: FavoriteCollection.all()
     popularSites: []
     doesHaveMorePopularSites: true
   methods:
