@@ -4,18 +4,19 @@
   content: "　";
   display: block;
 }
+
 .favorite {
   cursor: move;
+  a { cursor: move; }
 }
 
 li.after:after {
-@include placeholder;
+  @include placeholder;
 }
 
 li.before:before {
-@include placeholder;
+  @include placeholder;
 }
-
 </style>
 
 <template lang="jade">

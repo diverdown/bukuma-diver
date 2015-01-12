@@ -1,7 +1,15 @@
 'use strict'
 Vue = require 'vue'
 RecommendCollection = require './recommend_collection'
+page = require 'page'
+qs = require 'qs'
+_ = require 'lodash'
+Site = require './site'
+Query = require './query'
+
 window.onload = ->
+  Vue.config.debug = true
+
   Vue.filter 'truncate', (value, max)->
     if value.length > max
       value.substr(0, max) + "..."
@@ -12,19 +20,18 @@ window.onload = ->
   Vue.filter 'hatebuEntry', (url)->
     "http://b.hatena.ne.jp/entry/#{url.replace /^[a-z]+:\/\//, ''}"
 
+  Vue.prototype.$transit = page
+
   app = new Vue
     el: '#app'
     data:
-      currentView: 'hot-entry'
+      currentView: ''
       mainParams: {}
       isModalOpen: false
     methods:
       search: (q)->
         @mainParams = {q: q}
         @currentView = 'search-result'
-      searchBySite: (site)->
-        @mainParams = site
-        @currentView = 'domain'
       closeModal: ->
         @isModalOpen = false
       toggleModal: ->
@@ -43,3 +50,20 @@ window.onload = ->
     @$broadcast 'updateModal', domain
   app.$on 'openSite', (page)->
     RecommendCollection.countUp(page)
+
+  page '*', (ctx, next)->
+    ctx.params = _.merge(qs.parse(ctx.querystring), ctx.params)
+    next()
+
+  page '/', ->
+    app.currentView = 'hot-entry'
+
+  page Site.pathTemplate, (ctx, next)->
+    app.currentView = 'domain'
+    app.$.main.search(ctx.params)
+
+  page Query.pathTemplate, (ctx, next)->
+    app.currentView = 'search-result'
+    app.$.main.search(ctx.params)
+
+  page()

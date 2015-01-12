@@ -9,17 +9,24 @@ rimraf = require 'rimraf'
 connect = require 'gulp-connect'
 
 gulp.task 'connect', ->
+  apiProxy = do ->
+    url = require 'url'
+    proxy = require 'proxy-middleware'
+    options = url.parse('http://localhost:4567/')
+    options.route = '/api'
+    proxy(options)
+
   connect.server
     root: 'build'
     livereload: true
     middleware: (connect, opt)->
-      return [
-        do ->
-          url = require 'url'
-          proxy = require 'proxy-middleware'
-          options = url.parse('http://localhost:4567/')
-          options.route = '/api'
-          proxy(options)
+      [
+        (req, res, next)->
+          if req.url.match(/^\/api\//)
+            apiProxy(req, res, next)
+          else
+            req.url = '/' unless req.url.match(/^\/(?:css|js|stub)\//)
+            next()
       ]
 gulp.task 'clean', (cb)->
   rimraf './build', cb

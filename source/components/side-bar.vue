@@ -15,10 +15,10 @@
 </style>
 
 <template lang="jade">
-h2 ホットエントリー
+h2(v-on="click: $transit('/')") ホットエントリー
 .search-box
-  input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: search | key enter")
-  i.fa.fa-search(v-on="click: search")
+  input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: $transit('/pages/?q='+query) | key enter")
+  i.fa.fa-search(v-on="click: $transit('/pages/?q='+query)")
 
 my-favorites
 
@@ -44,8 +44,6 @@ module.exports =
     popularSites: []
     doesHaveMorePopularSites: true
   methods:
-    search: ->
-      @$emit('search', @query)
     addMorePopularSites: ->
       BukumaDiver.popularSites(
         offset: @popularSites.length

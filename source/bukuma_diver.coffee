@@ -3,23 +3,11 @@ _ = require 'lodash'
 Site = require './site'
 Query = require './query'
 FavoriteCollection = require './favorite_collection'
+PathTemplate = require './path_template'
 module.exports = class BukumaDiver
-  bindParams = (path, params)->
-    [
-      path.replace /:[^\/]+/g, (match)->
-        name = match.substr(1)
-        replacement = params[name]
-        if replacement
-          delete params[name]
-          encodeURIComponent(replacement)
-        else
-           match
-      params
-    ]
-
   bindedMethod = (method)->
     (path, params, callback)->
-      [path, params] = bindParams(path, params)
+      [path, params] = PathTemplate.bind(path, params)
       request[method](path, params)
         .end (res)->
           callback?(null, JSON.parse(res.text))

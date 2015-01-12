@@ -12,9 +12,9 @@ h1
 i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 ul
   li
-    a(v-on="click: search({sort: 'count'})") 人気順
-    a(v-on="click: search({sort: 'recent'})") 新着順
-    a(v-on="click: search({sort: 'eid'})") すべて
+    a(v-on="click: $transit(site.toPath({sort: 'count'}))") 人気順
+    a(v-on="click: $transit(site.toPath({sort: 'recent'}))") 新着順
+    a(v-on="click: $transit(site.toPath({sort: 'eid'}))") すべて
 ul
   li(v-repeat="pages" v-component="page")
 </template>
@@ -25,7 +25,9 @@ FavoriteCollection = require '../favorite_collection'
 Site = require '../site'
 module.exports =
   data: ->
-    { site: {favorited: false}, pages: [] }
+    params: {}
+    site: {favorited: false}
+    pages: []
   methods:
     search: (params = {})->
       @params[k] = v for k,v of params

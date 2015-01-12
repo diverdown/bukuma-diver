@@ -1,8 +1,11 @@
 <style lang="scss">
+.site {
+  display: block;
+}
 </style>
 
 <template lang="jade">
-div(v-on="click: $dispatch('searchBySite', site), mouseenter: isFavoritable = true, mouseleave: isFavoritable = false")
+a.site(v-on="click: $transit(site.toPath()), mouseenter: isFavoritable = true, mouseleave: isFavoritable = false")
   img(v-attr="src: site.domain | favicon")
   | {{site.name}}
   i.fa.fa-heart.right(v-if="isFavoritable" v-on="click: toggleFavorite" v-class="favorited: site.favorited")

@@ -17,9 +17,12 @@ ul, li {
 
 li { list-style: none; }
 
+a { cursor: pointer; }
+
 .container {
   @include container;
 }
+
 #content {
   @include container(900px);
 }
