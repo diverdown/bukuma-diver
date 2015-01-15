@@ -2,17 +2,24 @@ require 'addressable/uri'
 require 'nokogiri'
 require 'faraday'
 require 'faraday_middleware'
+require 'faraday-http-cache'
 require 'public_suffix'
 require 'hatena/bookmark/category'
+require 'faraday/http_cache/redis_store'
 
 module Hatena
   class Bookmark
     class InvalidCategoryError < StandardError; end
 
-    def initialize(user_agent: 'Hatena::Bookmark', log: false)
+    def initialize(user_agent: 'Hatena::Bookmark', log: false, cache_store: nil, cache_serializer: nil)
       @connection = Faraday.new(url: 'http://b.hatena.ne.jp') do |faraday|
-        faraday.response :logger if log
+        if log
+          require 'faraday/http_cache/development_logger'
+          faraday.response :logger
+          logger = Faraday::HttpCache::DevelopmentLogger.new
+        end
         faraday.headers[:user_agent] = user_agent
+        faraday.use Faraday::HttpCache, store: cache_store, serializer: cache_serializer, shared_cache: false, logger: logger
         faraday.use FaradayMiddleware::FollowRedirects, limit: 5
         faraday.adapter Faraday.default_adapter
       end

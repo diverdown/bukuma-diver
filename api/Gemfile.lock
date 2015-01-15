@@ -9,6 +9,8 @@ GEM
       redis (~> 3.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    faraday-http-cache (0.4.2)
+      faraday (~> 0.8)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     hiredis (0.5.2)
@@ -52,6 +54,7 @@ DEPENDENCIES
   dotenv
   fakeredis
   faraday
+  faraday-http-cache
   faraday_middleware
   hiredis
   nokogiri

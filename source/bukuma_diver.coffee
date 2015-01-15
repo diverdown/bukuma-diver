@@ -15,7 +15,7 @@ module.exports = class BukumaDiver
   [get, post, del] = ['get', 'post', 'del'].map(bindedMethod)
 
   @hotEntries: (callback)->
-    get '/stub/hotentries.json', null, callback
+    get '/api/hotentries', null, callback
 
   @search: (params, callback)->
     get '/api/pages', params, callback

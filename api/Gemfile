@@ -8,6 +8,7 @@ gem 'public_suffix'
 gem 'addressable'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'faraday-http-cache'
 gem 'dotenv'
 
 group :production do

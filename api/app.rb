@@ -31,14 +31,21 @@ set :json_encoder, Oj
 
 helpers do
   def client
-    @client ||= Hatena::Bookmark.new(user_agent: 'Bukuma Diver', log: settings.development?)
+    @client ||= Hatena::Bookmark.new(
+      user_agent: 'Bukuma Diver',
+      cache_store: Faraday::HttpCache::RedisStore.new(redis),
+      cache_serializer: Oj,
+      log: settings.development?
+    )
   end
 
   def redis
-    @redis ||= Redis.new(host: ENV['REDIS_HOST'],
-                         port: ENV['REDIS_PORT'],
-                         db: ENV['REDIS_DB'],
-                         driver: settings.production? ? :hiredis : :memory)
+    @redis ||= Redis.new(
+      host: ENV['REDIS_HOST'],
+      port: ENV['REDIS_PORT'],
+      db: ENV['REDIS_DB'],
+      driver: settings.production? ? :hiredis : :memory
+    )
   end
 end
 
