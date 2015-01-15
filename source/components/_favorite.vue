@@ -1,9 +1,10 @@
 <style lang="scss">
+.favorite { display: block; }
 .fa-close { cursor: pointer; }
 </style>
 
 <template lang="jade">
-a(v-on="click: $transit(favorite.toPath()), mouseenter: isRemovable = true, mouseleave: isRemovable = false")
+a.favorite(v-on="click: $transit(favorite.toPath()), mouseenter: isRemovable = true, mouseleave: isRemovable = false")
   img(v-attr="src: favorite.domain | favicon" v-if="favorite.domain")
   i.fa.fa-search(v-if="!favorite.domain")
   | {{favorite.name}}
