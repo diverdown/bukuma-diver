@@ -8,9 +8,14 @@ gem 'public_suffix'
 gem 'addressable'
 gem 'faraday'
 gem 'faraday_middleware'
-gem 'redis'
-gem 'hiredis'
+gem 'dotenv'
 
-group :development do
+group :production do
+  gem 'redis'
+  gem 'hiredis'
+end
+
+group :development, :test do
   gem 'pry'
+  gem 'fakeredis'
 end

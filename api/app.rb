@@ -5,12 +5,23 @@ require 'sinatra'
 require 'sinatra/json'
 require 'hatena/bookmark'
 require 'oj'
-require 'redis'
-require 'hiredis'
+
+if production?
+  require 'redis'
+  require 'hiredis'
+end
+
 if development?
   require 'sinatra/reloader'
-  require 'pry'
 end
+
+if development? or test?
+  require 'pry'
+  require 'fakeredis'
+end
+
+require 'dotenv'
+Dotenv.load
 
 Oj.default_options = { mode: :compat }
 class << Oj
@@ -24,7 +35,10 @@ helpers do
   end
 
   def redis
-    @redis ||= Redis.new(host: 'localhost', port: 6379, db: 1, driver: :hiredis)
+    @redis ||= Redis.new(host: ENV['REDIS_HOST'],
+                         port: ENV['REDIS_PORT'],
+                         db: ENV['REDIS_DB'],
+                         driver: settings.production? ? :hiredis : :memory)
   end
 end
 
