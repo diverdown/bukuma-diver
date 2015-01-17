@@ -48,6 +48,25 @@ helpers do
       driver: settings.production? ? :hiredis : :memory
     )
   end
+
+  def cache_key
+    "cache:#{request.fullpath}"
+  end
+end
+
+# /domains/popular may be inconsist temporarily because of offset param,
+# but it is not serious problem.
+CACHABLE_PATH = %r{^(?!/favorites)}
+before CACHABLE_PATH do
+  if cached = redis.get(cache_key)
+    content_type :json
+    halt cached
+  end
+end
+
+after CACHABLE_PATH do
+  redis.set cache_key, response.body[0]
+  redis.expire cache_key, 60 #sec
 end
 
 get '/hotentries' do
