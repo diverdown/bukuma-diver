@@ -5,6 +5,7 @@ require 'sinatra'
 require 'sinatra/json'
 require 'hatena/bookmark'
 require 'oj'
+require 'public_suffix'
 
 if production?
   require 'redis'
@@ -60,6 +61,7 @@ get '/hotentries' do
 end
 
 get '/domain/:url/pages' do
+  halt 400 unless PublicSuffix.valid?(params[:domain])
   json client.search_by_domain(params.select{ |k,v| %w{url sort of}.include? k })
 end
 
@@ -73,12 +75,14 @@ get '/domains/popular' do
 end
 
 post '/favorites/:domain' do
+  halt 400 unless PublicSuffix.valid?(params[:domain])
   created = redis.sadd params[:domain], request.host
   redis.zincrby 'popular_sites', 1, params[:domain] if created
   200
 end
 
 delete '/favorites/:domain' do
+  halt 400 unless PublicSuffix.valid?(params[:domain])
   deleted = redis.srem params[:domain], request.host
   redis.zincrby 'popular_sites', -1, params[:domain] if deleted
   200
