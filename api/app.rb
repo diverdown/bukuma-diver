@@ -85,6 +85,7 @@ get '/domains/:domain/pages' do
 end
 
 get '/pages' do
+  halt 400 unless params[:q]
   json client.search(params)
 end
 
