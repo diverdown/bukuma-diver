@@ -40,7 +40,7 @@ window.onload = ->
       'side-bar': require './components/side-bar.vue'
       'hot-entry': require './components/hot-entry.vue'
       'page': require './components/page.vue'
-      'bookmark': require './components/bookmark.vue'
+      'comment': require './components/comment.vue'
       'search-result': require './components/search-result.vue'
       'modal': require './components/modal.vue'
       'domain': require './components/domain.vue'

@@ -4,6 +4,7 @@ Site = require './site'
 Query = require './query'
 FavoriteCollection = require './favorite_collection'
 PathTemplate = require './path_template'
+jsonp = require 'jsonp'
 module.exports = class BukumaDiver
   bindedMethod = (method)->
     (path, params, callback)->
@@ -27,6 +28,13 @@ module.exports = class BukumaDiver
     get '/api/domains/popular', params, (err, domains)->
       res =  domains.map((domain)-> Site.find(domain: domain)) if domains
       callback(err, res)
+
+  @comments: (url, callback)->
+    jsonp(
+      "http://b.hatena.ne.jp/entry/jsonlite/?url=#{encodeURIComponent url}",
+      (err, {bookmarks})->
+        callback(err, _.reject(bookmarks, comment: ''))
+    )
 
   Site.on 'favorite', (site)->
     post "/api/favorites/:domain", _.clone(site)

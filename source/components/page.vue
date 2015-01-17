@@ -1,6 +1,6 @@
 <style lang="scss">
-.bookmarks {
-  max-height: 10em;
+.comments {
+  height: 10em;
   overflow-y: scroll;
   font-size: 10px;
 }
@@ -12,23 +12,38 @@ h3
     img(v-attr="src: domain | favicon")
   a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)") {{title | truncate 100}}
   a.right.bookmark-count(href="{{url | hatebuEntry}}" target="_blank") {{bookmark_count}}users
-.bookmarks
+.comments
   table
-    tr(v-repeat="bookmarks" v-component="bookmark")
+    tr(v-repeat="comments" v-component="comment")
 a(v-on="click: openModal(domain)" v-if="showPopularLink") このサイトの人気ページを見る
 </template>
 
 <script lang="coffee">
-jsonp = require 'jsonp'
+BukumaDiver = require '../bukuma_diver'
+_ = require 'lodash'
 module.exports =
   data: ->
-    bookmarks: []
+    comments: []
   methods:
     openModal: (domain)->
       @$dispatch 'openModal', domain
-  created: ->
-    jsonp(
-      "http://b.hatena.ne.jp/entry/jsonlite/?url=#{encodeURIComponent @url}",
-      (err, {@bookmarks})=>
-    )
+    loadComments: ->
+      BukumaDiver.comments(@url, (err, @comments)=>)
+    wasSeen: ->
+      {top, bottom} = @$el.getBoundingClientRect()
+      0 < bottom and top < (window.innerHeight || document.documentElement.clientHeight)
+  attached: ->
+    # to wait rendering and get appropriate position
+    @$root.constructor.nextTick =>
+      return @loadComments() if @wasSeen()
+      @_loadCommentIfInsideWindow = _.throttle(
+        =>
+          if @wasSeen()
+            @loadComments()
+            window.removeEventListener 'scroll', @_loadCommentIfInsideWindow
+        500
+      )
+      window.addEventListener 'scroll', @_loadCommentIfInsideWindow
+  detached: ->
+    window.removeEventListener 'scroll', @_loadCommentIfInsideWindow
 </script>
