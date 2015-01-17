@@ -69,9 +69,10 @@ get '/pages' do
   json client.search(params)
 end
 
+SITES_PER_PAGE = 10
 get '/domains/popular' do
   offset = (params[:offset] || 0).to_i
-  json redis.zrevrange 'popular_sites', offset, offset + 9
+  json redis.zrevrange 'popular_sites', offset, offset + SITES_PER_PAGE - 1
 end
 
 post '/favorites/:domain' do
