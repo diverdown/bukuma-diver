@@ -60,9 +60,9 @@ get '/hotentries' do
   json results
 end
 
-get '/domain/:url/pages' do
+get '/domains/:domain/pages' do
   halt 400 unless PublicSuffix.valid?(params[:domain])
-  json client.search_by_domain(params.select{ |k,v| %w{url sort of}.include? k })
+  json client.search_by_domain(params.select{ |k,v| %w{domain sort of}.include? k })
 end
 
 get '/pages' do

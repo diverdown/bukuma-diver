@@ -22,7 +22,7 @@ module.exports = class BukumaDiver
     get '/api/pages', params, callback
 
   @searchByDomain: (params, callback)->
-    get '/api/domain/:domain/pages', _.pick(params, 'domain', 'sort', 'of'), callback
+    get '/api/domains/:domain/pages', _.pick(params, 'domain', 'sort', 'of'), callback
 
   @popularSites: (params, callback)->
     get '/api/domains/popular', params, (err, domains)->
