@@ -9,6 +9,7 @@ h1 img {
 h1
   img(v-attr="src: site.domain | favicon")
   | {{site.name}}
+  .right Total{{totalBookmarkCount}}users
 i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 ul
   li
@@ -27,12 +28,13 @@ module.exports =
   data: ->
     params: {}
     site: {favorited: false}
+    totalBookmarkCount: 0
     pages: []
   methods:
     search: (params = {})->
       @params[k] = v for k,v of params
       @site = Site.find(@params)
-      BukumaDiver.searchByDomain @params, (err, {name, @pages})=>
+      BukumaDiver.searchByDomain @params, (err, {name, @totalBookmarkCount, @pages})=>
         @site.name = name
     onDomainChange: ->
       @search(@params)

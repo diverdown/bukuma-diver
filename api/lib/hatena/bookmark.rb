@@ -6,6 +6,7 @@ require 'faraday-http-cache'
 require 'public_suffix'
 require 'hatena/bookmark/category'
 require 'faraday/http_cache/redis_store'
+require 'unindent'
 
 module Hatena
   class Bookmark
@@ -35,12 +36,23 @@ module Hatena
     end
 
     def search_by_domain(params)
-      xml = request '/entrylist', params.merge(mode: 'rss')
-      title = xml.css('channel title').text
-      {
-        name: title.slice(/『(.*?)』/, 1) || title.slice(/[^\s]+\z/),
-        pages: extract_items(xml)
-      }
+      items '/entrylist', params.merge(mode: 'rss', url: params[:domain])
+    end
+
+    def total_count(url)
+      xml = Nokogiri::XML(@connection.post('/xmlrpc', <<-XML.unindent
+        <?xml version="1.0"?>
+        <methodCall>
+          <methodName>bookmark.getTotalCount</methodName>
+          <params>
+            <param>
+              <value><string>#{url}</string></value>
+            </param>
+          </params>
+        </methodCall>
+      XML
+      ).body)
+      xml.css('value').text.to_i
     end
 
     private

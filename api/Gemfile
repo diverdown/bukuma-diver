@@ -10,6 +10,7 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'faraday-http-cache'
 gem 'dotenv'
+gem 'unindent'
 
 group :production do
   gem 'redis'

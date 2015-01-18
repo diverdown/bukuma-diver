@@ -52,47 +52,76 @@ helpers do
   def cache_key
     "cache:#{request.fullpath}"
   end
-end
 
-# /domains/popular may be inconsist temporarily because of offset param,
-# but it is not serious problem.
-CACHABLE_PATH = %r{^(?!/favorites)}
-before CACHABLE_PATH do
-  if cached = redis.get(cache_key)
-    content_type :json
-    halt cached
+  def cache(key = cache_key, options = {}, &block)
+    if cached = redis.get(key)
+      cached
+    else
+      res = instance_eval(&block)
+      redis.set key, res, ex: options[:ex] || 60 #sec
+      res
+    end
+  end
+
+  def site_title(url)
+    conn = Faraday.new(url: url) do |faraday|
+      faraday.use FaradayMiddleware::FollowRedirects, limit: 5
+      faraday.adapter Faraday.default_adapter
+    end
+    Nokogiri::HTML(conn.get.body).css('title').text
+  end
+
+  def site(domain)
+    url = "http://#{domain}"
+    cache "site:#{domain}", ex: 10_800 do
+      Oj.dump(
+        name: site_title(url),
+        totalBookmarkCount: client.total_count(url)
+      )
+    end
   end
 end
 
-after CACHABLE_PATH do
-  redis.set cache_key, response.body[0]
-  redis.expire cache_key, 60 #sec
+before do
+  content_type :json
 end
 
 get '/hotentries' do
-  results = []
-  Hatena::Bookmark::Category.all.each_with_index.map do |(id, name), i|
-    Thread.new do
-      results[i] = { name: name, pages: client.hotentry(id) }
-    end
-  end.each(&:join)
-  json results
+  cache do
+    results = []
+    Hatena::Bookmark::Category.all.each_with_index.map do |(id, name), i|
+      Thread.new do
+        results[i] = { name: name, pages: client.hotentry(id) }
+      end
+    end.each(&:join)
+    Oj.dump results
+  end
 end
 
 get '/domains/:domain/pages' do
   halt 400 unless PublicSuffix.valid?(params[:domain])
-  json client.search_by_domain(params.select{ |k,v| %w{domain sort of}.include? k })
+  cache do
+    Oj.dump({
+      pages: client.search_by_domain(params)
+    }.merge(Oj.load site(params[:domain])))
+  end
 end
 
 get '/pages' do
   halt 400 unless params[:q]
-  json client.search(params)
+  cache do
+    Oj.dump(client.search(params))
+  end
 end
 
 SITES_PER_PAGE = 10
 get '/domains/popular' do
-  offset = (params[:offset] || 0).to_i
-  json redis.zrevrange 'popular_sites', offset, offset + SITES_PER_PAGE - 1
+  # cache may be inconsist temporarily because of offset param,
+  # but it is not serious problem.
+  cache do
+    offset = (params[:offset] || 0).to_i
+    Oj.dump(redis.zrevrange 'popular_sites', offset, offset + SITES_PER_PAGE - 1)
+  end
 end
 
 post '/favorites/:domain' do

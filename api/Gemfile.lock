@@ -45,6 +45,7 @@ GEM
       tilt (~> 1.3)
     slop (3.6.0)
     tilt (1.4.1)
+    unindent (1.0)
 
 PLATFORMS
   ruby
@@ -64,3 +65,4 @@ DEPENDENCIES
   redis
   sinatra
   sinatra-contrib
+  unindent
