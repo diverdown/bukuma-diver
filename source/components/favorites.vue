@@ -44,7 +44,7 @@ module.exports =
       e.preventDefault()
       y = e.clientY + window.pageYOffset
       threshold = e.target.offsetTop + e.target.offsetHeight / 2
-      li = e.target
+      li = e.target.parentNode
       [].forEach.call(li.parentNode.children, (e)->
         e.classList.remove('before')
         e.classList.remove('after')
