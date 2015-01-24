@@ -20,7 +20,9 @@ window.onload = ->
   Vue.filter 'hatebuEntry', (url)->
     "http://b.hatena.ne.jp/entry/#{url.replace /^[a-z]+:\/\//, ''}"
 
-  Vue.prototype.$transit = page
+  Vue.prototype.$transit = (path)->
+    return if path == window.location.pathname + window.location.search
+    page(path)
 
   app = new Vue
     el: '#app'
