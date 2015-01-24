@@ -48,8 +48,13 @@ module.exports =
     loadComments: ->
       BukumaDiver.comments(@url, (err, @comments)=> @loading = false)
     wasSeen: ->
+      @unbindScroll() unless @$el
       {top, bottom} = @$el.getBoundingClientRect()
       0 < bottom and top < (window.innerHeight || document.documentElement.clientHeight)
+    bindScroll: ->
+      window.addEventListener 'scroll', @_loadCommentIfInsideWindow
+    unbindScroll: ->
+      window.removeEventListener 'scroll', @_loadCommentIfInsideWindow
   attached: ->
     # to wait rendering and get appropriate position
     @$root.constructor.nextTick =>
@@ -58,10 +63,9 @@ module.exports =
         =>
           if @wasSeen()
             @loadComments()
-            window.removeEventListener 'scroll', @_loadCommentIfInsideWindow
+            @unbindScroll()
         500
       )
-      window.addEventListener 'scroll', @_loadCommentIfInsideWindow
-  detached: ->
-    window.removeEventListener 'scroll', @_loadCommentIfInsideWindow
+      @bindScroll()
+  detached: -> @unbindScroll()
 </script>
