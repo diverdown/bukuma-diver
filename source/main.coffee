@@ -44,6 +44,7 @@ window.onload = ->
       'search-result': require './components/search-result.vue'
       'modal': require './components/modal.vue'
       'domain': require './components/domain.vue'
+      'loading-circle': require './components/loading-circle.vue'
     }
   app.$on 'openModal', (domain)->
     @isModalOpen = true

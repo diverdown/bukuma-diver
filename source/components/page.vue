@@ -9,6 +9,10 @@
   font-size: 10px;
   margin: 0.6em 0;
   box-shadow: -1px 1px 3px 1px #eee inset;
+  .loading {
+    padding: 2em;
+    img { width: 6em; height: 6em; }
+  }
   table {
     width: 100%;
     padding: 0.2em 0.5em;
@@ -25,7 +29,8 @@
         | {{title | truncate 100}}
     a.bookmark-count(href="{{url | hatebuEntry}}" target="_blank") {{bookmark_count}}users
   .comments
-    table
+    loading-circle(v-if="loading")
+    table(v-if="!loading")
       tr(v-repeat="comments" v-component="comment")
   a.small(v-on="click: openModal(domain)" v-if="showPopularLink") このサイトの人気ページを見る
 </template>
@@ -36,11 +41,12 @@ _ = require 'lodash'
 module.exports =
   data: ->
     comments: []
+    loading: true
   methods:
     openModal: (domain)->
       @$dispatch 'openModal', domain
     loadComments: ->
-      BukumaDiver.comments(@url, (err, @comments)=>)
+      BukumaDiver.comments(@url, (err, @comments)=> @loading = false)
     wasSeen: ->
       {top, bottom} = @$el.getBoundingClientRect()
       0 < bottom and top < (window.innerHeight || document.documentElement.clientHeight)

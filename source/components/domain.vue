@@ -24,8 +24,10 @@ nav
     | Total
     span {{totalBookmarkCount}}
     | users
-ul
+loading-circle(v-if="loading")
+ul(v-if="!loading")
   li(v-repeat="pages" v-component="page")
+
 </template>
 
 <script lang="coffee">
@@ -38,15 +40,19 @@ module.exports =
     site: {favorited: false}
     totalBookmarkCount: 0
     pages: []
+    loading: true
   methods:
     search: (params = {})->
+      @loading = true
       @params[k] = v for k,v of params
       @site = Site.find(@params)
       BukumaDiver.searchByDomain @params, (err, {name, @totalBookmarkCount, @pages})=>
+        @loading = false
         @site.name = name
     onDomainChange: ->
       @search(@params)
     toggleFavorite: -> @site.toggleFavorite()
+    hasPages: -> @pages.length
   created: ->
     @$watch 'params.domain', @onDomainChange, true
 </script>

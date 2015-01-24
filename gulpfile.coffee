@@ -25,7 +25,7 @@ gulp.task 'connect', ->
           if req.url.match(/^\/api\//)
             apiProxy(req, res, next)
           else
-            req.url = '/' unless req.url.match(/^\/(?:css|js|stub)\//)
+            req.url = '/' unless req.url.match(/^\/(?:css|js|image|stub)\//)
             next()
       ]
 gulp.task 'clean', (cb)->

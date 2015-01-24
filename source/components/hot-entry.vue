@@ -6,7 +6,8 @@ h2.title-border {
 
 <template lang="jade">
 h1 ホットエントリー
-ul
+loading-circle(v-if="loading")
+ul(v-if="!loading")
   li(v-repeat="categories")
     h2.title-border {{name}}
     ul
@@ -18,7 +19,7 @@ ul
 BukumaDiver = require '../bukuma_diver'
 module.exports =
   data: ->
-    { categories: [] }
+    { categories: [], loading: true }
   methods:
     showMorePages: (e)->
       for pages, i in @_hiddenPages
@@ -30,4 +31,5 @@ module.exports =
       for c, i in categories
         @_hiddenPages[i] = c.pages.splice(5)
       @categories = categories
+      @loading = false
 </script>
