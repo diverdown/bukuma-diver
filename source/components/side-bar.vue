@@ -1,8 +1,15 @@
 <style lang="scss">
+#hotentry {
+  font-weight: bold;
+  font-size: 1.2em;
+  .fa-fire { color: #fe8687; }
+}
 .search-box {
   position: relative;
+  margin: 8px 0px;
   input {
     width: 100%;
+    padding: 4px;
   }
   .fa-search {
     position: absolute;
@@ -12,10 +19,17 @@
     cursor: pointer;
   }
 }
+#side-bar {
+  li {
+   margin: 4px 0px;
+  }
+}
 </style>
 
 <template lang="jade">
-h2(v-on="click: $transit('/')") ホットエントリー
+a#hotentry(v-on="click: $transit('/')")
+  i.fa.fa-fire.favicon
+  | ホットエントリー
 .search-box
   input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: $transit('/pages/?q='+query) | key enter")
   i.fa.fa-search(v-on="click: $transit('/pages/?q='+query)")

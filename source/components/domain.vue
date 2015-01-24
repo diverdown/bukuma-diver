@@ -6,16 +6,24 @@ h1 img {
 </style>
 
 <template lang="jade">
-h1
-  img(v-attr="src: site.domain | favicon")
-  | {{site.name}}
-  .right Total{{totalBookmarkCount}}users
-i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
-ul
-  li
-    a(v-on="click: $transit(site.toPath({sort: 'count'}))") 人気順
-    a(v-on="click: $transit(site.toPath({sort: 'recent'}))") 新着順
-    a(v-on="click: $transit(site.toPath({sort: 'eid'}))") すべて
+header
+  h1
+    img.favicon(v-attr="src: site.domain | favicon")
+    | {{site.name}}
+  i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
+
+nav
+  ul
+    li
+      a(v-on="click: $transit(site.toPath({sort: 'count'}))") 人気順
+    li
+      a(v-on="click: $transit(site.toPath({sort: 'recent'}))") 新着順
+    li
+      a(v-on="click: $transit(site.toPath({sort: 'eid'}))") すべて
+  .count
+    | Total
+    span {{totalBookmarkCount}}
+    | users
 ul
   li(v-repeat="pages" v-component="page")
 </template>

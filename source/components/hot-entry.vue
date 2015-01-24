@@ -1,5 +1,5 @@
 <style lang="scss">
-h2 {
+h2.title-border {
   border-bottom: 1px solid #eee;
 }
 </style>

@@ -7,8 +7,24 @@ $susy: (
 );
 @include border-box-sizing;
 
-header { text-align: center; }
 footer { text-align: center; }
+
+h1,h2,h3 {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1.1em;
+}
 
 ul, li {
   margin: 0;
@@ -17,31 +33,78 @@ ul, li {
 
 li { list-style: none; }
 
-a { cursor: pointer; }
-
-.container {
-  @include container;
+a {
+  cursor: pointer;
+  &:link {
+    color: #1f65c1;
+  }
+  &:visited {
+    color: #8475d1;
+  }
 }
 
-#content {
-  @include container(900px);
-}
-
-#side-bar {
-  @include span(4 of 16);
-  border: 1px solid #eee;
-  min-height: 400px;
-  @include box-shadow(1px 1px 3px 0px #999);
+#title {
+  text-align: center;
+  padding: 1.2em 0 0.6em;
+  h1 {
+    font-size: 2em;
+    letter-spacing: 0.1em;
+  }
 }
 
 main {
   @include span(12 of 16 last);
   border: 1px solid #eee;
   min-height: 500px;
+  padding: 20px 12px;
+}
+main, #modal {
+  header {
+    @include container;
+    h1 { @include span(15 of 16); }
+    i.fa  {
+      @include span(1 of 16);
+      cursor: pointer;
+      font-size: 1.5em;
+      position: relative;
+      top: 6px;
+    }
+  }
+
+  nav {
+    @include container;
+    margin-top: 8px;
+    ul {
+      li {
+        @include span(2 of 16);
+      }
+    }
+    .count {
+      @include span(4 of 16 last);
+      font-size: 0.6em;
+      text-align: right;
+      span {
+        font-size: 2em;
+        margin: 0 0.2em;
+      }
+    }
+  }
+
+  h2 {
+    margin-top: 0.5em;
+  }
+}
+
+.container {
+  @include container;
 }
 
 .modal-open {
   overflow: hidden;
+}
+
+.favicon {
+  margin-right: 0.4em;
 }
 
 .favorited {
@@ -49,3 +112,36 @@ main {
 }
 
 .right { float: right; }
+
+.samll {
+  font-size: 0.8em;
+}
+
+a.bookmark-count {
+  background-color: rgb(254, 198, 199);
+  text-align: center;
+  color: red;
+}
+
+#content {
+  @include container(900px);
+}
+
+.page-head {
+  @include container;
+  .page-title {
+    @include span(14 of 16);
+  }
+  .bookmark-count {
+    @include span(2 of 16);
+    @include last;
+  }
+}
+
+#side-bar {
+  @include span(4 of 16);
+  border: 1px solid #eee;
+  min-height: 400px;
+  @include box-shadow(1px 1px 3px 0px #999);
+  padding: 20px 10px;
+}

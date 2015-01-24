@@ -10,9 +10,9 @@ html
   body#app(v-class="modal-open: isModalOpen" v-on="keyup: closeModal | key esc")
     #modal(v-component="modal" v-show="isModalOpen" v-events="closeModal: closeModal")
     #content
-      header
+      header#title
         h1 ブクマダイバー
-     .container
+      .container
         nav#side-bar(v-component="side-bar")
         main(v-component="{{currentView}}" v-ref="main")
       footer

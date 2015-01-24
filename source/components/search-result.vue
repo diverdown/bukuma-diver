@@ -2,13 +2,19 @@
 </style>
 
 <template lang="jade">
-h1 「{{query.query}}」を検索
-i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
-ul
-  li
-    a(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
-    a(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
-    a(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
+header
+  h1 「{{query.query}}」を検索
+  i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
+
+nav
+  ul
+    li
+      a(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
+    li
+      a(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
+    li
+      a(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
+
 ul
   li(v-repeat="pages" v-component="page" v-with="showPopularLink: 1")
 a(v-on="click: searchMore") もっと見る...

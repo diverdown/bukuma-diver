@@ -11,10 +11,11 @@
 }
 
 .wrapper {
-  width: 600px;
+  width: 720px;
   min-height: 300px;
   background-color: white;
-  margin: 30px auto;
+  margin: 28px auto;
+  padding: 32px 24px;
 }
 </style>
 

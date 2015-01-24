@@ -6,8 +6,8 @@
 
 <template lang="jade">
 a.site(v-on="click: $transit(site.toPath()), mouseenter: isFavoritable = true, mouseleave: isFavoritable = false")
-  img(v-attr="src: site.domain | favicon")
-  | {{site.name}}
+  img.favicon(v-attr="src: site.domain | favicon")
+  | {{site.name | truncate 15}}
   i.fa.fa-heart.right(v-if="isFavoritable" v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 </template>
 
