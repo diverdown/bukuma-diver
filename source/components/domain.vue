@@ -52,7 +52,6 @@ module.exports =
     onDomainChange: ->
       @search(@params)
     toggleFavorite: -> @site.toggleFavorite()
-    hasPages: -> @pages.length
   created: ->
     @$watch 'params.domain', @onDomainChange, true
 </script>

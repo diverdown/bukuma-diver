@@ -3,7 +3,7 @@ Favoritable = require './favoritable'
 _ = require 'lodash'
 PathTemplate = require './path_template'
 module.exports = class Site extends Favoritable
-  @pathTemplate: '/domains/:domain'
+  @pathTemplate: '/domains/:domain/'
 
   _collection = []
 
