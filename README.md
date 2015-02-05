@@ -1,17 +1,19 @@
 # ブクマダイバー
 
-# Setup for develpment
+# Development dependency
+- rbenv
+- nvm
 
+# Setup for develpment
 ```sh
-$ gem install compass susy
-$ brew update
-$ brew install nvm
-# clone and go to the project directory
+$ git clone https://github.com/webken/bukuma-diver.git
+$ cd bukuma-diver
 $ npm install
 $ bower install
+$ bundle
 ```
 
 # Develpment
 ```sh
-gulp watch
+foreman start
 ```

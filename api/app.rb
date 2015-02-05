@@ -18,6 +18,7 @@ end
 
 if development? or test?
   require 'pry'
+  require 'pry-remote'
   require 'fakeredis'
 end
 

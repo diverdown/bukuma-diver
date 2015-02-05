@@ -17,7 +17,14 @@ group :production do
   gem 'hiredis'
 end
 
+group :development do
+  gem 'foreman'
+  gem 'compass'
+  gem 'susy'
+end
+
 group :development, :test do
   gem 'pry'
+  gem 'pry-remote'
   gem 'fakeredis'
 end
