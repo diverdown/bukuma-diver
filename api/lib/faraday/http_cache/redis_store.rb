@@ -17,6 +17,10 @@ module Faraday
         @client.get with_prefix(key)
       end
 
+      def delete(key)
+        @client.del with_prefix(key)
+      end
+
       private
 
       def with_prefix(key)
