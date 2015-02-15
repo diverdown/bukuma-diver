@@ -9,12 +9,14 @@ module Faraday
       end
 
       def write(key, value)
-        @client.set with_prefix(key), value
+        @client.set with_prefix(key), Oj.dump(value)
         @client.expire with_prefix(key), TTL
       end
 
       def read(key)
-        @client.get with_prefix(key)
+        if cached = @client.get(with_prefix(key))
+          Oj.load(cached)
+        end
       end
 
       def delete(key)
