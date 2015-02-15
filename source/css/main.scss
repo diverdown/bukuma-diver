@@ -7,8 +7,6 @@ $susy: (
 );
 @include border-box-sizing;
 
-footer { text-align: center; }
-
 h1,h2,h3 {
   margin: 0;
   padding: 0;
@@ -144,4 +142,26 @@ a.bookmark-count {
   min-height: 400px;
   @include box-shadow(1px 1px 3px 0px #999);
   padding: 20px 10px;
+}
+
+footer {
+  font-size: 0.9em;
+  margin-top: 60px;
+  @include container;
+  h3 {
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #eee;
+  }
+  .footer-box {
+    @include span(1 of 2);
+    padding: 0 10px;
+  }
+  #copyright {
+    border-top: solid 1px #eee;
+    margin-top: 20px;
+    padding-top: 4px;
+    text-align: center;
+    @include span(1 of 1);
+  }
 }

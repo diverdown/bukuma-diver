@@ -6,6 +6,7 @@ qs = require 'qs'
 _ = require 'lodash'
 Site = require './site'
 Query = require './query'
+BukumaDiver = require './bukuma_diver'
 
 window.onload = ->
   Vue.config.debug = true
@@ -30,6 +31,7 @@ window.onload = ->
       currentView: ''
       mainParams: {}
       isModalOpen: false
+      footerContent: ''
     methods:
       search: (q)->
         @mainParams = {q: q}
@@ -48,6 +50,8 @@ window.onload = ->
       'domain': require './components/domain.vue'
       'loading-circle': require './components/loading-circle.vue'
     }
+    attached: ->
+      BukumaDiver.footer (err, @footerContent)=>
   app.$on 'openModal', (domain)->
     @isModalOpen = true
     @$broadcast 'updateModal', domain

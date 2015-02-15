@@ -3,7 +3,7 @@ qs = require 'qs'
 module.exports =
   bind: (path, params)->
     [
-      path.replace /:[^\/]+/g, (match)->
+      path.replace /:[^\d\/]+/g, (match)->
         name = match.substr(1)
         replacement = params[name]
         if replacement

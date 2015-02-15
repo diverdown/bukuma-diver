@@ -15,5 +15,5 @@ html
       .container
         nav#side-bar(v-component="side-bar")
         main(v-component="{{currentView}}" v-ref="main")
-      footer
-        | フッター
+
+      #footer(v-html="footerContent")

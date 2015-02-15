@@ -11,7 +11,7 @@ module.exports = class BukumaDiver
       [path, params] = PathTemplate.bind(path, params)
       request[method](path, params)
         .end (res)->
-          callback?(null, JSON.parse(res.text))
+          callback?(null, if res.type.match('json') then JSON.parse(res.text) else res.text)
 
   [get, post, del] = ['get', 'post', 'del'].map(bindedMethod)
 
@@ -35,6 +35,9 @@ module.exports = class BukumaDiver
       (err, {bookmarks})->
         callback(err, _.reject(bookmarks, comment: ''))
     )
+
+  @footer: (callback)->
+    get 'http://api.webken-apps.com/page_parts/footer', null, callback
 
   Site.on 'favorite', (site)->
     post "/api/favorites/:domain", _.clone(site)
