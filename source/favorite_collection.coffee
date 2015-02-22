@@ -5,17 +5,18 @@ _ = require 'lodash'
 module.exports = class FavoriteCollection extends LocalStorable
   TYPES = [Site, Query]
 
-  @_collection: (@restore() || []).map (obj)->
-    fav = TYPES[obj.type].find(obj)
-    fav.favorited = true
-    fav
+  @restore (err, val)=>
+    @_collection = (val || []).map (obj)->
+      fav = TYPES[obj.type].find(obj)
+      fav.favorited = true
+      fav
 
   @save: ->
     collection = @_collection.map (favoritable)->
       obj = favoritable.preprocess()
       obj.type = _.indexOf(TYPES, favoritable.constructor)
       obj
-    localStorage.setItem(@name, JSON.stringify(collection))
+    super(collection)
 
   add = (favoritable)->
     @_collection.unshift(favoritable) unless @doesInclude(favoritable)

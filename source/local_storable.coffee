@@ -1,9 +1,10 @@
+localforage = require 'localforage'
 module.exports = class LocalStorable
   @all: ->
     @_collection
 
-  @restore: ->
-    JSON.parse(localStorage.getItem(@name))
+  @restore: (callback)->
+    localforage.getItem(@name, callback)
 
-  @save: ->
-    localStorage.setItem(@name, JSON.stringify(@_collection))
+  @save: (collection)->
+    localforage.setItem(@name, collection or @_collection)
