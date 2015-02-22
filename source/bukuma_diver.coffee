@@ -1,8 +1,5 @@
 request = require 'superagent'
 _ = require 'lodash'
-Site = require './site'
-Query = require './query'
-FavoriteCollection = require './favorite_collection'
 PathTemplate = require './path_template'
 jsonp = require 'jsonp'
 module.exports = class BukumaDiver
@@ -24,10 +21,11 @@ module.exports = class BukumaDiver
   @searchByDomain: (params, callback)->
     get '/api/domains/:domain/pages', _.pick(params, 'domain', 'sort', 'of'), callback
 
-  @popularSites: (params, callback)->
-    get '/api/domains/popular', params, (err, domains)->
-      res =  domains.map((domain)-> Site.find(domain: domain)) if domains
-      callback(err, res)
+  @title: (params, callback)->
+    get '/api/domains/:domain', params, callback
+
+  @popularDomains: (params, callback)->
+    get '/api/domains/popular', params, callback
 
   @comments: (url, callback)->
     jsonp(
@@ -39,8 +37,8 @@ module.exports = class BukumaDiver
   @footer: (callback)->
     get 'http://api.webken-apps.com/page_parts/footer', null, callback
 
-  Site.on 'favorite', (site)->
+  @favorite: (site)->
     post "/api/favorites/:domain", _.clone(site)
 
-  Site.on 'unfavorite', (site)->
+  @unfavorite: (site)->
     del "/api/favorites/:domain", _.clone(site)

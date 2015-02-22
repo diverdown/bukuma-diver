@@ -32,7 +32,6 @@ ul(v-if="!loading")
 
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
-FavoriteCollection = require '../favorite_collection'
 Site = require '../site'
 module.exports =
   data: ->

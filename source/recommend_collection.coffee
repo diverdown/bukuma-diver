@@ -22,8 +22,10 @@ module.exports = class RecommendCollection extends LocalStorable
     {name: 'google', domain: 'google.com'},
   ]
 
-  @restore (err, val)=>
-    @_collection = (val || DEFAULT_RECOMMENDED_SITES).map(Site.find)
+  @restore: (callback)->
+    super (err, val)=>
+      @_collection = (val || DEFAULT_RECOMMENDED_SITES).map(Site.find)
+      callback(err, @_collection)
 
   @countUp: (page)->
     domain = page.url.split('/')[2].replace(/^www\./, '')

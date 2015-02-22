@@ -25,7 +25,6 @@ a(v-on="click: searchMore" v-if="!loading") もっと見る...
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
 Query = require '../query'
-FavoriteCollection = require '../favorite_collection'
 _ = require 'lodash'
 module.exports =
   data: ->

@@ -47,25 +47,30 @@ a(v-on="click: addMorePopularSites" v-if="doesHaveMorePopularSites") もっと�
 </template>
 
 <script lang="coffee">
-BukumaDiver = require '../bukuma_diver'
+Site = require '../site'
 RecommendCollection = require '../recommend_collection'
 module.exports =
   components:
     'my-favorites': require './favorites.vue'
     _site: require './_site.vue'
   data: ->
-    recommends: RecommendCollection.all()
+    recommends: []
     popularSites: []
     doesHaveMorePopularSites: true
   methods:
     addMorePopularSites: ->
-      BukumaDiver.popularSites(
+      Site.popular(
         offset: @popularSites.length
         (err, sites)=>
           @doesHaveMorePopularSites = sites.length == 10
           @popularSites = @popularSites.concat(sites)
       )
   created: ->
-    BukumaDiver.popularSites(null, (err, @popularSites)=>)
-
+    Site.popular(null, (err, @popularSites)=>)
+    RecommendCollection.restore (err, @recommends)=>
+      @$watch(
+        'recommends'
+        -> RecommendCollection.save()
+        true
+      )
 </script>

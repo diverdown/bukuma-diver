@@ -64,22 +64,32 @@ helpers do
     end
   end
 
-  def site_title(url)
-    conn = Faraday.new(url: url) do |faraday|
-      faraday.use FaradayMiddleware::FollowRedirects, limit: 5
-      faraday.adapter Faraday.default_adapter
+  def site_title(domain)
+    cache "site:title:#{domain}", ex: 259_200 do
+      begin
+        url = url(domain)
+        conn = Faraday.new(url: url) do |faraday|
+          faraday.use FaradayMiddleware::FollowRedirects, limit: 5
+          faraday.adapter Faraday.default_adapter
+        end
+        Nokogiri::HTML(conn.get.body).css('title').text
+      rescue Faraday::ConnectionFailed
+        site_title("www.#{domain}") unless domain.start_with? 'www.'
+      end
     end
-    Nokogiri::HTML(conn.get.body).css('title').text
   end
 
   def site(domain)
-    url = "http://#{domain}"
     cache "site:#{domain}", ex: 10_800 do
       Oj.dump(
-        name: site_title(url),
-        totalBookmarkCount: client.total_count(url)
+        name: site_title(domain),
+        totalBookmarkCount: client.total_count(url(domain))
       )
     end
+  end
+
+  def url(domain)
+    "http://#{domain}"
   end
 end
 
@@ -122,6 +132,13 @@ get '/domains/popular' do
   cache do
     offset = (params[:offset] || 0).to_i
     Oj.dump(redis.zrevrange 'popular_sites', offset, offset + SITES_PER_PAGE - 1)
+  end
+end
+
+get '/domains/:domain' do
+  halt 400 unless PublicSuffix.valid?(params[:domain])
+  cache do
+    Oj.dump(title: site_title(params[:domain]))
   end
 end
 

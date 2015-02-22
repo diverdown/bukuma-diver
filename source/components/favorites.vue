@@ -32,7 +32,7 @@ module.exports =
   components:
     _favorite: require './_favorite.vue'
   data: ->
-    favorites: FavoriteCollection.all()
+    favorites: []
   methods:
     onDragStart: (e)->
       @dragged = e.currentTarget
@@ -78,4 +78,6 @@ module.exports =
 
       @favorites.splice(iAfter, 0, @favorites.splice(iBefore, 1)[0])
       FavoriteCollection.save()
+  created: ->
+    FavoriteCollection.restore (err, @favorites)=>
 </script>
