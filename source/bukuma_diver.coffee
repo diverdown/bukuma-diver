@@ -12,20 +12,22 @@ module.exports = class BukumaDiver
 
   [get, post, del] = ['get', 'post', 'del'].map(bindedMethod)
 
+  BUKUMA_DIVER_API_URL = process.env.BUKUMA_DIVER_API_URL
+
   @hotEntries: (callback)->
-    get '/api/hotentries', null, callback
+    get "#{BUKUMA_DIVER_API_URL}/hotentries", null, callback
 
   @search: (params, callback)->
-    get '/api/pages', params, callback
+    get "#{BUKUMA_DIVER_API_URL}/pages", params, callback
 
   @searchByDomain: (params, callback)->
-    get '/api/domains/:domain/pages', _.pick(params, 'domain', 'sort', 'of'), callback
+    get "#{BUKUMA_DIVER_API_URL}/domains/:domain/pages", _.pick(params, 'domain', 'sort', 'of'), callback
 
   @title: (params, callback)->
-    get '/api/domains/:domain', params, callback
+    get "#{BUKUMA_DIVER_API_URL}/domains/:domain", params, callback
 
   @popularDomains: (params, callback)->
-    get '/api/domains/popular', params, callback
+    get "#{BUKUMA_DIVER_API_URL}/domains/popular", params, callback
 
   @comments: (url, callback)->
     jsonp(

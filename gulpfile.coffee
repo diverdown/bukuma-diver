@@ -7,26 +7,20 @@ source = require 'vinyl-source-stream'
 compass = require 'gulp-compass'
 rimraf = require 'rimraf'
 connect = require 'gulp-connect'
+coffeeify = require 'coffeeify'
+envify = require 'envify/custom'
+require('dotenv').config(path: ".env.#{process.env.NODE_ENV || 'development'}")
+
 
 gulp.task 'connect', ->
-  apiProxy = do ->
-    url = require 'url'
-    proxy = require 'proxy-middleware'
-    options = url.parse('http://localhost:4567/')
-    options.route = '/api'
-    proxy(options)
-
   connect.server
     root: 'build'
     livereload: true
     middleware: (connect, opt)->
       [
         (req, res, next)->
-          if req.url.match(/^\/api\//)
-            apiProxy(req, res, next)
-          else
-            req.url = '/' unless req.url.match(/^\/(?:css|js|image|stub)\//)
-            next()
+          req.url = '/' unless req.url.match(/^\/(?:css|js|image|stub)\//)
+          next()
       ]
 gulp.task 'clean', (cb)->
   rimraf './build', cb
@@ -47,10 +41,11 @@ gulp.task 'js', ->
   browserify
     entries: [ './source/main.coffee']
     extensions: ['.coffee', '.js', '.jade']
-  .transform 'coffeeify'
+  .transform coffeeify
   .transform 'jadeify'
   .transform 'debowerify'
   .transform 'vueify'
+  .transform envify()
   .bundle()
   .pipe plumber()
   .pipe connect.reload()

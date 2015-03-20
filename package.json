@@ -10,6 +10,8 @@
     "coffee-script": "^1.8.0",
     "coffeeify": "^1.0.0",
     "debowerify": "^1.2.0",
+    "dotenv": "^1.0.0",
+    "envify": "^3.4.0",
     "gulp": "^3.8.10",
     "gulp-bower-files": "^0.2.7",
     "gulp-compass": "^2.0.3",
