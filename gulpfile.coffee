@@ -11,10 +11,12 @@ coffeeify = require 'coffeeify'
 envify = require 'envify/custom'
 require('dotenv').config(path: ".env.#{process.env.NODE_ENV || 'development'}")
 
+WEB_PATH = './web'
+EXTENSION_PATH = './chrome_extension'
 
 gulp.task 'connect', ->
   connect.server
-    root: 'build'
+    root: "#{WEB_PATH}/build"
     livereload: true
     middleware: (connect, opt)->
       [
@@ -23,23 +25,24 @@ gulp.task 'connect', ->
           next()
       ]
 gulp.task 'clean', (cb)->
-  rimraf './build', cb
+  rimraf "#{WEB_PATH}/build", cb
+  rimraf "#{EXTENSION_PATH}/build", cb
 
 gulp.task 'html', ->
   gulp
-    .src './source/[^_]*.jade'
+    .src "#{WEB_PATH}/source/[^_]*.jade"
     .pipe plumber()
     .pipe jade()
     .pipe connect.reload()
     .pipe gulp.dest './build/'
 
 gulp.task 'image', ->
-  gulp.src './source/image/*'
-  .pipe gulp.dest './build/image/'
+  gulp.src "#{WEB_PATH}/source/image/*"
+  .pipe gulp.dest "#{WEB_PATH}/build/image/"
 
 gulp.task 'js', ->
   browserify
-    entries: [ './source/main.coffee']
+    entries: [ "#{WEB_PATH}/source/main.coffee"]
     extensions: ['.coffee', '.js', '.jade']
   .transform coffeeify
   .transform 'jadeify'
@@ -50,26 +53,41 @@ gulp.task 'js', ->
   .pipe plumber()
   .pipe connect.reload()
   .pipe source 'main.js'
-  .pipe gulp.dest './build/js/'
+  .pipe gulp.dest "#{WEB_PATH}/build/js/"
 
 gulp.task 'css', ->
   gulp
-    .src './source/css/**/*.{s,}css'
+    .src "#{WEB_PATH}/source/css/**/*.{s,}css"
     .pipe plumber(errorHandler: (error)->
       console.log error.message
       @emit 'end'
     )
     .pipe connect.reload()
-    .pipe compass(css: 'build/css', sass: 'source/css', require: ['susy'])
-    .pipe gulp.dest './build/css/'
+    .pipe compass(css: "#{WEB_PATH}/build/css", sass: "#{WEB_PATH}/source/css", require: ['susy'])
+    .pipe gulp.dest "#{WEB_PATH}/build/css/"
+
+gulp.task 'extension', ->
+  gulp
+    .src "#{EXTENSION_PATH}/source/*.json"
+    .pipe gulp.dest "#{EXTENSION_PATH}/build/"
+
+  browserify
+    entries: [ "#{EXTENSION_PATH}/source/background.coffee"]
+  .transform coffeeify
+  .transform envify()
+  .bundle()
+  .pipe plumber()
+  .pipe source 'background.js'
+  .pipe gulp.dest "#{EXTENSION_PATH}/build/"
 
 gulp.task 'watch', ['connect', 'build'], ->
-  gulp.watch 'source/**/*.{js,coffee}', ['js']
-  gulp.watch 'source/components/**/*.vue', ['js']
-  gulp.watch 'source/**/*.jade', ['html', 'js']
-  gulp.watch 'source/css/**/*.{s,}css', ['css']
-  gulp.watch 'source/image/**/*.{png,jpeg,gif}', ['image']
+  gulp.watch "#{WEB_PATH}/source/**/*.{js,coffee}", ['js']
+  gulp.watch "#{WEB_PATH}/source/components/**/*.vue", ['js']
+  gulp.watch "#{WEB_PATH}/source/**/*.jade", ['html', 'js']
+  gulp.watch "#{WEB_PATH}/source/css/**/*.{s,}css", ['css']
+  gulp.watch "#{WEB_PATH}/source/image/**/*.{png,jpeg,gif}", ['image']
   gulp.watch 'bower_components/**/*.js', ['js']
+  gulp.watch "#{EXTENSION_PATH}/**/*.{coffee,json}", ['extension']
 
-gulp.task 'build', ['html', 'js', 'css', 'image']
+gulp.task 'build', ['html', 'js', 'css', 'image', 'extension']
 gulp.task 'default', ['clean', 'build']
