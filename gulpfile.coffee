@@ -34,7 +34,7 @@ gulp.task 'html', ->
     .pipe plumber()
     .pipe jade()
     .pipe connect.reload()
-    .pipe gulp.dest './build/'
+    .pipe gulp.dest "#{WEB_PATH}/build/"
 
 gulp.task 'image', ->
   gulp.src "#{WEB_PATH}/source/image/*"
