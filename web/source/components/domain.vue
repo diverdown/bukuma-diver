@@ -1,33 +1,24 @@
-<style lang="scss">
-h1 img {
-  width: 0.8em;
-  height: 0.8em;
-}
-</style>
-
 <template lang="jade">
-header
-  h1
-    img.favicon(v-attr="src: site.domain | favicon")
-    | {{site.name}}
-  i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
+header.main-header(v-class="fixed: fixedHeader")
+  .bottom-align-flexbox.padding-1unit-2unit
+    h1.main-title
+      img.favicon(v-attr="src: site.domain | favicon")
+      | {{site.name}}
+    i.fa.fa-heart.large.margin-0unit-1unit.clickable(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 
-nav
-  ul
-    li
-      a(v-on="click: $transit(site.toPath({sort: 'count'}))") 人気順
-    li
-      a(v-on="click: $transit(site.toPath({sort: 'recent'}))") 新着順
-    li
-      a(v-on="click: $transit(site.toPath({sort: 'eid'}))") すべて
-  .count
-    | Total
-    span {{totalBookmarkCount}}
-    | users
+    .bookmark-count {{totalBookmarkCount}}users
+
+  nav
+    ul.header-states
+      li.header-state(v-class="active: params.sort == 'count'")
+        a.padding-1unit(v-on="click: $transit(site.toPath({sort: 'count'}))") 人気順
+      li.header-state(v-class="active: params.sort == 'recent'")
+        a.padding-1unit(v-on="click: $transit(site.toPath({sort: 'recent'}))") 新着順
+      li.header-state(v-class="active: params.sort == 'eid'")
+        a.padding-1unit(v-on="click: $transit(site.toPath({sort: 'eid'}))") すべて
 loading-circle(v-if="loading")
-ul(v-if="!loading")
-  li(v-repeat="pages" v-component="page")
-
+ul.padding-2unit(v-if="!loading")
+  li.margin-2unit(v-repeat="pages" v-component="page")
 </template>
 
 <script lang="coffee">
@@ -35,11 +26,12 @@ BukumaDiver = require '../bukuma_diver'
 Site = require '../site'
 module.exports =
   data: ->
-    params: {}
+    params: {sort: 'count'}
     site: {favorited: false}
     totalBookmarkCount: 0
     pages: []
     loading: true
+    fixedHeader: true
   methods:
     search: (params = {})->
       @loading = true

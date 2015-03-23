@@ -1,0 +1,19 @@
+#overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+#modal-panel {
+  width: 720px;
+  min-height: 300px;
+  background-color: $bg-color;
+  margin: 28px auto;
+  border: 1px solid rgba(0,0,0,0);
+  @include border-radius(3px);
+}

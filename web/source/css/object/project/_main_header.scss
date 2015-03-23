@@ -1,0 +1,54 @@
+.main-header {
+  @include box-shadow(0px 1px 1px 0px $shadow-color);
+  background-color: white;
+  &.fixed {
+    top: 0;
+    @include span(12 of 16 last);
+    z-index: 1;
+  }
+}
+
+.main-title {
+  font-weight: normal;
+  color: #555;
+  @include flex(1);
+
+  > .favicon {
+    width: 0.8em;
+    height: 0.8em;
+  }
+}
+
+.header-states {
+  @include generic-flexbox;
+  border-top: 1px solid $border-color;
+}
+
+.header-state {
+  @include generic-flexbox;
+  @include flex(1);
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.8em;
+  +li { border-left: 1px solid $border-color; }
+  &:hover:not(.active) {
+    background-color: #fafafa;
+    color: $default-font-color;
+  }
+  &.active {
+    cursor: default;
+    > a {
+      cursor: default;
+      color: $default-font-color;
+    }
+  }
+  > a {
+    color: #aaa;
+    display: block;
+    @include flex(1);
+  }
+}
+
+.header-category {
+  border-bottom: 3px solid white;
+}

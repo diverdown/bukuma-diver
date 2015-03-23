@@ -1,0 +1,5 @@
+#main {
+  @include span(12 of 16 last);
+  min-height: 500px;
+  padding-top: 100px;
+}

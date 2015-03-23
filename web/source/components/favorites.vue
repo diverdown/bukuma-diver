@@ -1,28 +1,7 @@
-<style lang="scss">
-@mixin placeholder {
-  border: dotted 1px #999;
-  content: "　";
-  display: block;
-}
-
-.favorite {
-  cursor: move;
-  a { cursor: move; }
-}
-
-li.after:after {
-  @include placeholder;
-}
-
-li.before:before {
-  @include placeholder;
-}
-</style>
-
 <template lang="jade">
 h2 ウォッチリスト
 ul
-  li.favorite(v-repeat="favorite: favorites" v-component="_favorite" draggable="true"
+  li.draggable(v-repeat="favorite: favorites" v-component="_favorite" draggable="true"
     v-on="dragstart: onDragStart, dragenter: onDragEnter, dragover: onDragOver, drop: onDrop, dragend: onDragEnd")
 </template>
 

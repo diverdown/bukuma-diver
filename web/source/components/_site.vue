@@ -1,9 +1,3 @@
-<style lang="scss">
-.site {
-  display: block;
-}
-</style>
-
 <template lang="jade">
 a.site(v-on="click: $transit(site.toPath()), mouseenter: isFavoritable = true, mouseleave: isFavoritable = false")
   img.favicon(v-attr="src: site.domain | favicon")

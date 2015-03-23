@@ -1,14 +1,9 @@
-<style lang="scss">
-.favorite { display: block; }
-.fa-close { cursor: pointer; }
-</style>
-
 <template lang="jade">
-a.favorite(v-on="click: $transit(favorite.toPath()), mouseenter: isRemovable = true, mouseleave: isRemovable = false")
+a.site.draggable(v-on="click: $transit(favorite.toPath()), mouseenter: isRemovable = true, mouseleave: isRemovable = false")
   img.favicon(v-attr="src: favorite.domain | favicon" v-if="favorite.domain")
   i.fa.fa-search(v-if="!favorite.domain")
   | {{favorite.name | truncate 15}}
-  i.fa.fa-close.right(v-if="isRemovable" v-on="click: unfavorite")
+  i.fa.fa-close.right.clickable(v-if="isRemovable" v-on="click: unfavorite")
 </template>
 
 <script lang="coffee">

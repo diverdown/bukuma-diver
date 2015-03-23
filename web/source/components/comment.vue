@@ -1,22 +1,3 @@
-<style lang="scss">
-td {
-  &:nth-child(1) {
-    width: 2em;
-    img {
-      height: 2em;
-      width: 2em;
-    }
-  }
-  &:nth-child(2) {
-    width: 5em;
-  }
-  &:last-child {
-    text-alight: right;
-    width: 5em;
-  }
-}
-</style>
-
 <template lang="jade">
 td
  img(v-attr="src: userImageUrl" alt="{{user}}")

@@ -1,12 +1,5 @@
-<style lang="scss">
-.loading {
-  text-align: center;
-  padding: 40px;
-}
-</style>
-
 <template lang="jade">
-.loading
+.padding-5unit.center
   img(src="/image/loading.gif")
 </template>
 

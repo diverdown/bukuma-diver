@@ -33,7 +33,8 @@
     "rimraf": "^2.2.8",
     "superagent": "^0.21.0",
     "vinyl-source-stream": "^1.0.0",
-    "vueify": "^1.1.0"
+    "vueify": "^1.1.0",
+    "stickifier": "git+https://gist.github.com/en30/24d4c5b901f453774358"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

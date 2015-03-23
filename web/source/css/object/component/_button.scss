@@ -1,0 +1,40 @@
+/* $button-color: #2FA8E7; */
+$button-color: #F0BA32;
+button {
+  cursor: pointer;
+  border: 1px solid $button-color;
+  @include border-radius(2px);
+  background-color: white;
+  color: $button-color;
+  padding: 0.2em 0.4em;
+  &:hover {
+    background-color: #FFF8E9;
+  }
+}
+
+$button-color: #8BA3CF;
+$button-shadow-color: #8698BA;
+
+.button {
+  @include border-radius(4px);
+  color: white;
+}
+
+.button-default {
+  background-color: $button-color;
+  @include box-shadow(1px 1px 0px 1px $button-shadow-color);
+
+
+  &:hover {
+    background-color: $button-shadow-color;
+  }
+}
+
+.button-light {
+  color: #73BF67;
+  border: 1px solid #73BF67;
+  &:hover {
+    background-color: #EDFCEA;
+  }
+
+}

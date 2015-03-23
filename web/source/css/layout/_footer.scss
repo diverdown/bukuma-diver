@@ -1,0 +1,26 @@
+#footer {
+  color: white;
+  @include background-image(radial-gradient(#1D2E47, #142744));
+
+  font-size: 0.9em;
+  margin-top: 60px;
+  padding-top: 40px;
+  @include container;
+  h3 {
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    color: #8BA7D5;
+  }
+  .footer-box {
+    @include span(1 of 2);
+    padding: 0 10px;
+  }
+  #copyright {
+    margin-top: 40px;
+    text-align: center;
+    @include span(1 of 1);
+  }
+  a {
+    color: white;
+  }
+}

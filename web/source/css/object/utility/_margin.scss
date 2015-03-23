@@ -1,0 +1,20 @@
+$unit: 8px;
+
+@for $i from 0 through 10 {
+  @for $j from 0 through 10 {
+    @if $i == $j {
+      .margin-#{$i}unit + .margin-#{$i}unit {
+        margin-top: #{$i * $unit};
+      }
+      .padding-#{$i}unit {
+        padding: #{$i * $unit};
+      }
+    } @else {
+      @each $type in margin, padding {
+        .#{$type}-#{$i}unit-#{$j}unit {
+          #{$type}: #{$i * $unit} #{$j * $unit};
+        }
+      }
+    }
+  }
+}

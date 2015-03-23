@@ -1,0 +1,45 @@
+#side-bar {
+  h2 {
+    color: #787D88;
+    font-size: 14px;
+  }
+}
+
+#title {
+  padding: 0.5em;
+  @include background-image(radial-gradient(#1D2E47, #142744));
+
+  h1 {
+    font-size: 1.2em;
+  }
+  a {
+    color: white;
+  }
+}
+
+#hotentry {
+  .fa-fire { color: #fe8687; }
+}
+
+#search-box {
+  position: relative;
+  input {
+    width: 100%;
+    padding: 4px;
+  }
+  .fa-search {
+    position: absolute;
+    right: 3px;
+    top: 5px;
+    color: #999;
+    cursor: pointer;
+  }
+}
+
+.site {
+  display: block;
+  padding: 4px 0;
+  &:hover {
+    background-color: #fafafa;
+  }
+}

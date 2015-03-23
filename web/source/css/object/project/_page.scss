@@ -1,0 +1,8 @@
+.page-title {
+  @include flex(1);
+  font-weight: bold;
+  a {
+    &:link { color: $link-color; }
+    &:visited { color: $visited-link-color; }
+  }
+}

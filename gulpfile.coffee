@@ -57,7 +57,7 @@ gulp.task 'js', ->
 
 gulp.task 'css', ->
   gulp
-    .src "#{WEB_PATH}/source/css/**/*.{s,}css"
+    .src "#{WEB_PATH}/source/css/main.{s,}css"
     .pipe plumber(errorHandler: (error)->
       console.log error.message
       @emit 'end'

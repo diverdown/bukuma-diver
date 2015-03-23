@@ -1,0 +1,11 @@
+#side-bar {
+  @include span(4 of 16);
+  min-height: 400px;
+  background-color: white;
+  @include box-shadow(1px 0px 0px 1px $shadow-color);
+}
+
+#nav-middle {
+  background-color: #F3F4F5;
+  border-bottom: 1px solid $border-color;
+}

@@ -1,0 +1,62 @@
+.container {
+  @include container;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.left { float: left; }
+
+.right { float: right; }
+
+@mixin generic-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: inline-axis
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row
+                    ));
+}
+
+.top-align-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: verinline-axis,
+                      box-align: start
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row,
+                      flext-align: start
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row,
+                      align-items: flex-start
+                    ));
+
+}
+.bottom-align-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: verinline-axis,
+                      box-align: end
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row,
+                      flext-align: end
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row,
+                      align-items: flex-end
+                    ));
+}

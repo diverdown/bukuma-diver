@@ -1,5 +1,18 @@
 @import 'compass';
+$default-font-color: #1A1A1D;
+$border-color: #eee;
+$shadow-color: #ddd;
+
+$bg-color: #d5e0f1;
+
+$link-color: #4b75b9;
+$visited-link-color: #B492CC;
+
 @import 'susy';
+
+@import 'foundation/_reset';
+@import 'foundation/_base';
+
 $susy: (
   global-box-sizing: border-box,
   gutters: 0,
@@ -7,161 +20,25 @@ $susy: (
 );
 @include border-box-sizing;
 
-h1,h2,h3 {
-  margin: 0;
-  padding: 0;
-}
+@import 'layout/_side_bar';
+@import 'layout/_footer';
+@import 'layout/_main';
+@import 'layout/_modal';
 
-h1 {
-  font-size: 1.5em;
-}
+@import 'object/utility/_margin';
+@import 'object/utility/_text';
+@import 'object/utility/_layout';
+@import 'object/utility/_draggable';
 
-h2 {
-  font-size: 1.2em;
-}
+@import 'object/component/_card';
+@import 'object/component/_button';
+@import 'object/component/_bookmark_count';
+@import 'object/component/_state_list';
+@import 'object/component/_favorite';
+@import 'object/component/_icon';
 
-h3 {
-  font-size: 1.1em;
-}
-
-ul, li {
-  margin: 0;
-  padding: 0;
-}
-
-li { list-style: none; }
-
-a {
-  cursor: pointer;
-  &:link {
-    color: #1f65c1;
-  }
-  &:visited {
-    color: #8475d1;
-  }
-}
-
-#title {
-  text-align: center;
-  padding: 1.2em 0 0.6em;
-  h1 {
-    font-size: 2em;
-    letter-spacing: 0.1em;
-  }
-}
-
-main {
-  @include span(12 of 16 last);
-  border: 1px solid #eee;
-  min-height: 500px;
-  padding: 20px 12px;
-}
-main, #modal {
-  header {
-    @include container;
-    h1 { @include span(15 of 16); }
-    i.fa  {
-      @include span(1 of 16);
-      cursor: pointer;
-      font-size: 1.5em;
-      position: relative;
-      top: 6px;
-    }
-  }
-
-  nav {
-    @include container;
-    margin-top: 8px;
-    ul {
-      li {
-        @include span(2 of 16);
-      }
-    }
-    .count {
-      @include span(4 of 16 last);
-      font-size: 0.6em;
-      text-align: right;
-      span {
-        font-size: 2em;
-        margin: 0 0.2em;
-      }
-    }
-  }
-
-  h2 {
-    margin-top: 0.5em;
-  }
-}
-
-.container {
-  @include container;
-}
-
-.modal-open {
-  overflow: hidden;
-}
-
-.favicon {
-  margin-right: 0.4em;
-}
-
-.favorited {
-  color: rgb(249,180, 197);
-}
-
-.right { float: right; }
-
-.samll {
-  font-size: 0.8em;
-}
-
-a.bookmark-count {
-  background-color: rgb(254, 198, 199);
-  text-align: center;
-  color: red;
-}
-
-#content {
-  @include container(900px);
-}
-
-.page-head {
-  @include container;
-  .page-title {
-    @include span(14 of 16);
-  }
-  .bookmark-count {
-    @include span(2 of 16);
-    @include last;
-  }
-}
-
-#side-bar {
-  @include span(4 of 16);
-  border: 1px solid #eee;
-  min-height: 400px;
-  @include box-shadow(1px 1px 3px 0px #999);
-  padding: 20px 10px;
-}
-
-footer {
-  font-size: 0.9em;
-  margin-top: 60px;
-  @include container;
-  h3 {
-    padding-bottom: 4px;
-    margin-bottom: 4px;
-    border-bottom: 1px solid #eee;
-  }
-  .footer-box {
-    @include span(1 of 2);
-    padding: 0 10px;
-  }
-  #copyright {
-    border-top: solid 1px #eee;
-    margin-top: 20px;
-    padding-top: 4px;
-    text-align: center;
-    @include span(1 of 1);
-  }
-}
+@import 'object/project/_page';
+@import 'object/project/_comments';
+@import 'object/project/_main_header';
+@import 'object/project/_hot_entries';
+@import 'object/project/_side_bar';

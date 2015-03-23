@@ -1,23 +1,21 @@
-<style lang="scss">
-</style>
-
 <template lang="jade">
-header
-  h1 「{{query.query}}」を検索
-  i.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
+header.main-header.fixed
+  .container
+    h1.padding-1unit-2unit.left 「{{query.query}}」を検索
+    i.right.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
 
-nav
-  ul
-    li
-      a(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
-    li
-      a(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
-    li
-      a(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
+  nav
+    ul.header-states
+      li.header-state(v-class="active: popular")
+        a.padding-1unit(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
+      li.header-state(v-class="active: new")
+        a.padding-1unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
+      li.header-state(v-class="active: all")
+        a.padding-1unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
 
 loading-circle(v-if="loading")
-ul(v-if="!loading")
-  li(v-repeat="pages" v-component="page" v-with="showPopularLink: 1")
+ul.padding-2unit(v-if="!loading")
+  li.margin-2unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
 a(v-on="click: searchMore" v-if="!loading") もっと見る...
 
 </template>
@@ -28,7 +26,11 @@ Query = require '../query'
 _ = require 'lodash'
 module.exports =
   data: ->
-    { params: {}, query: {favorited: false}, pages: [], loading: true }
+    { params: {sort: 'popular', users: null}, query: {favorited: false}, pages: [], loading: true }
+  computed:
+    popular: -> @params.sort == 'popular'
+    new: -> @params.sort == 'recent' and @params.users == '3'
+    all: -> @params.sort == 'recent' and @params.users == '1'
   methods:
     search: (params = {})->
       @loading = true

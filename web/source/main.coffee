@@ -7,8 +7,15 @@ _ = require 'lodash'
 Site = require './site'
 Query = require './query'
 BukumaDiver = require './bukuma_diver'
-
+stickifier = require 'stickifier'
 window.onload = ->
+  window.addEventListener 'scroll', stickifier(
+    target: -> document.querySelector('#side-bar'),
+    lowerBound: 0,
+    bottomBarrier: -> document.querySelector('#footer')
+    wait: 100
+  )
+
   Vue.config.debug = true
 
   Vue.filter 'truncate', (value, max)->

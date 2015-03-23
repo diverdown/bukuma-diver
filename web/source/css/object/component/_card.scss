@@ -1,0 +1,12 @@
+.card {
+  background-color: white;
+  border: 1px solid $border-color;
+  @include box-shadow(1px 1px 1px 0px $shadow-color);
+  @include border-radius(2px);
+  /* margin: 8px 0; */
+}
+
+.card-head {
+  padding: 0.4em 0.8em 0.2em;
+  border-bottom: 1px solid $border-color;
+}
