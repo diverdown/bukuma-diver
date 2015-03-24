@@ -40,6 +40,7 @@ module.exports =
       BukumaDiver.searchByDomain @params, (err, {name, @totalBookmarkCount, @pages})=>
         @loading = false
         @site.name = name
+        @$pushMainContent() if @fixedHeader
     onDomainChange: ->
       @search(@params)
     toggleFavorite: -> @site.toggleFavorite()

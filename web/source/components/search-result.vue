@@ -36,7 +36,9 @@ module.exports =
       @loading = true
       @params[k] = v for k,v of params
       @query = Query.find(@params)
-      BukumaDiver.search @params, (err, @pages)=> @loading = false
+      BukumaDiver.search @params, (err, @pages)=>
+        @loading = false
+        @$pushMainContent()
     searchMore: ->
       BukumaDiver.search _.merge({of: @pages.length}, @params), (err, res)=>
         @pages = @pages.concat(res)
