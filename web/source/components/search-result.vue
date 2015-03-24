@@ -1,7 +1,7 @@
 <template lang="jade">
 header.main-header.fixed
   .container
-    h1.padding-1unit-2unit.left 「{{query.query}}」を検索
+    h1.padding-1unit-2unit.left 「{{query.query}}」の検索結果
     i.right.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
 
   nav
