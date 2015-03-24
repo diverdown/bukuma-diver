@@ -32,6 +32,9 @@ window.onload = ->
     return if path == window.location.pathname + window.location.search
     page(path)
 
+  Vue.prototype.$pushMainContent = (height)->
+    document.querySelector('#main').style.paddingTop = "#{height}px"
+
   app = new Vue
     el: '#app'
     data:

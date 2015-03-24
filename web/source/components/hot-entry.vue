@@ -1,9 +1,9 @@
 <template lang="jade">
-header.main-header.fixed
+header.main-header.fixed.hotentry-header
   h1.main-title.padding-1unit-2unit ホットエントリー
   ul.header-states
     li.header-state(v-repeat="categories" v-class="active: active")
-      a.header-category.padding-1unit(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'"){{name}}
+      a.header-category.padding-1unit(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'" v-on="click: moveToCategory"){{name}}
 
 loading-circle(v-if="loading")
 ul.hotentries(v-if="!loading")
@@ -29,14 +29,26 @@ CATEGORY_COLORS =
 
 _ = require 'lodash'
 BukumaDiver = require '../bukuma_diver'
+CONTENT_OFFSET_TO_HEADER = 16 # px
 module.exports =
   data: ->
-    { categories: [], loading: true }
+    { categories: [], loading: true, _headerHeight: null }
   methods:
     showMorePages: (e)->
       for pages, i in @_hiddenPages
         @categories[i].pages = @categories[i].pages.concat(pages)
       e.target.parentNode.removeChild(e.target)
+    moveToCategory: (hashOrEvent)->
+      hash =
+        if hashOrEvent instanceof MouseEvent
+          hashOrEvent.preventDefault()
+          hashOrEvent.target.hash
+        else
+          hashOrEvent
+      category = document.querySelector(hash)
+      # +1 for safety margin to determine current category
+      window.scrollTo(0, category.offsetTop - @_headerHeight - CONTENT_OFFSET_TO_HEADER + 1)
+
   created: ->
     BukumaDiver.hotEntries (err, categories)=>
       @_hiddenPages = []
@@ -46,23 +58,28 @@ module.exports =
         @_hiddenPages[i] = c.pages.splice(5)
       @categories = categories
       @loading = false
+      @$root.constructor.nextTick =>
+        @_headerHeight = document.querySelector('.hotentry-header').clientHeight
+        @$pushMainContent(@_headerHeight + CONTENT_OFFSET_TO_HEADER)
+        if hash = document.location.hash
+          @moveToCategory(hash)
+        else
+          @_activateCurrentCategory()
+
   attached: ->
     @_activateCurrentCategory = do =>
-      headerHeight = null
       _.throttle(
         =>
-          headerHeight ||= document.querySelector('.main-header').clientHeight
           c.active = false for c in @categories
           for i in [(@categories.length-1)..0] by -1
             c = @categories[i]
             {top, bottom} = document.querySelector("##{c.name}").getBoundingClientRect()
-            if top <= headerHeight
+            if top <= @_headerHeight + CONTENT_OFFSET_TO_HEADER
               history.pushState(null, null, "##{c.name}")
               c.active = true
               break
         200
       )
-
     window.addEventListener 'scroll', @_activateCurrentCategory
   detached: ->
     window.removeEventListener 'scroll', @_activateCurrentCategory
