@@ -4,23 +4,28 @@
     a(href="http://{{domain}}")
       img.favicon(v-attr="src: domain | favicon")
       | {{domain}}
-    button.right.small(v-on="click: openModal(domain)") {{domain}}の人気ページ
-  .page.padding-1unit
-    .top-align-flexbox
+    button.right.small(v-on="click: openModal(domain)") 人気ページを見る
+  .card-body
+    .center-flexbox.padding-1unt-0unit
+      a.bookmark-count(href="{{url | hatebuEntry}}" target="_blank")
+        .number {{bookmark_count}}
+        | users
       h3.page-title
         a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)")
           | {{title | truncate 100}}
-      a.bookmark-count(href="{{url | hatebuEntry}}" target="_blank") {{bookmark_count}}users
-    .comments.margin-1unit-0unit
-      .pending.center.padding-1unit-0unit(v-if="pending")
+
+
+    .comment-box
+      .pending.center(v-if="pending")
         | ブックマーク数が多いため読み込みを手動にしました。
-        .center.margin-1unit-0unit
-          a.button.button-light.padding-1unit-2unit(v-on="click: loadComments") コメントを読み込む
+        .center.margin-2unit-0unit
+          a.button.button-light.padding-2unit-4unit(v-on="click: loadComments") コメントを読み込む
         | コメントの読み込みには時間がかかることがあります。
 
       loading-circle(v-if="loading")
-      table(v-if="loaded")
-        tr(v-repeat="comments" v-component="comment")
+
+      ul.comments(v-if="loaded")
+        li.comment(v-repeat="comments" v-component="comment")
 
 </template>
 

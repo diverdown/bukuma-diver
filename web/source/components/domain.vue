@@ -1,24 +1,26 @@
 <template lang="jade">
 header.main-header(v-class="fixed: fixedHeader")
-  .bottom-align-flexbox.padding-1unit-2unit
-    h1.main-title
+  .center-flexbox.main-title-box
+    h1.main-title.center-flexbox
       img.favicon(v-attr="src: site.domain | favicon")
-      | {{site.name}}
+      span {{site.name}}
     i.fa.fa-heart.large.margin-0unit-1unit.clickable(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 
-    .bookmark-count {{totalBookmarkCount}}users
+    .bookmark-count
+      .number {{totalBookmarkCount}}
+      | users
 
   nav
     ul.header-states
       li.header-state(v-class="active: params.sort == 'count'")
-        a.padding-1unit(v-on="click: $transit(site.toPath({sort: 'count'}))") 人気順
+        a.padding-2unit(v-on="click: $transit(site.toPath({sort: 'count'}))") 人気順
       li.header-state(v-class="active: params.sort == 'recent'")
-        a.padding-1unit(v-on="click: $transit(site.toPath({sort: 'recent'}))") 新着順
+        a.padding-2unit(v-on="click: $transit(site.toPath({sort: 'recent'}))") 新着順
       li.header-state(v-class="active: params.sort == 'eid'")
-        a.padding-1unit(v-on="click: $transit(site.toPath({sort: 'eid'}))") すべて
+        a.padding-2unit(v-on="click: $transit(site.toPath({sort: 'eid'}))") すべて
 loading-circle(v-if="loading")
-ul.padding-2unit(v-if="!loading")
-  li.margin-2unit(v-repeat="pages" v-component="page")
+ul.padding-6unit(v-if="!loading")
+  li.margin-4unit(v-repeat="pages" v-component="page")
 </template>
 
 <script lang="coffee">

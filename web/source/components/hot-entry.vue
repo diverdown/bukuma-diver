@@ -1,18 +1,20 @@
 <template lang="jade">
 header.main-header.fixed.hotentry-header
-  h1.main-title.padding-1unit-2unit ホットエントリー
+  .center-flexbox.main-title-box
+    h1.main-title ホットエントリー
   ul.header-states
     li.header-state(v-repeat="categories" v-class="active: active")
-      a.header-category.padding-1unit(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'" v-on="click: moveToCategory"){{name}}
+      a.header-category.padding-2unit(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'" v-on="click: moveToCategory"){{name}}
 
-loading-circle(v-if="loading")
-ul.hotentries(v-if="!loading")
-  li.padding-1unit-2unit.hotentry(v-repeat="categories" v-attr="id: name")
-    h2.margin-2unit-0unit.hotentry-category(v-style="border-bottom-color: color") {{name}}
-    ul
-      li.margin-2unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
-    .center.padding-3unit-0unit
-      a.button.button-default.padding-1unit-2unit(v-on="click: showMorePages") もっと見る...
+.main-body
+  loading-circle(v-if="loading")
+  ul.hotentries(v-if="!loading")
+    li.padding-2unit-0unit.hotentry(v-repeat="categories" v-attr="id: name")
+      h2.margin-4unit-0unit.hotentry-category(v-style="border-bottom-color: color") {{name}}
+      ul
+        li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
+      .center.padding-6unit-0unit
+        a.button.button-default.padding-2unit-4unit(v-on="click: showMorePages") もっと見る...
 </template>
 
 <script lang="coffee">

@@ -1,5 +1,14 @@
+$bookmark-color: #15A4FA;
 .bookmark-count {
-  background-color: rgb(254, 198, 199);
+  border: 1px solid $bookmark-color;
   text-align: center;
-  color: red;
+  font-size: 10px;
+  color: $bookmark-color;
+  min-width: 55px;
+  @include unit-padding(2);
+  @include unit-margin(0 2 0 0);
+  @include border-radius(50px);
+  > .number {
+    font-size: 14px;
+  }
 }

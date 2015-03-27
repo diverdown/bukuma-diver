@@ -1,3 +1,5 @@
+$main-side-padding-unit: 6;
+
 .main-header {
   @include box-shadow(0px 1px 1px 0px $shadow-color);
   background-color: white;
@@ -8,14 +10,18 @@
   }
 }
 
+.main-title-box {
+  height: $title-height;
+  @include unit-padding(0 $main-side-padding-unit);
+}
+
 .main-title {
-  font-weight: normal;
   color: #555;
   @include flex(1);
 
   > .favicon {
-    width: 0.8em;
-    height: 0.8em;
+    width: 1em;
+    height: 1em;
   }
 }
 
@@ -29,7 +35,7 @@
   @include flex(1);
   text-align: center;
   cursor: pointer;
-  font-size: 0.8em;
+  font-size: 12px;
   +li { border-left: 1px solid $border-color; }
   &:hover:not(.active) {
     background-color: #fafafa;
@@ -51,4 +57,8 @@
 
 .header-category {
   border-bottom: 3px solid white;
+}
+
+.main-body {
+  @include unit-padding(2 $main-side-padding-unit);
 }

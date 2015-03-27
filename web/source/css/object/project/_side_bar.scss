@@ -1,45 +1,86 @@
 #side-bar {
   h2 {
-    color: #787D88;
-    font-size: 14px;
+    color: white;
+    font-size: 12px;
+    @include unit-padding(0 2 1);
   }
 }
 
-#title {
-  padding: 0.5em;
-  @include background-image(radial-gradient(#1D2E47, #142744));
-
-  h1 {
-    font-size: 1.2em;
+.side-bar-list {
+  font-size: 12px;
+  &:hover {
+    background-color: $side-bar-hover-bg-color;
+    > a {
+      color: $side-bar-hover-color;
+      background-color: $side-bar-hover-bg-color;
+    }
   }
+  > a {
+    @include unit-padding(3);
+    color: $side-bar-color;
+  }
+  border-bottom: 1px solid $side-bar-border-color;
+  &:nth-child(1) {
+    border-top: 1px solid $side-bar-border-color;
+  }
+}
+
+$title-size: 18px;
+#side-bar-top {
+  height: $title-height;
+  @include unit-padding(0 2);
+  font-size: 18px;
+  background-color: $title-bg-color;
   a {
     color: white;
   }
 }
 
-#hotentry {
-  .fa-fire { color: #fe8687; }
+#logo {
+  width: $title-size + 8;
+  @include unit-margin(0 1 0 0);
 }
 
+#hotentry {
+  color: #DBDBDB;
+  @include unit-margin(3 0);
+  &:hover { color: white; }
+}
+
+$placeholder-color: #808894;
 #search-box {
   position: relative;
   input {
     width: 100%;
-    padding: 4px;
+    border: 1px solid $placeholder-color;
+    @include unit-padding(2 3);
+    background-color: $side-bar-bg-color;
+    @include border-radius(4px);
+    font-size: 14px;
+    color: white;
+    @include input-placeholder {
+      color: $placeholder-color;
+    }
   }
   .fa-search {
+    color: $placeholder-color;
     position: absolute;
-    right: 3px;
-    top: 5px;
-    color: #999;
+    right: 8px;
+    top: 9px;
     cursor: pointer;
   }
 }
 
 .site {
-  display: block;
-  padding: 4px 0;
   &:hover {
     background-color: #fafafa;
   }
+
+  .favicon {
+    @include unit-margin(0 2 0 0);
+  }
+}
+
+.site-title {
+  @include flex(1);
 }

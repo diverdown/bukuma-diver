@@ -1,28 +1,28 @@
 <template lang="jade">
-header#title
-  h1.container
+header#side-bar-top.center-flexbox
+  h1#title
     a(v-on="click: $transit('/')") ブクマダイバー
 
-#nav-middle.padding-2unit-1unit
-  a#hotentry(v-on="click: $transit('/')")
-    i.fa.fa-fire.favicon
+#side-bar-middle.padding-4unit-2unit
+  a#hotentry.center-flexbox(v-on="click: $transit('/')")
+    img.favicon(src="/image/hatenabookmark-logo.png" alt="はてなブックマーク")
     | ホットエントリー
-  #search-box.margin-1unit-0unit
+  #search-box
     input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: $transit('/pages/?q='+query) | key enter")
     i.fa.fa-search(v-on="click: $transit('/pages/?q='+query)")
 
-.padding-1unit
-  my-favorites.margin-3unit-0unit
+.padding-4unit-0unit
+  my-favorites.margin-6unit-0unit
 
-  .margin-3unit-0unit
+  .margin-6unit-0unit
     h2 おすすめサイト
     ul
-      li(v-repeat="site: recommends | orderBy 'count' -1", v-component="_site")
+      li.side-bar-list(v-repeat="site: recommends | orderBy 'count' -1", v-component="_site")
 
-  .margin-3unit-0unit
+  .margin-6unit-0unit
     h2 人気サイト
     ul
-      li(v-repeat="site: popularSites", v-component="_site")
+      li.side-bar-list(v-repeat="site: popularSites", v-component="_site")
     a(v-on="click: addMorePopularSites" v-if="doesHaveMorePopularSites") もっと見る...
 </template>
 

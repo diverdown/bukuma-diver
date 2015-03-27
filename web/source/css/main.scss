@@ -1,12 +1,28 @@
 @import 'compass';
-$default-font-color: #1A1A1D;
+$default-font-color: #4E5F70;
 $border-color: #eee;
 $shadow-color: #ddd;
 
-$bg-color: #d5e0f1;
+$bg-color: #E8F0FA;
+
+$side-bar-bg-color: #333C4E;
+$side-bar-color: #9CABC4;
+$side-bar-border-color: #3B465A;
+$title-bg-color: #15A4FA;
+$side-bar-middle-bg-color: #3E4960;
+
+$side-bar-hover-color: #FFFFFF;
+$side-bar-hover-bg-color: #28303E;
 
 $link-color: #4b75b9;
-$visited-link-color: #B492CC;
+$visited-link-color: #9361B6;
+
+$unit: 4px;
+$title-height: 16 * $unit;
+
+$footer-bg-color: #293141;
+$footer-color: #90969E;
+$footer-blight-color: #DADADA;
 
 @import 'susy';
 
@@ -20,15 +36,16 @@ $susy: (
 );
 @include border-box-sizing;
 
-@import 'layout/_side_bar';
-@import 'layout/_footer';
-@import 'layout/_main';
-@import 'layout/_modal';
-
 @import 'object/utility/_margin';
 @import 'object/utility/_text';
 @import 'object/utility/_layout';
 @import 'object/utility/_draggable';
+@import 'object/utility/_font';
+
+@import 'layout/_side_bar';
+@import 'layout/_footer';
+@import 'layout/_main';
+@import 'layout/_modal';
 
 @import 'object/component/_card';
 @import 'object/component/_button';

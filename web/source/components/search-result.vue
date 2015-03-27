@@ -1,21 +1,21 @@
 <template lang="jade">
 header.main-header.fixed
-  .container
-    h1.padding-1unit-2unit.left 「{{query.query}}」の検索結果
-    i.right.fa.fa-heart(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
+  .center-flexbox.main-title-box
+    h1.main-title 「{{query.query}}」の検索結果
+    i.fa.fa-heart.large.clickable(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
 
   nav
     ul.header-states
       li.header-state(v-class="active: popular")
-        a.padding-1unit(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
+        a.padding-2unit(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
       li.header-state(v-class="active: new")
-        a.padding-1unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
+        a.padding-2unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
       li.header-state(v-class="active: all")
-        a.padding-1unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
+        a.padding-2unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
 
 loading-circle(v-if="loading")
-ul.padding-2unit(v-if="!loading")
-  li.margin-2unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
+ul.padding-6unit(v-if="!loading")
+  li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
 a(v-on="click: searchMore" v-if="!loading") もっと見る...
 
 </template>

@@ -1,4 +1,18 @@
-$unit: 8px;
+@mixin unit-padding($args) {
+  $list: ();
+  @each $v in $args {
+    $list: append($list, $v * $unit);
+  }
+  padding: $list;
+}
+
+@mixin unit-margin($args) {
+  $list: ();
+  @each $v in $args {
+    $list: append($list, $v * $unit);
+  }
+  margin: $list;
+}
 
 @for $i from 0 through 10 {
   @for $j from 0 through 10 {

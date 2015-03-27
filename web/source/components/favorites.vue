@@ -1,7 +1,9 @@
 <template lang="jade">
-h2 ウォッチリスト
+h2
+  i.fa.fa-heart
+  = ' ウォッチリスト'
 ul
-  li.draggable(v-repeat="favorite: favorites" v-component="_favorite" draggable="true"
+  li.side-bar-list.draggable(v-repeat="favorite: favorites" v-component="_favorite" draggable="true"
     v-on="dragstart: onDragStart, dragenter: onDragEnter, dragover: onDragOver, drop: onDrop, dragend: onDragEnd")
 </template>
 

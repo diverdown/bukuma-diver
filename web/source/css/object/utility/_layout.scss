@@ -28,7 +28,7 @@
 .top-align-flexbox {
   @include flexbox((
                       display: box,
-                      box-orient: verinline-axis,
+                      box-orient: inline-axis,
                       box-align: start
                     ), $version: 1);
   @include flexbox((
@@ -46,7 +46,7 @@
 .bottom-align-flexbox {
   @include flexbox((
                       display: box,
-                      box-orient: verinline-axis,
+                      box-orient: inline-axis,
                       box-align: end
                     ), $version: 1);
   @include flexbox((
@@ -58,5 +58,23 @@
                       display: flex,
                       flex-direction: row,
                       align-items: flex-end
+                    ));
+}
+
+.center-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: vertical,
+                      box-pack: center
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row,
+                      flext-align: center,
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row,
+                      align-items: center
                     ));
 }

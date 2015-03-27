@@ -1,26 +1,28 @@
 #footer {
-  color: white;
-  @include background-image(radial-gradient(#1D2E47, #142744));
-
-  font-size: 0.9em;
-  margin-top: 60px;
-  padding-top: 40px;
   @include container;
+  @include unit-padding(10 3 0);
+  @include unit-margin(15 0 0 0);
+  background-color: $footer-bg-color;
+  font-size: 0.9em;
+  color: $footer-color;
+
   h3 {
-    padding-bottom: 4px;
-    margin-bottom: 4px;
-    color: #8BA7D5;
+    @include unit-margin(0 0 1 0);
+    color: $footer-blight-color;
   }
   .footer-box {
     @include span(1 of 2);
-    padding: 0 10px;
+
   }
   #copyright {
-    margin-top: 40px;
+    @include unit-margin(10 0 0 0);
     text-align: center;
     @include span(1 of 1);
+
+    a { color: $footer-blight-color; }
   }
   a {
-    color: white;
+    color: $footer-color;
+    &:hover { color: $footer-blight-color; }
   }
 }

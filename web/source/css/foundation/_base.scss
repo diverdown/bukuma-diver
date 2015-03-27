@@ -10,16 +10,16 @@ body {
   }
 }
 
-h1 { font-size: 1.5em; }
+h1 { font-size: 24px; }
 
-h2 { font-size: 1.2em; }
+h2 { font-size: 20px; }
 
-h3 { font-size: 1em; }
+h3 { font-size: 12px; }
 
 h1, h2, h3 { font-weight: normal; }
 
 a {
   cursor: pointer;
   text-decoration: none;
-  color: black;
+  color: $default-font-color;
 }
