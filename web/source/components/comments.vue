@@ -8,9 +8,10 @@
 
   loading-circle(v-if="loading")
 
-  ul.comments(v-if="loaded")
+  ul.comments(v-if="!isEmpty")
     li.comment(v-repeat="comments" v-component="comment" v-with="eid: eid")
-
+  .comment-empty.center-flexbox(v-if="isEmpty")
+    .message まだブックマークコメントがありません
 </template>
 
 <script lang="coffee">
@@ -31,6 +32,7 @@ module.exports =
     pending: -> @state == PENDING
     loading: -> @state == LOADING
     loaded: -> @state == LOADED
+    isEmpty: -> @comments.length == 0
   methods:
     fetch: ->
       @state = LOADING
