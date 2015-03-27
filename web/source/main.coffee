@@ -27,6 +27,9 @@ window.onload = ->
     "http://www.google.com/s2/favicons?domain=#{encodeURIComponent domain}"
   Vue.filter 'hatebuEntry', (url)->
     "http://b.hatena.ne.jp/entry/#{url.replace /^[a-z]+:\/\//, ''}"
+  Vue.filter 'toDate', (timestamp)->
+    fragments = timestamp.split(/[/\s]/)
+    "#{fragments[0]}年#{fragments[1]}月#{fragments[2]}日"
 
   Vue.prototype.$transit = (path)->
     return if path == window.location.pathname + window.location.search

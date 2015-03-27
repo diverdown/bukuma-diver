@@ -5,7 +5,7 @@
 .comment-body
   .container
     a.comment-user.left(href="http://b.hatena.ne.jp/{{user}}" target="_blank") {{user}}
-    a.comment-timestamp.right(href="http://b.hatena.ne.jp/entry/{{eid}}/comment/{{user}}" target="_blank") {{timestamp}}
+    a.comment-timestamp.right(href="http://b.hatena.ne.jp/entry/{{eid}}/comment/{{user}}" target="_blank") {{timestamp | toDate}}
   .comment-content {{comment}}
 </template>
 
