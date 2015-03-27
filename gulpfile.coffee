@@ -75,6 +75,10 @@ gulp.task 'extension', ->
     .src "#{EXTENSION_PATH}/source/*.json"
     .pipe gulp.dest "#{EXTENSION_PATH}/build/"
 
+  gulp
+    .src "#{EXTENSION_PATH}/source/image/*"
+    .pipe gulp.dest "#{EXTENSION_PATH}/build/image/"
+
   browserify
     entries: [ "#{EXTENSION_PATH}/source/background.coffee"]
   .transform coffeeify
@@ -92,7 +96,7 @@ gulp.task 'watch', ['connect', 'build'], ->
   gulp.watch "#{WEB_PATH}/source/image/**/*.{png,jpeg,gif}", ['image']
   gulp.watch "#{WEB_PATH}/source/font/**/*.{eot,woff,ttf,svg}", ['font']
   gulp.watch 'bower_components/**/*.js', ['js']
-  gulp.watch "#{EXTENSION_PATH}/**/*.{coffee,json}", ['extension']
+  gulp.watch "#{EXTENSION_PATH}/**/*.{coffee,json,png,jpeg,gif}", ['extension']
 
 gulp.task 'build', ['html', 'js', 'css', 'image', 'font', 'extension']
 gulp.task 'default', ['clean', 'build']

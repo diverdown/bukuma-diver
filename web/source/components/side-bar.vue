@@ -1,6 +1,7 @@
 <template lang="jade">
 header#side-bar-top.center-flexbox
-  h1#title
+  h1#title.center-flexbox
+    i#logo.icon-bukuma-diver
     a(v-on="click: $transit('/')") ブクマダイバー
 
 #side-bar-middle.padding-4unit-2unit

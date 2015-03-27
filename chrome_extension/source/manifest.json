@@ -3,12 +3,20 @@
   "name": "ブクマダイバー Google Chrome 拡張",
   "description": "はてなブックマークをより身近に。ブクマダイバーをより便利に使える拡張です。",
   "version": "1.0",
+  "icons": {
+    "16": "image/icon16.png",
+    "48": "image/icon48.png",
+    "128": "image/icon128.png"
+  },
   "background": {
     "scripts": ["background.js"],
     "persistent": false
   },
   "browser_action": {
-    "default_title": "ブクマダイバーで見る！"
+    "default_title": "ブクマダイバーで見る！",
+    "default_icon": {
+      "38": "image/icon38.png"
+    }
   },
   "omnibox": {
     "keyword": "b"

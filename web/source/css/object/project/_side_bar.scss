@@ -37,8 +37,9 @@ $title-size: 18px;
 }
 
 #logo {
-  width: $title-size + 8;
-  @include unit-margin(0 1 0 0);
+  color: white;
+  font-size: 32px;
+  @include unit-margin(0 2 0 0);
 }
 
 #hotentry {
