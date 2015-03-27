@@ -21,7 +21,7 @@ gulp.task 'connect', ->
     middleware: (connect, opt)->
       [
         (req, res, next)->
-          req.url = '/' unless req.url.match(/^\/(?:css|js|image|stub)\//)
+          req.url = '/' unless req.url.match(/^\/(?:css|js|image|font|stub)\//)
           next()
       ]
 gulp.task 'clean', (cb)->
@@ -39,6 +39,10 @@ gulp.task 'html', ->
 gulp.task 'image', ->
   gulp.src "#{WEB_PATH}/source/image/*"
   .pipe gulp.dest "#{WEB_PATH}/build/image/"
+
+gulp.task 'font', ->
+  gulp.src "#{WEB_PATH}/source/font/*"
+  .pipe gulp.dest "#{WEB_PATH}/build/font/"
 
 gulp.task 'js', ->
   browserify
@@ -86,8 +90,9 @@ gulp.task 'watch', ['connect', 'build'], ->
   gulp.watch "#{WEB_PATH}/source/**/*.jade", ['html', 'js']
   gulp.watch "#{WEB_PATH}/source/css/**/*.{s,}css", ['css']
   gulp.watch "#{WEB_PATH}/source/image/**/*.{png,jpeg,gif}", ['image']
+  gulp.watch "#{WEB_PATH}/source/font/**/*.{eot,woff,ttf,svg}", ['font']
   gulp.watch 'bower_components/**/*.js', ['js']
   gulp.watch "#{EXTENSION_PATH}/**/*.{coffee,json}", ['extension']
 
-gulp.task 'build', ['html', 'js', 'css', 'image', 'extension']
+gulp.task 'build', ['html', 'js', 'css', 'image', 'font', 'extension']
 gulp.task 'default', ['clean', 'build']
