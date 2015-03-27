@@ -13,7 +13,7 @@
       h3.page-title
         a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)")
           | {{title | truncate 100}}
-    div(v-component="comments" v-with="url: url")
+    div(v-component="comments" v-with="url: url, bookmark_count: bookmark_count")
 </template>
 
 <script lang="coffee">
