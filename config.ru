@@ -1,3 +1,10 @@
-require './api/app'
+require File.expand_path('../development-proxy.rb', __FILE__)
+require File.expand_path('../api/app.rb', __FILE__)
 
-run Sinatra::Application
+map '/api' do
+  run Sinatra::Application
+end
+
+map '/' do
+  run DevelopmentProxy
+end

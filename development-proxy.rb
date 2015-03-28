@@ -8,7 +8,7 @@ class Rack::DevelopmentProxy
 
   def call(env)
     unless env['PATH_INFO'].match /\A\/(?:css|js|image|font)\//
-      env['REQUEST_URI'].sub(env['REQUEST_PATH'][1..-1], '')
+      env['REQUEST_URI'].sub(env['PATH_INFO'][1..-1], '') if env['REQUEST_URI']
       env['REQUEST_PATH'] = '/index.html'
       env['PATH_INFO'] = '/index.html'
     end
@@ -16,7 +16,9 @@ class Rack::DevelopmentProxy
   end
 end
 
-use Rack::LiveReload
-use Rack::DevelopmentProxy
+class DevelopmentProxy < Sinatra::Base
+  use Rack::LiveReload if development?
+  use Rack::DevelopmentProxy
 
-set :public_folder, File.dirname(__FILE__) + '/web/build'
+  set :public_folder, File.dirname(__FILE__) + '/web/build'
+end

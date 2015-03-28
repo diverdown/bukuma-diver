@@ -28,4 +28,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-remote'
   gem 'fakeredis'
+  gem 'rspec'
+  gem 'capybara'
+  gem 'selenium-webdriver'
 end
