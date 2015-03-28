@@ -33,6 +33,7 @@ window.onload = ->
 
   Vue.prototype.$transit = (path)->
     return if path == window.location.pathname + window.location.search
+    window.scrollTo(0, 0)
     page(path)
 
   Vue.prototype.$pushMainContent = (callback)->
