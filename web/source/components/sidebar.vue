@@ -1,10 +1,10 @@
 <template lang="jade">
-header#side-bar-top.center-flexbox
+header#sidebar-top.center-flexbox
   h1#title.center-flexbox
     i#logo.icon-bukuma-diver
     a(v-on="click: $transit('/')") ブクマダイバー
 
-#side-bar-middle.padding-4unit-2unit
+#sidebar-middle.padding-4unit-2unit
   a#hotentry.center-flexbox(v-on="click: $transit('/')")
     img.favicon(src="/image/hatenabookmark-logo.png" alt="はてなブックマーク")
     | ホットエントリー
@@ -18,12 +18,12 @@ header#side-bar-top.center-flexbox
   .margin-6unit-0unit
     h2 おすすめサイト
     ul
-      li.side-bar-list(v-repeat="site: recommends | orderBy 'count' -1", v-component="_site")
+      li.sidebar-list(v-repeat="site: recommends | orderBy 'count' -1", v-component="_site")
 
   .margin-6unit-0unit
     h2 人気サイト
     ul
-      li.side-bar-list(v-repeat="site: popularSites", v-component="_site")
+      li.sidebar-list(v-repeat="site: popularSites", v-component="_site")
     a(v-on="click: addMorePopularSites" v-if="doesHaveMorePopularSites") もっと見る...
 </template>
 

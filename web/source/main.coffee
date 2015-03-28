@@ -10,7 +10,7 @@ BukumaDiver = require './bukuma_diver'
 stickifier = require 'stickifier'
 window.onload = ->
   window.addEventListener 'scroll', stickifier(
-    target: -> document.querySelector('#side-bar'),
+    target: -> document.querySelector('#sidebar'),
     lowerBound: 0,
     bottomBarrier: -> document.querySelector('#footer')
     wait: 100
@@ -59,7 +59,7 @@ window.onload = ->
       toggleModal: ->
         @isModalOpen = !@isModalOpen
     components: {
-      'side-bar': require './components/side-bar.vue'
+      'sidebar': require './components/sidebar.vue'
       'hot-entry': require './components/hot-entry.vue'
       'page': require './components/page.vue'
       'comments': require './components/comments.vue'

@@ -5,7 +5,7 @@ $main-side-padding-unit: 6;
   background-color: white;
   &.fixed {
     top: 0;
-    width: calc(100% - #{$side-bar-width});
+    width: calc(100% - #{$sidebar-width});
     z-index: 1;
   }
 }

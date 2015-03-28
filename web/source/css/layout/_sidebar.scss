@@ -1,0 +1,13 @@
+#sidebar-wrapper {
+  width: $sidebar-width;
+}
+#sidebar {
+  width: $sidebar-width;
+  min-height: 400px;
+  background-color: $sidebar-bg-color;
+  color: $sidebar-color;
+}
+
+#sidebar-middle {
+  background-color: $sidebar-middle-bg-color;
+}

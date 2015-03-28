@@ -1,4 +1,4 @@
-#side-bar {
+#sidebar {
   h2 {
     color: white;
     font-size: 12px;
@@ -6,27 +6,27 @@
   }
 }
 
-.side-bar-list {
+.sidebar-list {
   font-size: 12px;
   &:hover {
-    background-color: $side-bar-hover-bg-color;
+    background-color: $sidebar-hover-bg-color;
     > a {
-      color: $side-bar-hover-color;
-      background-color: $side-bar-hover-bg-color;
+      color: $sidebar-hover-color;
+      background-color: $sidebar-hover-bg-color;
     }
   }
   > a {
     @include unit-padding(3);
-    color: $side-bar-color;
+    color: $sidebar-color;
   }
-  border-bottom: 1px solid $side-bar-border-color;
+  border-bottom: 1px solid $sidebar-border-color;
   &:nth-child(1) {
-    border-top: 1px solid $side-bar-border-color;
+    border-top: 1px solid $sidebar-border-color;
   }
 }
 
 $title-size: 18px;
-#side-bar-top {
+#sidebar-top {
   height: $title-height;
   @include unit-padding(0 2);
   font-size: 18px;
@@ -55,7 +55,7 @@ $placeholder-color: #808894;
     width: 100%;
     border: 1px solid $placeholder-color;
     @include unit-padding(2 3);
-    background-color: $side-bar-bg-color;
+    background-color: $sidebar-bg-color;
     @include border-radius(4px);
     font-size: 14px;
     color: white;
