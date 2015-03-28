@@ -6,7 +6,7 @@ concat = require 'gulp-concat'
 source = require 'vinyl-source-stream'
 compass = require 'gulp-compass'
 rimraf = require 'rimraf'
-connect = require 'gulp-connect'
+livereload = require 'gulp-livereload'
 coffeeify = require 'coffeeify'
 envify = require 'envify/custom'
 require('dotenv').config(path: ".env.#{process.env.NODE_ENV || 'development'}")
@@ -14,35 +14,26 @@ require('dotenv').config(path: ".env.#{process.env.NODE_ENV || 'development'}")
 WEB_PATH = './web'
 EXTENSION_PATH = './chrome_extension'
 
-gulp.task 'connect', ->
-  connect.server
-    root: "#{WEB_PATH}/build"
-    livereload: true
-    middleware: (connect, opt)->
-      [
-        (req, res, next)->
-          req.url = '/' unless req.url.match(/^\/(?:css|js|image|font|stub)\//)
-          next()
-      ]
 gulp.task 'clean', (cb)->
   rimraf "#{WEB_PATH}/build", cb
   rimraf "#{EXTENSION_PATH}/build", cb
 
 gulp.task 'html', ->
-  gulp
-    .src "#{WEB_PATH}/source/[^_]*.jade"
+  gulp.src "#{WEB_PATH}/source/[^_]*.jade"
     .pipe plumber()
     .pipe jade()
-    .pipe connect.reload()
     .pipe gulp.dest "#{WEB_PATH}/build/"
+    .pipe livereload()
 
 gulp.task 'image', ->
   gulp.src "#{WEB_PATH}/source/image/*"
-  .pipe gulp.dest "#{WEB_PATH}/build/image/"
+    .pipe gulp.dest "#{WEB_PATH}/build/image/"
+    .pipe livereload()
 
 gulp.task 'font', ->
   gulp.src "#{WEB_PATH}/source/font/*"
-  .pipe gulp.dest "#{WEB_PATH}/build/font/"
+    .pipe gulp.dest "#{WEB_PATH}/build/font/"
+    .pipe livereload()
 
 gulp.task 'js', ->
   browserify
@@ -55,9 +46,9 @@ gulp.task 'js', ->
   .transform envify()
   .bundle()
   .pipe plumber()
-  .pipe connect.reload()
   .pipe source 'main.js'
   .pipe gulp.dest "#{WEB_PATH}/build/js/"
+  .pipe livereload()
 
 gulp.task 'css', ->
   gulp
@@ -66,9 +57,9 @@ gulp.task 'css', ->
       console.log error.message
       @emit 'end'
     )
-    .pipe connect.reload()
     .pipe compass(css: "#{WEB_PATH}/build/css", sass: "#{WEB_PATH}/source/css", require: ['susy'])
     .pipe gulp.dest "#{WEB_PATH}/build/css/"
+    .pipe livereload()
 
 gulp.task 'extension', ->
   gulp
@@ -88,7 +79,8 @@ gulp.task 'extension', ->
   .pipe source 'background.js'
   .pipe gulp.dest "#{EXTENSION_PATH}/build/"
 
-gulp.task 'watch', ['connect', 'build'], ->
+gulp.task 'watch', ['build'], ->
+  livereload.listen()
   gulp.watch "#{WEB_PATH}/source/**/*.{js,coffee}", ['js']
   gulp.watch "#{WEB_PATH}/source/components/**/*.vue", ['js']
   gulp.watch "#{WEB_PATH}/source/**/*.jade", ['html', 'js']

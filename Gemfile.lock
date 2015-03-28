@@ -46,6 +46,8 @@ GEM
       slop (~> 3.0)
     public_suffix (1.5.0)
     rack (1.6.0)
+    rack-livereload (0.3.15)
+      rack
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -91,6 +93,7 @@ DEPENDENCIES
   pry
   pry-remote
   public_suffix
+  rack-livereload
   redis
   sinatra
   sinatra-contrib
