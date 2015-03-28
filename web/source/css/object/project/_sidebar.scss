@@ -29,8 +29,9 @@ $title-size: 18px;
 #sidebar-top {
   height: $title-height;
   @include unit-padding(0 2);
-  font-size: 18px;
   background-color: $title-bg-color;
+  font-family: 'chogokubosogothic';
+  font-size: 18px;
   a {
     color: white;
   }
