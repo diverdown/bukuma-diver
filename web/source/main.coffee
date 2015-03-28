@@ -38,9 +38,8 @@ window.onload = ->
 
   Vue.prototype.$pushMainContent = (callback)->
     Vue.nextTick ->
-      unless height
-        main = document.querySelector('#main')
-        height = main.querySelector('.main-header').clientHeight
+      main = document.querySelector('#main')
+      height = main.querySelector('.main-header').clientHeight
       main.style.paddingTop = "#{height}px"
       callback() if callback
 

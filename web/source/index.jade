@@ -11,8 +11,9 @@ html
   body#app(v-class="modal-open: isModalOpen" v-on="keyup: closeModal | key esc")
     #modal(v-component="modal" v-show="isModalOpen" v-events="closeModal: closeModal")
 
-    .container
-      nav#side-bar(v-component="side-bar")
+    .top-align-flexbox
+      #side-bar-wrapper
+        nav#side-bar(v-component="side-bar")
       main#main(v-component="{{currentView}}" v-ref="main")
 
     #footer(v-html="footerContent")

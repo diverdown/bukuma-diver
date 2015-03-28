@@ -5,7 +5,7 @@ $main-side-padding-unit: 6;
   background-color: white;
   &.fixed {
     top: 0;
-    @include span(12 of 16 last);
+    width: calc(100% - #{$side-bar-width});
     z-index: 1;
   }
 }

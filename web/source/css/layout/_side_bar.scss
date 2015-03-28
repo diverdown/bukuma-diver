@@ -1,5 +1,8 @@
+#side-bar-wrapper {
+  width: $side-bar-width;
+}
 #side-bar {
-  @include span(4 of 16);
+  width: $side-bar-width;
   min-height: 400px;
   background-color: $side-bar-bg-color;
   color: $side-bar-color;

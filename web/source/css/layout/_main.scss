@@ -1,4 +1,4 @@
 #main {
-  @include span(12 of 16 last);
+  @include flex(1);
   min-height: 500px;
 }
