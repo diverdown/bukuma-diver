@@ -4,13 +4,13 @@ header.main-header.fixed.hotentry-header
     h1.main-title ホットエントリー
   ul.header-states
     li.header-state(v-repeat="categories" v-class="active: active")
-      a.header-category.padding-2unit(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'" v-on="click: moveToCategory"){{name}}
+      a.header-category(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'" v-on="click: moveToCategory"){{name}}
 
 .main-body
   loading-circle(v-if="loading")
   ul.hotentries(v-if="!loading")
-    li.padding-2unit-0unit.hotentry(v-repeat="categories" v-attr="id: name")
-      h2.margin-4unit-0unit.hotentry-category(v-style="border-bottom-color: color") {{name}}
+    li.hotentry.margin-5unit(v-repeat="categories" v-attr="id: name")
+      h2.hotentry-category(v-style="border-bottom-color: color") {{name}}
       ul
         li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
       .center.padding-6unit-0unit

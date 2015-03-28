@@ -57,8 +57,9 @@ $main-side-padding-unit: 6;
 
 .header-category {
   border-bottom: 3px solid white;
+  @include unit-padding(2);
 }
 
 .main-body {
-  @include unit-padding(2 $main-side-padding-unit);
+  @include unit-padding(0 $main-side-padding-unit);
 }
