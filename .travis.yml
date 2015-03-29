@@ -6,7 +6,7 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 install:
   - bundle install
-  - npm install -g bower gulp coffee
+  - npm install -g bower gulp coffee-script
   - npm install
   - bower install
   - gulp build
