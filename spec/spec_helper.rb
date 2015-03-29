@@ -5,9 +5,12 @@ require File.expand_path('../../api/app.rb', __FILE__)
 require 'capybara/rspec'
 
 ENV['RACK_ENV'] = 'test'
-Capybara.register_driver :selenium do |app|
+
+Capybara.register_driver :selenium_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
+
+Capybara.javascript_driver = ENV['TRAVIS'] ? :selenium : :selenium_chrome
 
 Capybara.app = Rack::Builder.new do
   map '/api' do
