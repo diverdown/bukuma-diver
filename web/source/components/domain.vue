@@ -43,9 +43,5 @@ module.exports =
         @loading = false
         @site.name = name
         @$pushMainContent() if @fixedHeader
-    onDomainChange: ->
-      @search(@params)
     toggleFavorite: -> @site.toggleFavorite()
-  created: ->
-    @$watch 'params.domain', @onDomainChange, true
 </script>

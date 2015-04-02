@@ -66,6 +66,7 @@ window.onload = ->
     }
     attached: ->
       BukumaDiver.footer (err, @footerContent)=>
+
   app.$on 'openModal', (domain)->
     @isModalOpen = true
     @$broadcast 'updateModal', domain

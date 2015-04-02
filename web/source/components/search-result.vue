@@ -43,6 +43,4 @@ module.exports =
       BukumaDiver.search _.merge({of: @pages.length}, @params), (err, res)=>
         @pages = @pages.concat(res)
     toggleFavorite: -> @query.toggleFavorite()
-  created: ->
-    @$watch 'params.q', @search, true
 </script>

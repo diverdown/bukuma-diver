@@ -1,7 +1,7 @@
 <template lang="jade">
 #overlay(v-on="click: closeModal, scroll: propagateScroll")
   #modal-panel(v-on="click: doNothing")
-    div(v-component="domain" v-with="params: modalParams, fixedHeader: false" wait-for="updated")
+    div(v-component="domain" v-with="fixedHeader: false" v-ref="domain" wait-for="updated")
 </template>
 
 <script lang="coffee">
@@ -20,6 +20,6 @@ module.exports =
       window.dispatchEvent(@scrollEvent)
   created: ->
     @$on 'updateModal', (domain)->
-      @modalParams = {domain: domain, name: '', sort: 'count'}
+      @$.domain.search(domain: domain, name: '', sort: 'count')
       @$emit 'updated'
 </script>
