@@ -101,9 +101,9 @@ end
 get '/hotentries' do
   cache do
     results = []
-    Hatena::Bookmark::Category.all.each_with_index.map do |(id, name), i|
+    Hatena::Bookmark::Category.all.each_with_index.map do |c, i|
       Thread.new do
-        results[i] = { name: name, pages: client.hotentry(id) }
+        results[i] = { name: c.name, pages: client.hotentry(c) }
       end
     end.each(&:join)
     Oj.dump results

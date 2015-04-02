@@ -27,7 +27,7 @@ module Hatena
     end
 
     def hotentry(category = nil)
-      path, params = Category.to_query category
+      path, params = category.to_query
       items "/hotentry#{path}", params
     end
 

@@ -1,8 +1,8 @@
 module Hatena
   class Bookmark
-    module Category
+    class Category
       CATEGORIES = {
-        general: '一般',
+        all: '総合',
         social: '世の中',
         economics: '政治と経済',
         life: '暮らし',
@@ -13,16 +13,23 @@ module Hatena
         game: 'アニメとゲーム',
       }
 
-      def self.all
-        CATEGORIES
+      attr_accessor :id, :name
+
+      def initialize(id:, name:)
+        @id = id
+        @name = name
       end
 
-      def self.to_query(category)
-        case category
-        when nil
+      def self.all
+        CATEGORIES.map {|id,name| new(id: id, name: name) }
+      end
+
+      def to_query
+        case id
+        when :all
           ['', { mode: 'rss' }]
         when ->(c) { CATEGORIES[c] }
-          ["/#{category}.rss", nil]
+          ["/#{id}.rss", nil]
         else
           raise InvalidCategoryError.new "Valid categories are #{CATEGORIES.join(', ')}."
         end

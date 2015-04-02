@@ -19,7 +19,7 @@ header.main-header.fixed.hotentry-header
 
 <script lang="coffee">
 CATEGORY_COLORS =
-  '一般': '#008FDE'
+  '総合': '#008FDE'
   '世の中': '#A88357'
   '政治と経済': '#A88357'
   '暮らし': '#228C7D'
