@@ -39,7 +39,6 @@ module.exports =
       @state = LOADING
       BukumaDiver.comments(@url, (err, {@eid,@comments})=> @state = LOADED)
     wasSeen: ->
-      @unbindScroll() unless @$el
       {top, bottom} = @$el.getBoundingClientRect()
       0 < bottom and top < (window.innerHeight || document.documentElement.clientHeight)
     bindScroll: ->
@@ -59,7 +58,6 @@ module.exports =
         500
       )
       @bindScroll()
-  detached: ->
+  beforeDestroy: ->
     @unbindScroll()
-
 </script>
