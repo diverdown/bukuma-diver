@@ -1,7 +1,7 @@
 <template lang="jade">
 #overlay(v-on="click: closeModal, scroll: propagateScroll")
   #modal-panel(v-on="click: doNothing")
-    div(v-component="domain" v-with="fixedHeader: false" v-ref="domain" wait-for="updated")
+    div(v-component="domain" v-with="globalUpdate: false, fixedHeader: false" v-ref="domain" wait-for="updated")
 </template>
 
 <script lang="coffee">
