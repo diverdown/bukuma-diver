@@ -1,5 +1,5 @@
 <template lang="jade">
-a.site.draggable.center-flexbox(v-on="click: $transit(favorite.toPath()), mouseenter: isRemovable = true, mouseleave: isRemovable = false")
+a.site.draggable.center-flexbox(v-on="click: $transit(favorite.toPath({sort: 'recent', users: 3})), mouseenter: isRemovable = true, mouseleave: isRemovable = false")
   img.favicon(v-attr="src: favorite.domain | favicon" v-if="favorite.domain")
   i.fa.fa-search(v-if="!favorite.domain")
   .site-title(title="{{favorite.name}}") {{favorite.name}}
