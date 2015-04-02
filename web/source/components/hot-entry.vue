@@ -14,7 +14,7 @@ header.main-header.fixed.hotentry-header
       ul
         li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
       .center.padding-6unit-0unit
-        a.button.button-default.padding-2unit-4unit(v-on="click: showMorePages") もっと見る...
+        a.button.button-default.padding-2unit-4unit(v-on="click: showMorePages($event, $index)") もっと見る...
 </template>
 
 <script lang="coffee">
@@ -35,9 +35,9 @@ module.exports =
   data: ->
     { categories: [], loading: true, _headerHeight: null }
   methods:
-    showMorePages: (e)->
-      for pages, i in @_hiddenPages
-        @categories[i].pages = @categories[i].pages.concat(pages)
+    showMorePages: (e, index)->
+      category = @categories[index]
+      category.pages = category.pages.concat(@_hiddenPages[index])
       e.target.parentNode.removeChild(e.target)
     moveToCategory: (hashOrEvent)->
       hash =
