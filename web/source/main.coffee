@@ -18,11 +18,6 @@ window.onload = ->
 
   Vue.config.debug = true
 
-  Vue.filter 'truncate', (value, max)->
-    if value.length > max
-      value.substr(0, max) + "..."
-    else
-      value
   Vue.filter 'favicon', (domain)->
     "http://www.google.com/s2/favicons?domain=#{encodeURIComponent domain}"
   Vue.filter 'hatebuEntry', (url)->

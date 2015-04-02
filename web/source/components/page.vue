@@ -11,8 +11,7 @@
         .number {{bookmark_count}}
         | users
       h3.page-title
-        a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)")
-          | {{title | truncate 100}}
+        a(href="{{url}}" target="_blank" v-on="click: $dispatch('openSite', this)") {{title}}
     div(v-component="comments" v-with="url: url, bookmark_count: bookmark_count")
 </template>
 

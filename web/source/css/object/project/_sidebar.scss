@@ -85,4 +85,7 @@ $placeholder-color: #808894;
 
 .site-title {
   @include flex(1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
