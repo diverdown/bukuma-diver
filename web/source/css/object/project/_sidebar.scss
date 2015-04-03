@@ -81,6 +81,10 @@ $placeholder-color: #808894;
   .favicon {
     @include unit-margin(0 2 0 0);
   }
+
+  .fa {
+    font-size: 16px;
+  }
 }
 
 .site-title {
