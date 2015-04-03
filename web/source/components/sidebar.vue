@@ -13,12 +13,12 @@ header#sidebar-top.center-flexbox
     i.fa.fa-search(v-on="click: $transit('/pages/?q='+query)")
 
 .padding-4unit-0unit
-  my-favorites.margin-6unit-0unit
+  .margin-6unit-0unit(v-component="my-favorites" v-with="favorites: favorites")
 
   .margin-6unit-0unit
     h2 おすすめサイト
     ul
-      li.sidebar-list(v-repeat="site: recommends | orderBy 'count' -1", v-component="_site")
+      li.sidebar-list(v-repeat="site: filteredRecommends | orderBy 'count' -1", v-component="_site")
 
   .margin-6unit-0unit
     h2 人気サイト
@@ -28,6 +28,7 @@ header#sidebar-top.center-flexbox
 </template>
 
 <script lang="coffee">
+_ = require 'lodash'
 Site = require '../site'
 RecommendCollection = require '../recommend_collection'
 module.exports =
@@ -38,6 +39,9 @@ module.exports =
     recommends: []
     popularSites: []
     doesHaveMorePopularSites: true
+  computed:
+    filteredRecommends: ->
+      _.difference @recommends, @favorites
   methods:
     addMorePopularSites: ->
       Site.popular(
