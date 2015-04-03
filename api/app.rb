@@ -75,6 +75,8 @@ helpers do
         Nokogiri::HTML(conn.get.body).css('title').text
       rescue Faraday::ConnectionFailed
         site_title("www.#{domain}") unless domain.start_with? 'www.'
+      rescue
+        domain
       end
     end
   end
