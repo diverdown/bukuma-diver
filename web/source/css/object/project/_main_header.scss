@@ -18,7 +18,11 @@ $main-side-padding-unit: 6;
 .main-title {
   color: #555;
   @include flex(1);
-
+  > a {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   > .favicon {
     width: 1em;
     height: 1em;

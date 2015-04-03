@@ -3,7 +3,7 @@ header.main-header(v-class="fixed: fixedHeader")
   .center-flexbox.main-title-box
     h1.main-title.center-flexbox
       img.favicon(v-attr="src: site.domain | favicon")
-      span {{site.name}}
+      a(href="http://{{site.domain}}" target="_blank" title="{{site.name}}") {{site.name}}
     i.fa.fa-heart.large.margin-0unit-1unit.clickable(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
 
     .bookmark-count
