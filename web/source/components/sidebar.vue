@@ -12,7 +12,7 @@ header#sidebar-top.center-flexbox
     input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: $transit('/pages/?q='+query) | key enter")
     i.fa.fa-search(v-on="click: $transit('/pages/?q='+query)")
 
-.padding-4unit-0unit
+#sidebar-bottom
   .margin-6unit-0unit(v-component="my-favorites" v-with="favorites: favorites")
 
   .margin-6unit-0unit
@@ -20,38 +20,23 @@ header#sidebar-top.center-flexbox
     ul
       li.sidebar-list(v-repeat="site: filteredRecommends | orderBy 'count' -1", v-component="_site")
 
-  .margin-6unit-0unit
-    h2 人気サイト
-    ul
-      li.sidebar-list(v-repeat="site: popularSites", v-component="_site")
-    a(v-on="click: addMorePopularSites" v-if="doesHaveMorePopularSites") もっと見る...
+  .margin-6unit-0unit(v-component="popular-sites")
 </template>
 
 <script lang="coffee">
 _ = require 'lodash'
-Site = require '../site'
 RecommendCollection = require '../recommend_collection'
 module.exports =
   components:
     'my-favorites': require './favorites.vue'
+    'popular-sites': require './popular-sites.vue'
     _site: require './_site.vue'
   data: ->
     recommends: []
-    popularSites: []
-    doesHaveMorePopularSites: true
   computed:
     filteredRecommends: ->
       _.difference @recommends, @favorites
-  methods:
-    addMorePopularSites: ->
-      Site.popular(
-        offset: @popularSites.length
-        (err, sites)=>
-          @doesHaveMorePopularSites = sites.length == 10
-          @popularSites = @popularSites.concat(sites)
-      )
   created: ->
-    Site.popular(null, (err, @popularSites)=>)
     RecommendCollection.restore (err, @recommends)=>
       @$watch(
         'recommends'
