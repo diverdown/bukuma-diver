@@ -1,10 +1,11 @@
 <template lang="jade">
 .comment-box
-  .pending.center(v-if="pending")
-    | ブックマーク数が多いため読み込みを手動にしました。
-    .center.margin-2unit-0unit
-      a.button.button-light.padding-2unit-4unit(v-on="click: fetch") コメントを読み込む
-    | コメントの読み込みには時間がかかることがあります。
+  .pending.center-flexbox(v-if="pending")
+    .pending-inner.center
+      | ブックマーク数が多いため読み込みを手動にしました。
+      .center.margin-2unit-0unit
+        a.button.button-light.padding-2unit-4unit(v-on="click: fetch") コメントを読み込む
+      | コメントの読み込みには時間がかかることがあります。
 
   loading-circle(v-if="loading")
 

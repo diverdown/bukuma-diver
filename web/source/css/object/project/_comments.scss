@@ -8,8 +8,12 @@
   border: 1px solid $border-color;
   @include unit-margin(2 0);
   .pending {
-    @include unit-padding(2 0);
+    height: $box-height;
     font-size: 1.2em;
+
+    > .pending-inner {
+      @include flex(1);
+    }
   }
   .loading-box {
     height: $box-height;
