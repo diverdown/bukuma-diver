@@ -89,3 +89,14 @@ $placeholder-color: #808894;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.more {
+  display: block;
+  text-align: center;
+  @include unit-padding(3 0);
+  color: #8A9196;
+  font-size: 12px;
+  &:hover {
+    color: $sidebar-hover-color;
+  }
+}

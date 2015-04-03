@@ -2,7 +2,7 @@
 h2 人気サイト
 ul
   li.sidebar-list(v-repeat="site: sites", v-component="_site")
-a(v-on="click: showMore" v-if="doesHaveMore") もっと見る...
+a.more(v-on="click: showMore" v-if="doesHaveMore") もっと見る...
 </template>
 
 <script lang="coffee">
