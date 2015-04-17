@@ -19,7 +19,8 @@ header.main-header.fixed
 loading-circle(v-if="loading")
 ul.padding-6unit(v-if="!loading")
   li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
-a(v-on="click: searchMore" v-if="!loading") もっと見る...
+.center.padding-6uni-0unit(v-if="hasMore")
+  a.button.button-default.padding-2unit-4unit(v-on="click: searchMore" v-if="!loading") もっと見る...
 
 </template>
 
@@ -31,7 +32,11 @@ module.exports =
   components:
     'social-buttons': require './_social_buttons.vue'
   data: ->
-    { params: {sort: 'popular', users: null}, query: {favorited: false}, pages: [], loading: true }
+    params: {sort: 'popular', users: null}
+    query: {favorited: false}
+    pages: []
+    loading: true
+    hasMore: true
   computed:
     popular: -> @params.sort == 'popular'
     new: -> @params.sort == 'recent' and @params.users == '3'
@@ -48,5 +53,6 @@ module.exports =
     searchMore: ->
       BukumaDiver.search _.merge({of: @pages.length}, @params), (err, res)=>
         @pages = @pages.concat(res)
+        @hasMore = false if res.length == 0
     toggleFavorite: -> @query.toggleFavorite()
 </script>
