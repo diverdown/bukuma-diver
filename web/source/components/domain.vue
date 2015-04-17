@@ -3,12 +3,14 @@ header.main-header(v-class="fixed: fixedHeader")
   .center-flexbox.main-title-box
     h1.main-title.center-flexbox
       img.favicon(v-attr="src: site.domain | favicon")
-      a(href="http://{{site.domain}}" target="_blank" title="{{site.name}}") {{site.name}}
+      a(href="{{url}}" target="_blank" title="{{site.name}}") {{site.name}}
     i.fa.fa-heart.large.margin-0unit-1unit.clickable(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
-
+    i.fa.fa-share-alt.large.margin-0unit-1unit.clickable(v-on="click: $.socialButtons.toggle()")
     .bookmark-count
       .number {{totalBookmarkCount}}
       | users
+
+  div(v-ref="socialButtons" v-component="social-buttons" v-with="title: socialTitle")
 
   nav
     ul.header-states
@@ -26,7 +28,10 @@ ul.padding-6unit(v-if="!loading")
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
 Site = require '../site'
+
 module.exports =
+  components:
+    'social-buttons': require './_social_buttons.vue'
   data: ->
     globalUpdate: true
     params: {sort: 'count'}
@@ -35,6 +40,8 @@ module.exports =
     pages: []
     loading: true
     fixedHeader: true
+  computed:
+    socialTitle: -> "ブクマダイバー - #{@site.domain}のブクマ"
   methods:
     update: (params)->
       if @globalUpdate

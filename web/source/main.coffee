@@ -25,6 +25,7 @@ window.onload = ->
   Vue.filter 'toDate', (timestamp)->
     fragments = timestamp.split(/[/\s]/)
     "#{fragments[0]}年#{fragments[1]}月#{fragments[2]}日"
+  Vue.filter 'u', encodeURIComponent
 
   Vue.prototype.$transit = (path)->
     return if path == window.location.pathname + window.location.search

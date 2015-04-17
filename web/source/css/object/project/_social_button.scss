@@ -1,0 +1,35 @@
+.social-buttons {
+  transition: opacity .3s ease;
+  text-align: right;
+  padding: 2 * $unit;
+  position: absolute;
+  right: $main-side-padding-unit * $unit;
+  background-color: white;
+  border: 1px solid $border-color;
+
+  &.expand-enter, &.expand-leave {
+    visibility: hidden;
+    opacity: 0;
+  }
+  > a {
+    @include unit-margin(0 2 0 0);
+    &:last-child { margin: 0; }
+  }
+  i {
+    width: 8 * $unit;
+    height: 8 * $unit;
+    line-height: 8 * $unit;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    @include border-radius(2px);
+    &.icon-hatebu {
+      position: relative;
+      top: 2px;
+      background-color: #00A4DE;
+    }
+    &.fa-twitter { background-color: #00ACEE; }
+    &.fa-facebook { background-color: #3B5998; }
+    &.fa-google-plus { background-color: #DC4A36; }
+  }
+}

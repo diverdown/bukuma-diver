@@ -3,6 +3,9 @@ header.main-header.fixed
   .center-flexbox.main-title-box
     h1.main-title 「{{query.query}}」の検索結果
     i.fa.fa-heart.large.clickable(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
+    i.fa.fa-share-alt.large.margin-0unit-1unit.clickable(v-on="click: $.socialButtons.toggle()")
+
+  div(v-ref="socialButtons" v-component="social-buttons" v-with="title: socialTitle")
 
   nav
     ul.header-states
@@ -25,12 +28,15 @@ BukumaDiver = require '../bukuma_diver'
 Query = require '../query'
 _ = require 'lodash'
 module.exports =
+  components:
+    'social-buttons': require './_social_buttons.vue'
   data: ->
     { params: {sort: 'popular', users: null}, query: {favorited: false}, pages: [], loading: true }
   computed:
     popular: -> @params.sort == 'popular'
     new: -> @params.sort == 'recent' and @params.users == '3'
     all: -> @params.sort == 'recent' and @params.users == '1'
+    socialTitle: -> "ブクマダイバー - 「#{@query.query}」の検索結果"
   methods:
     search: (params = {})->
       @loading = true
