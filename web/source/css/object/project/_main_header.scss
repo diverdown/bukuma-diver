@@ -59,6 +59,12 @@ $main-side-padding-unit: 6;
   }
 }
 
+.state-default {
+  @include unit-padding(2);
+}
+.active > .state-default {
+  border-bottom: 2px solid #008FDE;
+}
 .header-category {
   border-bottom: 3px solid white;
   @include unit-padding(2);
