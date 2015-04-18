@@ -12,7 +12,7 @@ header.main-header.fixed.hotentry-header
     li.hotentry.margin-5unit(v-repeat="categories" v-attr="id: name")
       h2.hotentry-category(v-style="border-bottom-color: color") {{name}}
       ul
-        li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
+        li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1" v-on="click: showMorePages($event, $index)")
       .center.padding-6unit-0unit
         a.button.button-default.padding-2unit-4unit(v-on="click: showMorePages($event, $index)") もっと見る...
 </template>
