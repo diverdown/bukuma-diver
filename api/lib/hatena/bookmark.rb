@@ -60,11 +60,12 @@ module Hatena
     def extract_items(nokogiri_xml)
       nokogiri_xml.css('item').map do |elem|
         url = elem.css('link').text
+        ps = PublicSuffix.parse(Addressable::URI.parse(url).host)
         {
           title: elem.css('title').text,
           url: url,
           bookmark_count: elem.css('hatena|bookmarkcount').text.to_i,
-          domain: PublicSuffix.parse(Addressable::URI.parse(url).host).domain
+          domain: ps.subdomain || ps.domain
         }
       end
     end
