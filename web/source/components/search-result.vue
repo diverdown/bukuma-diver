@@ -10,11 +10,11 @@ header.main-header.fixed
   nav
     ul.header-states
       li.header-state(v-class="active: popular")
-        a.padding-2unit(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
+        a.state-default(v-on="click: $transit(query.toPath({sort: 'popular'}))") 人気順
       li.header-state(v-class="active: new")
-        a.padding-2unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
+        a.state-default(v-on="click: $transit(query.toPath({sort: 'recent', users: 3}))") 新着順
       li.header-state(v-class="active: all")
-        a.padding-2unit(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
+        a.state-default(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
 
 loading-circle(v-if="loading")
 ul.padding-6unit(v-if="!loading")

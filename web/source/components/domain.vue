@@ -15,11 +15,11 @@ header.main-header(v-class="fixed: fixedHeader")
   nav
     ul.header-states
       li.header-state(v-class="active: params.sort == 'count'")
-        a.padding-2unit(v-on="click: update({sort: 'count'})") 人気順
+        a.state-default(v-on="click: update({sort: 'count'})") 人気順
       li.header-state(v-class="active: params.sort == 'recent'")
-        a.padding-2unit(v-on="click: update({sort: 'recent'})") 新着順
+        a.state-default(v-on="click: update({sort: 'recent'})") 新着順
       li.header-state(v-class="active: params.sort == 'eid'")
-        a.padding-2unit(v-on="click: update({sort: 'eid'})") すべて
+        a.state-default(v-on="click: update({sort: 'eid'})") すべて
 loading-circle(v-if="loading")
 ul.padding-6unit(v-if="!loading")
   li.margin-4unit(v-repeat="pages" v-component="page")
