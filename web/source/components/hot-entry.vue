@@ -56,7 +56,7 @@ module.exports =
       for c, i in categories
         c.color = CATEGORY_COLORS[c.name]
         c.active = false
-        @_hiddenPages[i] = c.pages.splice(5)
+        @_hiddenPages[i] = c.pages.splice(if c.name == '総合' then 10 else 5)
       @categories = categories
       @loading = false
       @$pushMainContent =>
