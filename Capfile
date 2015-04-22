@@ -24,6 +24,7 @@ require 'capistrano/bundler'
 # require 'capistrano/passenger'
 
 require 'sshkit/sudo'
+require 'slackistrano'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('config/deploy/tasks/*.rake').each { |r| import r }

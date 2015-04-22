@@ -56,6 +56,8 @@ set :ssh_options, {
   keys: %w{~/.ssh/id_rsa}
 }
 
+set :slack_webhook, ENV['SLACK_WEBHOOK_URL']
+
 after 'nginx:setup', 'nginx:restart'
 
 after 'deploy:started', 'dotenv:upload'
