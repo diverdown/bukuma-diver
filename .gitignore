@@ -11,4 +11,7 @@ bower_components
 
 build
 
-.env
+.env*
+!.env.development
+
+config/deploy/newrelic.yml

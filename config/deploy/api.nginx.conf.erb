@@ -1,0 +1,29 @@
+upstream <%= fetch :application %>_server {
+    server unix:/tmp/<%= fetch :application %>.unicorn.sock;
+}
+
+server {
+    listen       80 deferred;
+    server_name  <%= fetch :api_server_name %>;
+    server_name_in_redirect on;
+    access_log  /var/log/nginx/<%= fetch :api_server_name %>.access.log ltsv;
+
+    client_max_body_size 2G;
+    keepalive_timeout 5;
+
+    location / {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_pass http://<%= fetch :application %>_server;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}

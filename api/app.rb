@@ -7,7 +7,7 @@ require 'hatena/bookmark'
 require 'oj'
 require 'public_suffix'
 
-if production?
+if production? or ENV['RACK_ENV'] == 'staging'
   require 'redis'
   require 'hiredis'
 end
@@ -21,9 +21,6 @@ if development? or test?
   require 'pry-remote'
   require 'fakeredis'
 end
-
-require 'dotenv'
-Dotenv.load
 
 Oj.default_options = { mode: :compat }
 class << Oj
@@ -46,7 +43,7 @@ helpers do
       host: ENV['REDIS_HOST'],
       port: ENV['REDIS_PORT'],
       db: ENV['REDIS_DB'],
-      driver: settings.production? ? :hiredis : :memory
+      driver: %{production staging}.include?(ENV['RACK_ENV']) ? :hiredis : :memory
     )
   end
 
@@ -97,7 +94,7 @@ end
 
 before do
   content_type :json
-  headers 'Access-Control-Allow-Origin' => 'http://localhost:8080'
+  headers 'Access-Control-Allow-Origin' => ENV['BUKUMA_DIVER_URL']
 end
 
 get '/hotentries' do

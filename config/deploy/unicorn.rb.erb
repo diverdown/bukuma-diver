@@ -1,0 +1,25 @@
+listen "/tmp/<%= fetch :application %>.unicorn.sock"
+worker_processes <%= fetch :unicorn_processes %>
+pid "<%= fetch :unicorn_pid %>"
+stderr_path "<%= shared_path %>/log/unicorn.log"
+stdout_path "<%= shared_path %>/log/unicorn.log"
+timeout 10
+
+preload_app true
+
+before_exec do |server|
+  Dotenv.overload("<%= "#{current_path}/.env.#{fetch :env}" %>")
+
+  ENV['BUNDLE_GEMFILE'] = "<%= current_path %>/Gemfile"
+end
+
+before_fork do |server, worker|
+  old_pid = "#{server.config[:pid]}.oldbin"
+  if File.exists?(old_pid) && server.pid != old_pid
+    begin
+      Process.kill("QUIT", File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+      # someone else did our job for us
+    end
+  end
+end

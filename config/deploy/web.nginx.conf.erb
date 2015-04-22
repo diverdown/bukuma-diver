@@ -1,0 +1,26 @@
+server {
+    server_name  <%= fetch :server_name %>;
+    access_log  /var/log/nginx/<%= fetch :server_name %>.access.log ltsv;
+
+    client_max_body_size 2G;
+    keepalive_timeout 5;
+
+    gzip_static on;
+    add_header Cache-Control public;
+
+    root <%= current_path %>/web/build;
+    location ~ ^/(css|js|image|font)/ {
+      expires max;
+    }
+
+    try_files $uri /index.html =404;
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}

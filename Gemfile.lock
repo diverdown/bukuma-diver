@@ -3,6 +3,16 @@ GEM
   specs:
     addressable (2.3.8)
     backports (3.6.4)
+    capistrano (3.4.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    capistrano-bundler (1.1.4)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
+    capistrano-rbenv (2.0.3)
+      capistrano (~> 3.1)
+      sshkit (~> 1.3)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -13,6 +23,7 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     chunky_png (1.3.4)
     coderay (1.1.0)
+    colorize (0.7.7)
     compass (1.0.3)
       chunky_png (~> 1.2)
       compass-core (~> 1.0.2)
@@ -39,11 +50,17 @@ GEM
     foreman (0.78.0)
       thor (~> 0.19.1)
     hiredis (0.6.0)
+    i18n (0.7.0)
+    kgio (2.9.3)
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
     multi_json (1.11.0)
     multipart-post (2.0.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.2)
+    newrelic_rpm (3.9.5.251)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     oj (2.12.1)
@@ -62,6 +79,8 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    raindrops (0.13.0)
+    rake (10.4.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -98,10 +117,20 @@ GEM
       sinatra (~> 1.4.0)
       tilt (~> 1.3)
     slop (3.6.0)
+    sshkit (1.7.1)
+      colorize (>= 0.7.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
+    sshkit-sudo (0.0.3)
+      sshkit
     susy (2.2.2)
       sass (>= 3.3.0, < 3.5)
     thor (0.19.1)
     tilt (1.4.1)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     unindent (1.0)
     websocket (1.2.1)
     xpath (2.0.0)
@@ -112,6 +141,9 @@ PLATFORMS
 
 DEPENDENCIES
   addressable
+  capistrano
+  capistrano-bundler
+  capistrano-rbenv
   capybara
   compass
   dotenv
@@ -121,6 +153,7 @@ DEPENDENCIES
   faraday_middleware
   foreman
   hiredis
+  newrelic_rpm
   nokogiri
   oj
   pry
@@ -132,5 +165,7 @@ DEPENDENCIES
   selenium-webdriver
   sinatra
   sinatra-contrib
+  sshkit-sudo
   susy
+  unicorn
   unindent

@@ -1,0 +1,4 @@
+check process <%= fetch :application %> with pidfile <%= fetch :unicorn_pid %>
+  group <%= fetch :application %>
+  start program = "/bin/su - <%= fetch :user %> -c 'cd <%= current_path %>/api;touch <%= shared_path %>/log/unicorn.log; bundle exec unicorn -c config/unicorn.rb -E <%= fetch :env %> -D'"
+  stop program = "/bin/su - <%= fetch :user %> -c 'kill -s QUIT `cat <%= fetch :unicorn_pid %>`"

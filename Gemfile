@@ -12,9 +12,11 @@ gem 'faraday-http-cache'
 gem 'dotenv'
 gem 'unindent'
 
-group :production do
+group :production, :staging do
   gem 'redis'
   gem 'hiredis'
+  gem 'unicorn'
+  gem 'newrelic_rpm'
 end
 
 group :development do
@@ -31,4 +33,11 @@ group :development, :test do
   gem 'rspec'
   gem 'capybara'
   gem 'selenium-webdriver'
+end
+
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'sshkit-sudo'
+  gem 'capistrano-rbenv'
 end
