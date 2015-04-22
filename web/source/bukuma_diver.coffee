@@ -40,7 +40,7 @@ module.exports = class BukumaDiver
     get 'http://api.webken-apps.com/page_parts/footer', null, callback
 
   @favorite: (site)->
-    post "/api/favorites/:domain", _.clone(site)
+    post "#{BUKUMA_DIVER_API_URL}/favorites/:domain", _.clone(site)
 
   @unfavorite: (site)->
-    del "/api/favorites/:domain", _.clone(site)
+    del "#{BUKUMA_DIVER_API_URL}/favorites/:domain", _.clone(site)
