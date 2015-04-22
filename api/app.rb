@@ -28,6 +28,11 @@ class << Oj
 end
 set :json_encoder, Oj
 
+require 'rack/parser'
+use Rack::Parser, parsers: {
+  'application/json' => proc { |body| Oj.load(body) }
+}
+
 helpers do
   def client
     @client ||= Hatena::Bookmark.new(
@@ -142,22 +147,22 @@ get '/domains/:domain' do
   end
 end
 
-options '/favorites/:domain' do
+options '/favorites' do
   headers(
-    'Access-Control-Allow-Methods' => %w(POST DELETE).join(','),
-    'Access-Control-Allow-Headers' => %w(Accept Connection Content-Type Host Origin X-Requested-With).join(','),
-    'Access-Control-x-Age' => 2_592_000
+    'Access-Control-Allow-Methods': %w(POST DELETE).join(','),
+    'Access-Control-Allow-Headers': %w(Accept Connection Content-Type Host Origin X-Requested-With).join(','),
+    'Access-Control-x-Age': 2_592_000
   )
 end
 
-post '/favorites/:domain' do
+post '/favorites' do
   halt 400 unless PublicSuffix.valid?(params[:domain])
   created = redis.sadd params[:domain], request.host
   redis.zincrby 'popular_sites', 1, params[:domain] if created
   200
 end
 
-delete '/favorites/:domain' do
+delete '/favorites' do
   halt 400 unless PublicSuffix.valid?(params[:domain])
   deleted = redis.srem params[:domain], request.host
   redis.zincrby 'popular_sites', -1, params[:domain] if deleted

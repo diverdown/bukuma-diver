@@ -11,6 +11,7 @@ gem 'faraday_middleware'
 gem 'faraday-http-cache'
 gem 'dotenv'
 gem 'unindent'
+gem 'rack-parser'
 
 group :production, :staging do
   gem 'redis'
