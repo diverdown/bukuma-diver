@@ -7,7 +7,7 @@ set :env, fetch(:stage)
 
 set :scm, :git
 set :application, 'bukuma-diver'
-set :repo_url, "git@github.com/webken/#{fetch :application}.git"
+set :repo_url, "git@github.com:webken/#{fetch :application}.git"
 
 set :user, ENV['DEPLOY_USER']
 # Default branch is :master
@@ -60,7 +60,7 @@ set :slack_webhook, ENV['SLACK_WEBHOOK_URL']
 
 after 'nginx:setup', 'nginx:restart'
 
-after 'deploy:started', 'dotenv:upload'
+before 'deploy:check', 'dotenv:upload'
 after 'deploy:publishing', 'deploy:restart'
 before 'deploy:restart', 'unicorn:config'
 before 'unicorn:config', 'newrelic:config'
