@@ -13,6 +13,14 @@ if production? or ENV['RACK_ENV'] == 'staging'
   require 'newrelic_rpm'
 end
 
+if production?
+  require 'raven'
+  Raven.configure do |config|
+    config.dsn = ENV['SENTRY_DSN']
+  end
+  use Raven::Rack
+end
+
 if development?
   require 'sinatra/reloader'
 end

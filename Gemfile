@@ -18,6 +18,7 @@ group :production, :staging do
   gem 'hiredis'
   gem 'unicorn'
   gem 'newrelic_rpm'
+  gem 'sentry-raven'
 end
 
 group :development do
