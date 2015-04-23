@@ -15,3 +15,5 @@ build
 !.env.development
 
 config/deploy/newrelic.yml
+
+rev-manifest.json

@@ -100,13 +100,13 @@ gulp.task 'extension', ->
       .pipe gulp.dest "#{EXTENSION_PATH}/build/"
   )
 
-MANIFEST_PATH = "#{WEB_BUILD_PATH}/rev-manifest.json"
+MANIFEST_PATH = "./rev-manifest.json"
 addRevision = (globs)->
   gulp.src globs
     .pipe rev()
     .pipe gulp.dest(WEB_BUILD_PATH)
     .pipe rev.manifest(merge: true)
-    .pipe gulp.dest(WEB_BUILD_PATH)
+    .pipe gulp.dest('.')
 
 replaceRevision = (globs)->
   gulp.src globs
