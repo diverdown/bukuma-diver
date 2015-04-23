@@ -5,7 +5,7 @@ browserify = require 'browserify'
 concat     = require 'gulp-concat'
 source     = require 'vinyl-source-stream'
 compass    = require 'gulp-compass'
-rimraf     = require 'rimraf'
+del        = require 'del'
 livereload = require 'gulp-livereload'
 coffeeify  = require 'coffeeify'
 envify     = require 'envify/custom'
@@ -23,8 +23,7 @@ WEB_PATH = './web'
 EXTENSION_PATH = './chrome_extension'
 
 gulp.task 'clean', (cb)->
-  rimraf "#{WEB_PATH}/build", cb
-  rimraf "#{EXTENSION_PATH}/build", cb
+  del ["#{WEB_PATH}/build", "#{EXTENSION_PATH}/build"], cb
 
 gulp.task 'html', ->
   gulp.src "#{WEB_PATH}/source/[^_]*.jade"
