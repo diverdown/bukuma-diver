@@ -116,10 +116,12 @@ replaceRevision = (globs)->
 gulp.task 'revision:font,image', ->
   addRevision(["#{WEB_BUILD_PATH}/{image,font}/*"])
 
-gulp.task 'revision:css,js', ->
+gulp.task 'revision:css,js', (callback)->
   replaceRevision("#{WEB_BUILD_PATH}/{css,js}/*")
     .on 'end', ->
       addRevision(["#{WEB_BUILD_PATH}/{css,js}/*"])
+        .on 'end', callback
+  null
 
 gulp.task 'revision:replace', ->
   replaceRevision("#{WEB_BUILD_PATH}/index.html")
@@ -130,8 +132,8 @@ gulp.task 'revision:clean', (callback)->
   seeds.push(MANIFEST_PATH)
   del seeds, callback
 
-gulp.task 'revision', ->
-  runSequence 'revision:font,image', 'revision:css,js', 'revision:replace', 'revision:clean'
+gulp.task 'revision', (callback)->
+  runSequence 'revision:font,image', 'revision:css,js', 'revision:replace', 'revision:clean', callback
 
 gulp.task 'watch', ['build'], ->
   livereload.listen()
