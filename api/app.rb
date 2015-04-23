@@ -10,6 +10,7 @@ require 'public_suffix'
 if production? or ENV['RACK_ENV'] == 'staging'
   require 'redis'
   require 'hiredis'
+  require 'newrelic_rpm'
 end
 
 if development?
