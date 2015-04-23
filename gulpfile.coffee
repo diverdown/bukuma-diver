@@ -1,15 +1,23 @@
-gulp = require 'gulp'
-plumber = require 'gulp-plumber'
-jade = require 'gulp-jade'
+gulp       = require 'gulp'
+plumber    = require 'gulp-plumber'
+jade       = require 'gulp-jade'
 browserify = require 'browserify'
-concat = require 'gulp-concat'
-source = require 'vinyl-source-stream'
-compass = require 'gulp-compass'
-rimraf = require 'rimraf'
+concat     = require 'gulp-concat'
+source     = require 'vinyl-source-stream'
+compass    = require 'gulp-compass'
+rimraf     = require 'rimraf'
 livereload = require 'gulp-livereload'
-coffeeify = require 'coffeeify'
-envify = require 'envify/custom'
-require('dotenv').config(path: ".env.#{process.env.NODE_ENV || 'development'}")
+coffeeify  = require 'coffeeify'
+envify     = require 'envify/custom'
+minifyCSS  = require 'gulp-minify-css'
+uglify     = require 'gulp-uglify'
+buffer     = require 'vinyl-buffer'
+sourcemaps = require 'gulp-sourcemaps'
+gulpif     = require 'gulp-if'
+
+env = process.env.NODE_ENV || 'development'
+isDevelopment = env == 'development'
+require('dotenv').config(path: ".env.#{env}")
 
 WEB_PATH = './web'
 EXTENSION_PATH = './chrome_extension'
@@ -36,19 +44,24 @@ gulp.task 'font', ->
     .pipe livereload()
 
 gulp.task 'js', ->
-  browserify
+  browserify(
     entries: [ "#{WEB_PATH}/source/main.coffee"]
     extensions: ['.coffee', '.js', '.jade']
-  .transform coffeeify
-  .transform 'jadeify'
-  .transform 'debowerify'
-  .transform 'vueify'
-  .transform envify()
-  .bundle()
-  .pipe plumber()
-  .pipe source 'main.js'
-  .pipe gulp.dest "#{WEB_PATH}/build/js/"
-  .pipe livereload()
+  )
+    .transform coffeeify
+    .transform 'jadeify'
+    .transform 'debowerify'
+    .transform 'vueify'
+    .transform envify()
+    .bundle()
+    .pipe plumber()
+    .pipe source 'main.js'
+    .pipe buffer()
+    .pipe gulpif(isDevelopment, sourcemaps.init(loadMaps: true))
+    .pipe uglify(preserveComments: 'some')
+    .pipe gulpif(isDevelopment, sourcemaps.write())
+    .pipe gulp.dest "#{WEB_PATH}/build/js/"
+    .pipe livereload()
 
 gulp.task 'css', ->
   gulp
@@ -58,6 +71,7 @@ gulp.task 'css', ->
       @emit 'end'
     )
     .pipe compass(css: "#{WEB_PATH}/build/css", sass: "#{WEB_PATH}/source/css", require: ['susy'])
+    .pipe minifyCSS()
     .pipe gulp.dest "#{WEB_PATH}/build/css/"
     .pipe livereload()
 

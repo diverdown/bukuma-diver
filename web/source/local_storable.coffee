@@ -4,7 +4,7 @@ module.exports = class LocalStorable
     @_collection
 
   @restore: (callback)->
-    localforage.getItem(@name, callback)
+    localforage.getItem(@klass, callback)
 
   @save: (collection)->
-    localforage.setItem(@name, collection or @_collection)
+    localforage.setItem(@klass, collection or @_collection)

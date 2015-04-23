@@ -2,6 +2,7 @@ _ = require 'lodash'
 Site = require './site'
 LocalStorable = require './local_storable'
 module.exports = class RecommendCollection extends LocalStorable
+  @klass = 'RecommendCollection' # for minify
   DEFAULT_RECOMMENDED_SITES = [
     {name: 'はてな', domain: 'hatena.ne.jp'},
     {name: 'はてなブログ', domain: 'hatenablog.com'},

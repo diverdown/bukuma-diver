@@ -3,6 +3,7 @@ Query = require './query'
 LocalStorable = require './local_storable'
 _ = require 'lodash'
 module.exports = class FavoriteCollection extends LocalStorable
+  @klass = 'FavoriteCollection' # for minify
   TYPES = [Site, Query]
 
   @restore: (callback)->
