@@ -1,14 +1,17 @@
 'use strict'
-Vue = require 'vue'
-RecommendCollection = require './recommend_collection'
-page = require 'page'
-qs = require 'qs'
-_ = require 'lodash'
-Site = require './site'
-Query = require './query'
-BukumaDiver = require './bukuma_diver'
-stickifier = require 'stickifier'
-window.onload = ->
+Raven = require 'raven-js'
+Raven.config(process.env.SENTRY_PUBLIC_DSN).install()
+window.onload = Raven.wrap ->
+  Vue = require 'vue'
+  RecommendCollection = require './recommend_collection'
+  page = require 'page'
+  qs = require 'qs'
+  _ = require 'lodash'
+  Site = require './site'
+  Query = require './query'
+  BukumaDiver = require './bukuma_diver'
+  stickifier = require 'stickifier'
+
   window.addEventListener 'scroll', stickifier(
     target: -> document.querySelector('#sidebar'),
     lowerBound: 0,

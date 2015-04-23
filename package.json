@@ -39,6 +39,7 @@
     "page": "^1.5.0",
     "proxy-middleware": "^0.9.0",
     "qs": "^2.3.3",
+    "raven-js": "^1.1.18",
     "rimraf": "^2.2.8",
     "run-sequence": "^1.0.2",
     "stickifier": "git+https://gist.github.com/en30/24d4c5b901f453774358",
