@@ -21,7 +21,6 @@ runSequence= require 'run-sequence'
 fs         = require 'fs'
 
 env = process.env.NODE_ENV || 'development'
-isDevelopment = env == 'development'
 require('dotenv').config(path: ".env.#{env}")
 
 WEB_PATH = 'web'
@@ -54,6 +53,7 @@ gulp.task 'js', ->
   browserify(
     entries: [ "./#{WEB_SOURCE_PATH}/main.coffee"]
     extensions: ['.coffee', '.js', '.jade']
+    degug: true
   )
     .transform coffeeify
     .transform 'jadeify'
@@ -64,9 +64,9 @@ gulp.task 'js', ->
     .pipe plumber()
     .pipe source 'main.js'
     .pipe buffer()
-    .pipe gulpif(isDevelopment, sourcemaps.init(loadMaps: true))
+    .pipe sourcemaps.init(loadMaps: true)
     .pipe uglify(preserveComments: 'some')
-    .pipe gulpif(isDevelopment, sourcemaps.write())
+    .pipe sourcemaps.write('./')
     .pipe gulp.dest "#{WEB_BUILD_PATH}/js/"
     .pipe livereload()
 
@@ -119,7 +119,7 @@ gulp.task 'revision:font,image', ->
 gulp.task 'revision:css,js', (callback)->
   replaceRevision("#{WEB_BUILD_PATH}/{css,js}/*")
     .on 'end', ->
-      addRevision(["#{WEB_BUILD_PATH}/{css,js}/*"])
+      addRevision(["#{WEB_BUILD_PATH}/{css,js}/**/*.{css,js}"]) # without .map
         .on 'end', callback
   null
 
