@@ -124,7 +124,6 @@ get '/hotentries' do
 end
 
 get '/domains/:domain/pages' do
-  halt 400 unless PublicSuffix.valid?(params[:domain])
   cache do
     Oj.dump({
       pages: client.search_by_domain(params)
@@ -150,7 +149,6 @@ get '/domains/popular' do
 end
 
 get '/domains/:domain' do
-  halt 400 unless PublicSuffix.valid?(params[:domain])
   cache do
     Oj.dump(title: site_title(params[:domain]))
   end
