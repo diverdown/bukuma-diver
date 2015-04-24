@@ -24,7 +24,9 @@ window.onload = Raven.wrap ->
   Vue.filter 'favicon', (domain)->
     "http://www.google.com/s2/favicons?domain=#{encodeURIComponent domain}"
   Vue.filter 'hatebuEntry', (url)->
-    "http://b.hatena.ne.jp/entry/#{url.replace /^[a-z]+:\/\//, ''}"
+    path = url.replace /^http(s)?:\/\/(.+)$/, (str, isHttps, urn)->
+      (if isHttps then 's/' else '') + urn
+    "http://b.hatena.ne.jp/entry/#{path}"
   Vue.filter 'toDate', (timestamp)->
     fragments = timestamp.split(/[/\s]/)
     "#{fragments[0]}年#{fragments[1]}月#{fragments[2]}日"
