@@ -34,15 +34,15 @@
   @include flexbox((
                       display: flexbox,
                       flex-direction: row,
-                      flext-align: start
+                      flex-align: start
                     ), $version: 2);
   @include flexbox((
                       display: flex,
                       flex-direction: row,
                       align-items: flex-start
                     ));
-
 }
+
 .bottom-align-flexbox {
   @include flexbox((
                       display: box,
@@ -52,7 +52,7 @@
   @include flexbox((
                       display: flexbox,
                       flex-direction: row,
-                      flext-align: end
+                      flex-align: end
                     ), $version: 2);
   @include flexbox((
                       display: flex,
@@ -70,7 +70,7 @@
   @include flexbox((
                       display: flexbox,
                       flex-direction: row,
-                      flext-align: center,
+                      flex-align: center,
                     ), $version: 2);
   @include flexbox((
                       display: flex,
