@@ -1,5 +1,4 @@
 #footer {
-  @include container;
   @include unit-padding(10 3 0);
   @include unit-margin(15 0 0 0);
   background-color: $footer-bg-color;
@@ -11,13 +10,12 @@
     color: $footer-blight-color;
   }
   .footer-box {
-    @include span(1 of 2);
-
+    display: inline-block;
+    width: 50%;
   }
   #copyright {
     @include unit-margin(10 0 0 0);
     text-align: center;
-    @include span(1 of 1);
 
     a { color: $footer-blight-color; }
   }

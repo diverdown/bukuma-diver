@@ -27,17 +27,8 @@ $footer-bg-color: #293141;
 $footer-color: #90969E;
 $footer-blight-color: #DADADA;
 
-@import 'susy';
-
 @import 'foundation/_reset';
 @import 'foundation/_base';
-
-$susy: (
-  global-box-sizing: border-box,
-  gutters: 0,
-  columns: 16
-);
-@include border-box-sizing;
 
 @import 'object/utility/_margin';
 @import 'object/utility/_text';

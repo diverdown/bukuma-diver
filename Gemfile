@@ -24,7 +24,6 @@ end
 group :development do
   gem 'foreman'
   gem 'compass'
-  gem 'susy'
   gem 'rack-livereload'
 end
 
