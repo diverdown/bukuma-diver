@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'sinatra'
 require 'sinatra/json'
+require 'sinatra/advanced_routes'
 require 'hatena/bookmark'
 require 'oj'
 require 'public_suffix'
@@ -154,14 +155,6 @@ get '/domains/:domain' do
   end
 end
 
-options '/favorites' do
-  headers(
-    'Access-Control-Allow-Methods': %w(POST DELETE).join(','),
-    'Access-Control-Allow-Headers': %w(Accept Connection Content-Type Host Origin X-Requested-With).join(','),
-    'Access-Control-x-Age': 2_592_000
-  )
-end
-
 post '/favorites' do
   halt 400 unless PublicSuffix.valid?(params[:domain])
   created = redis.sadd params[:domain], request.host
@@ -174,4 +167,15 @@ delete '/favorites' do
   deleted = redis.srem params[:domain], request.host
   redis.zincrby 'popular_sites', -1, params[:domain] if deleted
   200
+end
+
+Sinatra::Application.each_route.group_by(&:path).each do |path, routes|
+  puts path, routes.map(&:verb).join(',').upcase
+  options path do
+    headers(
+      'Access-Control-Allow-Methods': routes.map(&:verb).join(',').upcase,
+      'Access-Control-Allow-Headers': %w(Accept Connection Content-Type Host Origin X-Requested-With).join(','),
+      'Access-Control-x-Age': 2_592_000
+    )
+  end
 end
