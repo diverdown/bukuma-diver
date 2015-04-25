@@ -36,6 +36,7 @@ window.onload = Raven.wrap ->
     return if path == window.location.pathname + window.location.search
     window.scrollTo(0, 0)
     page(path)
+    app.sidebarHeight = document.querySelector('#sidebar').clientHeight + 'px'
 
   Vue.prototype.$pushMainContent = (callback)->
     Vue.nextTick ->
@@ -51,6 +52,7 @@ window.onload = Raven.wrap ->
       mainParams: {}
       isModalOpen: false
       footerContent: ''
+      sidebarHeight: 0
     methods:
       search: (q)->
         @mainParams = {q: q}

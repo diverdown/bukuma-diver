@@ -11,7 +11,7 @@ html
   body#app(v-class="modal-open: isModalOpen" v-on="keyup: closeModal | key esc")
     #modal(v-component="modal" v-show="isModalOpen" v-events="closeModal: closeModal")
 
-    .top-align-flexbox
+    .top-align-flexbox(v-style="min-height: sidebarHeight")
       #sidebar-wrapper
         nav#sidebar(v-component="sidebar")
       main#main(v-component="{{currentView}}" v-ref="main")
