@@ -50,26 +50,30 @@ gulp.task 'font', ->
     .pipe livereload()
 
 gulp.task 'js', ->
-  browserify(
-    entries: [ "./#{WEB_SOURCE_PATH}/main.coffee"]
-    extensions: ['.coffee', '.js', '.jade']
-    degug: true
-  )
-    .transform coffeeify
-    .transform 'jadeify'
-    .transform 'debowerify'
-    .transform 'vueify'
-    .transform envify()
-    .bundle()
-    .pipe plumber()
-    .pipe source 'main.js'
-    .pipe buffer()
-    .pipe sourcemaps.init(loadMaps: true)
-    .pipe uglify(preserveComments: 'some')
-    .pipe sourcemaps.write('./')
-    .pipe gulp.dest "#{WEB_BUILD_PATH}/js/"
-    .pipe livereload()
+  merge(
+    gulp.src "#{WEB_SOURCE_PATH}/analytics.js"
+      .pipe gulp.dest "#{WEB_BUILD_PATH}/js/"
 
+    browserify(
+      entries: [ "./#{WEB_SOURCE_PATH}/main.coffee"]
+      extensions: ['.coffee', '.js', '.jade']
+      degug: true
+    )
+      .transform coffeeify
+      .transform 'jadeify'
+      .transform 'debowerify'
+      .transform 'vueify'
+      .transform envify()
+      .bundle()
+      .pipe plumber()
+      .pipe source 'main.js'
+      .pipe buffer()
+      .pipe sourcemaps.init(loadMaps: true)
+      .pipe uglify(preserveComments: 'some')
+      .pipe sourcemaps.write('./')
+      .pipe gulp.dest "#{WEB_BUILD_PATH}/js/"
+      .pipe livereload()
+  )
 gulp.task 'css', ->
   gulp
     .src "#{WEB_SOURCE_PATH}/css/main.{s,}css"

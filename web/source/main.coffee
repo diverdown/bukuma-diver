@@ -83,6 +83,7 @@ window.onload = Raven.wrap ->
 
   page '*', (ctx, next)->
     ctx.params = _.merge(qs.parse(ctx.querystring), ctx.params)
+    ga 'send', 'pageview', ctx.path
     next()
 
   page '/', ->
