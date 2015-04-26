@@ -56,4 +56,5 @@ module.exports =
         @pages = @pages.concat(res)
         @hasMore = false if res.length == 0
     toggleFavorite: -> @query.toggleFavorite()
+  attached: -> @$dispatch 'mainUpdated'
 </script>

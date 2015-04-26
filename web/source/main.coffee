@@ -91,10 +91,12 @@ window.onload = Raven.wrap ->
 
   page Site.pathTemplate, (ctx, next)->
     app.currentView = 'domain'
-    app.$.main.search(ctx.params)
+    app.$once 'mainUpdated', ->
+      app.$.main.search(ctx.params)
 
   page Query.pathTemplate, (ctx, next)->
     app.currentView = 'search-result'
-    app.$.main.search(ctx.params)
+    app.$once 'mainUpdated', ->
+      app.$.main.search(ctx.params)
 
   page()

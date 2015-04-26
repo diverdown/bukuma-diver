@@ -58,4 +58,5 @@ module.exports =
         @site.name = name
         @$pushMainContent() if @fixedHeader
     toggleFavorite: -> @site.toggleFavorite()
+  attached: -> @$dispatch 'mainUpdated'
 </script>
