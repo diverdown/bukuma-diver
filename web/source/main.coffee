@@ -19,7 +19,7 @@ window.onload = Raven.wrap ->
     wait: 100
   )
 
-  Vue.config.debug = true
+  Vue.config.debug = (process.env.NODE_ENV == 'development')
 
   Vue.filter 'favicon', (domain)->
     "http://www.google.com/s2/favicons?domain=#{encodeURIComponent domain}"

@@ -20,7 +20,7 @@ runSequence= require 'run-sequence'
 {merge}    = require 'event-stream'
 fs         = require 'fs'
 
-env = process.env.NODE_ENV || 'development'
+env = process.env.NODE_ENV || (process.env.NODE_ENV = 'development')
 require('dotenv').config(path: ".env.#{env}")
 
 WEB_PATH = 'web'
