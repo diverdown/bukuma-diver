@@ -104,3 +104,15 @@ $placeholder-color: #808894;
     color: $sidebar-hover-color;
   }
 }
+
+.extensions {
+  @include unit-margin(6 0);
+  a {
+    display: block;
+    @include unit-padding(3);
+  }
+  .fa {
+    font-size: 16px;
+    @include unit-margin(0 2 0 0);
+  }
+}
