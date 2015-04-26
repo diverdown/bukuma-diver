@@ -1,6 +1,6 @@
 #footer {
-  @include unit-padding(10 3 0);
   @include unit-margin(15 0 0 0);
+
   background-color: $footer-bg-color;
   font-size: 0.9em;
   color: $footer-color;
@@ -13,6 +13,21 @@
     display: inline-block;
     width: 50%;
   }
+
+  i {
+    color: white;
+    font-size: 80px;
+  }
+}
+
+#about {
+  @include unit-padding(6 0);
+  background-color: #788190;
+  color: #C5C9CF;
+  a { color: white; }
+}
+#webken-footer {
+  @include unit-padding(10 3 0);
   #copyright {
     @include unit-margin(10 0 0 0);
     text-align: center;

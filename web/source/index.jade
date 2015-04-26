@@ -17,4 +17,25 @@ html
         nav#sidebar(v-component="sidebar")
       main#main(v-component="{{currentView}}" v-ref="main")
 
-    #footer(v-html="footerContent")
+    #footer
+      #about
+        .footer-box.center
+          a(href="http://b.hatena.ne.jp/" target="_blank")
+            i.icon-hatebu
+          p
+            | ブクマダイバーは
+            a(href="http://www.hatena.ne.jp/" target="_blank") はてな
+            | のサービスである
+            br
+            a(href="http://b.hatena.ne.jp/" target="_blank") はてなブックマーク
+            | の情報を利用しています
+        .footer-box.center
+          a(href="https://github.com/webken/bukuma-diver" target="_blank")
+            i.fa.fa-github
+          p
+            | ブクマダイバーの
+            br
+            | ソースコードは
+            a(href="https://github.com/webken/bukuma-diver" target="_blank") Githubで公開
+            | しています
+      #webken-footer(v-html="footerContent")
