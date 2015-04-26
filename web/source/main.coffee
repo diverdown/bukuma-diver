@@ -89,14 +89,16 @@ window.onload = Raven.wrap ->
   page '/', ->
     app.currentView = 'hotentry'
 
-  page Site.pathTemplate, (ctx, next)->
-    app.currentView = 'domain'
-    app.$once 'mainUpdated', ->
-      app.$.main.search(ctx.params)
+  updateAndSearch = (view)->
+    (ctx, next)->
+      if app.currentView == view
+        app.$.main.search(ctx.params)
+      else
+        app.$once 'mainUpdated', -> app.$.main.search(ctx.params)
+        app.currentView = view
 
-  page Query.pathTemplate, (ctx, next)->
-    app.currentView = 'search-result'
-    app.$once 'mainUpdated', ->
-      app.$.main.search(ctx.params)
+  page Site.pathTemplate, updateAndSearch('domain')
+
+  page Query.pathTemplate, updateAndSearch('search-result')
 
   page()
