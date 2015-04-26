@@ -1,15 +1,17 @@
 <template lang="jade">
 h2 おすすめサイト
 ul
-  li.sidebar-list(v-repeat="site: sites", v-component="_site")
+  li.sidebar-list(v-repeat="site: sites", v-component="site")
 a.more(v-on="click: showMore" v-if="doesHaveMore") もっと見る...
 </template>
 
 <script lang="coffee">
 _ = require 'lodash'
-RecommendCollection = require '../recommend_collection'
+RecommendCollection = require '../../recommend_collection'
 PER_PAGE = 10
 module.exports =
+  components:
+    site: require './_site.vue'
   data: ->
     recommends: []
     page: 1
@@ -29,4 +31,6 @@ module.exports =
         -> RecommendCollection.save()
         true
       )
+    @$watch 'recommends', -> @$dispatch 'sidebarChanged'
+    @$watch 'page', -> @$dispatch 'sidebarChanged'
 </script>

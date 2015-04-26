@@ -36,7 +36,6 @@ window.onload = Raven.wrap ->
     return if path == window.location.pathname + window.location.search
     window.scrollTo(0, 0)
     page(path)
-    app.sidebarHeight = document.querySelector('#sidebar').clientHeight + 'px'
 
   Vue.prototype.$pushMainContent = (callback)->
     Vue.nextTick ->
@@ -63,14 +62,11 @@ window.onload = Raven.wrap ->
         @isModalOpen = !@isModalOpen
     components: {
       'sidebar': require './components/sidebar.vue'
-      'hot-entry': require './components/hot-entry.vue'
-      'page': require './components/page.vue'
-      'comments': require './components/comments.vue'
-      'comment': require './components/comment.vue'
+      'hotentry': require './components/hotentry.vue'
       'search-result': require './components/search-result.vue'
       'modal': require './components/modal.vue'
       'domain': require './components/domain.vue'
-      'loading-circle': require './components/loading-circle.vue'
+      'loading-circle': require './components/_loading-circle.vue'
     }
     attached: ->
       BukumaDiver.footer (err, @footerContent)=>
@@ -81,13 +77,17 @@ window.onload = Raven.wrap ->
   app.$on 'openSite', (page)->
     RecommendCollection.countUp(page)
 
+  app.$on 'sidebarChanged', ->
+    Vue.nextTick =>
+      @sidebarHeight = (document.querySelector('#sidebar').clientHeight + 24) + 'px'
+
   page '*', (ctx, next)->
     ctx.params = _.merge(qs.parse(ctx.querystring), ctx.params)
     ga 'send', 'pageview', ctx.path
     next()
 
   page '/', ->
-    app.currentView = 'hot-entry'
+    app.currentView = 'hotentry'
 
   page Site.pathTemplate, (ctx, next)->
     app.currentView = 'domain'

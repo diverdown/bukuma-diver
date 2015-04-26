@@ -1,7 +1,7 @@
 <template lang="jade">
 .card
   .card-head(v-if="withDomain")
-    a(href="http://{{domain}}")
+    a(v-on="click: openModal(domain)")
       img.favicon(v-attr="src: domain | favicon")
       | {{domain}}
     button.right.small(v-on="click: openModal(domain)") 人気ページを見る
@@ -17,6 +17,8 @@
 
 <script lang="coffee">
 module.exports =
+  components:
+    comments: require './_page/_comments.vue'
   methods:
     openModal: (domain)->
       @$dispatch 'openModal', domain

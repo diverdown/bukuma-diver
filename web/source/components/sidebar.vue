@@ -13,7 +13,7 @@ header#sidebar-top.center-flexbox
     i.fa.fa-search(v-on="click: $transit('/pages/?q='+query)")
 
 #sidebar-bottom
-  .margin-6unit-0unit(v-component="my-favorites" v-with="favorites: favorites")
+  .margin-6unit-0unit(v-component="favorites" v-with="favorites: favorites")
 
   .margin-6unit-0unit(v-component="recommends" v-with="favorites: favorites")
 
@@ -36,8 +36,7 @@ module.exports =
   data: ->
     chrome: navigator.userAgent.toLowerCase().indexOf('chrome') != -1
   components:
-    'my-favorites': require './favorites.vue'
-    'popular-sites': require './popular-sites.vue'
-    _site: require './_site.vue'
-    recommends: require './recommends.vue'
+    favorites: require './sidebar/_favorites.vue'
+    'popular-sites': require './sidebar/_popular-sites.vue'
+    recommends: require './sidebar/_recommends.vue'
 </script>

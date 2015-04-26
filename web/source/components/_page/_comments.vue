@@ -16,7 +16,7 @@
 </template>
 
 <script lang="coffee">
-BukumaDiver = require '../bukuma_diver'
+BukumaDiver = require '../../bukuma_diver'
 _ = require 'lodash'
 
 PENDING_THRESHOULD = 2000
@@ -25,6 +25,8 @@ LOADING = 1
 LOADED = 2
 
 module.exports =
+  components:
+    comment: require './_comments/_comment.vue'
   data: ->
     eid: ''
     comments: []

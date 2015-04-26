@@ -13,7 +13,7 @@ module.exports = class Site extends Favoritable
 
   constructor: ({@name, @domain, @count})->
     super
-    if @name == @domain
+    if @name == @domain and !@count
       BukumaDiver.title domain: @domain, (err, {title})=> @name = title
     @name ||= @domain
     @count ||= 1

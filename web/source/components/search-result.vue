@@ -31,6 +31,7 @@ _ = require 'lodash'
 module.exports =
   components:
     'social-buttons': require './_social_buttons.vue'
+    page: require './_page.vue'
   data: ->
     params: {sort: 'popular', users: null}
     query: {favorited: false}

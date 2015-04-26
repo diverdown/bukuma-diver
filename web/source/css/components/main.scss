@@ -1,0 +1,214 @@
+#main {
+  @include flex(1);
+  min-height: 500px;
+}
+
+$bookmark-color: #15A4FA;
+.bookmark-count {
+  border: 1px solid $bookmark-color;
+  text-align: center;
+  font-size: 10px;
+  color: $bookmark-color;
+  min-width: 55px;
+  @include unit-padding(2);
+  @include unit-margin(0 2 0 0);
+  @include border-radius(50px);
+  > .number {
+    font-size: 14px;
+  }
+}
+
+/* $button-color: #2FA8E7; */
+$button-color: #F0BA32;
+button {
+  cursor: pointer;
+  border: 1px solid $button-color;
+  @include border-radius(2px);
+  background-color: white;
+  color: $button-color;
+  padding: 0.2em 0.4em;
+  &:hover {
+    background-color: #FFF8E9;
+  }
+}
+
+$button-color: #8BA3CF;
+$button-shadow-color: #8698BA;
+
+.button {
+  @include border-radius(4px);
+  color: white;
+}
+
+.button-default {
+  background-color: $button-color;
+  @include box-shadow(1px 1px 0px 1px $button-shadow-color);
+
+
+  &:hover {
+    background-color: $button-shadow-color;
+  }
+}
+
+.button-light {
+  color: #73BF67;
+  border: 1px solid #73BF67;
+  &:hover {
+    background-color: #EDFCEA;
+  }
+}
+
+.favicon {
+  width: 1.5em;
+  height: 1.5em;
+  @include unit-margin(0 2 0 0);
+}
+
+.card {
+  background-color: white;
+  border: 1px solid $border-color;
+  @include box-shadow(1px 1px 1px 0px $shadow-color);
+  @include border-radius(2px);
+}
+
+.card-head {
+  border-bottom: 1px solid $border-color;
+  @include unit-padding(3 4 2);
+  font-size: 12px;
+
+  .favicon {
+    position: relative;
+    top: 4px;
+  }
+}
+
+.card-body {
+  @include unit-padding(2 4 2);
+}
+
+.favorited {
+  color: #FF4978;
+}
+
+.favorite { display: block; }
+
+.loading-box {
+  margin: 160px auto;
+}
+
+.loading {
+  width: 200px;
+  height: 200px;
+}
+
+$main-side-padding-unit: 6;
+
+.main-header {
+  @include box-shadow(0px 1px 1px 0px $shadow-color);
+  background-color: white;
+  &.fixed {
+    top: 0;
+    width: calc(100% - #{$sidebar-width});
+    z-index: 1;
+  }
+}
+
+.main-title-box {
+  height: $title-height;
+  @include unit-padding(0 $main-side-padding-unit);
+}
+
+.main-title {
+  color: #555;
+  @include flex(1);
+  > a {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .favicon {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+.header-states {
+  @include generic-flexbox;
+  border-top: 1px solid $border-color;
+}
+
+.header-state {
+  @include generic-flexbox;
+  @include flex(1);
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  +li { border-left: 1px solid $border-color; }
+  &:hover:not(.active) {
+    background-color: #fafafa;
+    color: $default-font-color;
+  }
+  &.active {
+    cursor: default;
+    > a {
+      cursor: default;
+      color: $default-font-color;
+    }
+  }
+  > a {
+    color: #aaa;
+    display: block;
+    @include flex(1);
+  }
+}
+
+.state-default {
+  @include unit-padding(2);
+}
+.active > .state-default {
+  border-bottom: 2px solid #008FDE;
+}
+.header-category {
+  border-bottom: 3px solid white;
+  @include unit-padding(2);
+}
+
+.main-body {
+  @include unit-padding(0 $main-side-padding-unit);
+}
+
+.social-buttons {
+  transition: opacity .3s ease;
+  text-align: right;
+  padding: 2 * $unit;
+  position: absolute;
+  right: $main-side-padding-unit * $unit;
+  background-color: white;
+  border: 1px solid $border-color;
+
+  &.expand-enter, &.expand-leave {
+    visibility: hidden;
+    opacity: 0;
+  }
+  > a {
+    @include unit-margin(0 2 0 0);
+    &:last-child { margin: 0; }
+  }
+  i {
+    width: 8 * $unit;
+    height: 8 * $unit;
+    line-height: 8 * $unit;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    @include border-radius(2px);
+    &.icon-hatebu {
+      position: relative;
+      top: 2px;
+      background-color: #00A4DE;
+    }
+    &.fa-twitter { background-color: #00ACEE; }
+    &.fa-facebook { background-color: #3B5998; }
+    &.fa-google-plus { background-color: #DC4A36; }
+  }
+}

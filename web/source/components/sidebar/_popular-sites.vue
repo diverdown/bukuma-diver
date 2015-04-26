@@ -6,10 +6,12 @@ a.more(v-on="click: showMore" v-if="doesHaveMore") もっと見る...
 </template>
 
 <script lang="coffee">
-Site = require '../site'
+Site = require '../../site'
 module.exports =
   data: ->
     sites: []
+  components:
+    _site: require './_site.vue'
   computed:
     doesHaveMore: ->
       @sites.length % 10 == 0
@@ -22,5 +24,5 @@ module.exports =
       )
   created: ->
     Site.popular(null, (err, @sites)=>)
-
+    @$watch 'sites', -> @$dispatch 'sidebarChanged'
 </script>

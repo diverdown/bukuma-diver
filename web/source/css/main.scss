@@ -27,31 +27,15 @@ $footer-bg-color: #293141;
 $footer-color: #90969E;
 $footer-blight-color: #DADADA;
 
-@import 'foundation/_reset';
-@import 'foundation/_base';
 
-@import 'object/utility/_margin';
-@import 'object/utility/_text';
-@import 'object/utility/_layout';
-@import 'object/utility/_draggable';
-@import 'object/utility/_font';
-@import 'object/utility/_cursor';
+@import 'base';
+@import 'utility';
 
-@import 'layout/_sidebar';
-@import 'layout/_footer';
-@import 'layout/_main';
-@import 'layout/_modal';
+@import 'components/modal';
+@import 'components/sidebar';
 
-@import 'object/component/_card';
-@import 'object/component/_button';
-@import 'object/component/_bookmark_count';
-@import 'object/component/_favorite';
-@import 'object/component/_icon';
-@import 'object/component/_loading';
-
-@import 'object/project/_page';
-@import 'object/project/_comments';
-@import 'object/project/_main_header';
-@import 'object/project/_hot_entries';
-@import 'object/project/_sidebar';
-@import 'object/project/_social_button';
+@import 'components/main';
+@import 'components/hotentry';
+@import 'components/_page';
+@import 'components/_page/_comments';
+@import 'components/footer';

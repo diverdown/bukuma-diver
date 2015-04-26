@@ -1,3 +1,10 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
   width: 100%;
   margin: 0;
@@ -10,23 +17,27 @@ body {
   }
 }
 
+h1,h2,h3 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
 h1 { font-size: 24px; }
 
 h2 { font-size: 20px; }
 
 h3 { font-size: 12px; }
 
-h1, h2, h3 { font-weight: normal; }
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+li { list-style: none; }
 
 a {
   cursor: pointer;
   text-decoration: none;
   color: $default-font-color;
-}
-
-html {
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
 }

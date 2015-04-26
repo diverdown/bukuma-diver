@@ -32,6 +32,8 @@ CATEGORY_COLORS =
 _ = require 'lodash'
 BukumaDiver = require '../bukuma_diver'
 module.exports =
+  components:
+    page: require './_page.vue'
   data: ->
     { categories: [], loading: true, _headerHeight: null }
   methods:

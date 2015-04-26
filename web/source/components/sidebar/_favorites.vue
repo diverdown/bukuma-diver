@@ -3,15 +3,15 @@ h2
   i.fa.fa-heart
   = ' ウォッチリスト'
 ul
-  li.sidebar-list.draggable(v-repeat="favorite: favorites" v-component="_favorite" draggable="true"
+  li.sidebar-list.draggable(v-repeat="favorite: favorites" v-component="favorite" draggable="true"
     v-on="dragstart: onDragStart, dragenter: onDragEnter, dragover: onDragOver, drop: onDrop, dragend: onDragEnd")
 </template>
 
 <script lang="coffee">
-FavoriteCollection = require '../favorite_collection'
+FavoriteCollection = require '../../favorite_collection'
 module.exports =
   components:
-    _favorite: require './_favorite.vue'
+    favorite: require './_favorites/_favorite.vue'
   data: ->
     favorites: []
   methods:
@@ -61,4 +61,5 @@ module.exports =
       FavoriteCollection.save()
   created: ->
     FavoriteCollection.restore (err, @favorites)=>
+    @$watch 'favorites', -> @$dispatch 'sidebarChanged'
 </script>

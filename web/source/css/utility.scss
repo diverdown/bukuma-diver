@@ -1,0 +1,207 @@
+.clickable { cursor: pointer; }
+.draggable { cursor: pointer; }
+
+@mixin placeholder {
+  border: dotted 1px #999;
+  content: "　";
+  display: block;
+}
+
+li.draggable.after:after {
+  @include placeholder;
+}
+
+li.draggable.before:before {
+  @include placeholder;
+}
+@font-face {
+  font-family: 'chogokubosogothic';
+  src:url('/font/chogokubosogothic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'icomoon';
+  src:url('/font/icomoon.eot?um671v');
+  src:url('/font/icomoon.eot?#iefixum671v') format('embedded-opentype'),
+    url('/font/icomoon.woff?um671v') format('woff'),
+    url('/font/icomoon.ttf?um671v') format('truetype'),
+    url('/font/icomoon.svg?um671v#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-hatebu:before {
+  content: "\e602";
+}
+
+.icon-pocket:before {
+  content: "\e601";
+}
+
+.icon-bukuma-diver:before {
+  content: "\e600";
+}
+.container:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.left { float: left; }
+
+.right { float: right; }
+
+@mixin generic-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: inline-axis
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row
+                    ));
+}
+
+.top-align-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: inline-axis,
+                      box-align: start
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row,
+                      flex-align: start
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row,
+                      align-items: flex-start
+                    ));
+}
+
+.bottom-align-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: inline-axis,
+                      box-align: end
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row,
+                      flex-align: end
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row,
+                      align-items: flex-end
+                    ));
+}
+
+.center-flexbox {
+  @include flexbox((
+                      display: box,
+                      box-orient: vertical,
+                      box-pack: center
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: row,
+                      flex-align: center,
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: row,
+                      align-items: center
+                    ));
+}
+@mixin unit-padding($args) {
+  $list: ();
+  @each $v in $args {
+    $list: append($list, $v * $unit);
+  }
+  padding: $list;
+}
+
+@mixin unit-margin($args) {
+  $list: ();
+  @each $v in $args {
+    $list: append($list, $v * $unit);
+  }
+  margin: $list;
+}
+
+@for $i from 0 through 10 {
+  @for $j from 0 through 10 {
+    @if $i == $j {
+      .margin-#{$i}unit + .margin-#{$i}unit {
+        margin-top: #{$i * $unit};
+      }
+      .padding-#{$i}unit {
+        padding: #{$i * $unit};
+      }
+    } @else {
+      @each $type in margin, padding {
+        .#{$type}-#{$i}unit-#{$j}unit {
+          #{$type}: #{$i * $unit} #{$j * $unit};
+        }
+      }
+    }
+  }
+}
+.center {
+  text-align: center;
+}
+
+.large {
+  font-size: 1.5em;
+}
+
+.fa.large {
+  font-size: 1.5em;
+}
+
+.samll {
+  font-size: 0.8em;
+}
+
+$bookmark-color: #15A4FA;
+.bookmark-count {
+  border: 1px solid $bookmark-color;
+  text-align: center;
+  font-size: 10px;
+  color: $bookmark-color;
+  min-width: 55px;
+  @include unit-padding(2);
+  @include unit-margin(0 2 0 0);
+  @include border-radius(50px);
+  > .number {
+    font-size: 14px;
+  }
+}

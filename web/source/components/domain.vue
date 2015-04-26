@@ -32,6 +32,7 @@ Site = require '../site'
 module.exports =
   components:
     'social-buttons': require './_social_buttons.vue'
+    page: require './_page.vue'
   data: ->
     globalUpdate: true
     params: {sort: 'count'}
