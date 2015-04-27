@@ -15,27 +15,26 @@ html
     .top-align-flexbox(v-style="min-height: sidebarHeight")
       #sidebar-wrapper
         nav#sidebar(v-component="sidebar")
-      main#main(v-component="{{currentView}}" v-ref="main")
+      main#main
+        div(v-component="{{currentView}}" v-ref="main")
+        #about
+          .about-box.center
+            a(href="http://b.hatena.ne.jp/" target="_blank")
+              i.icon-hatebu
+            p
+              | ブクマダイバーは
+              a(href="http://www.hatena.ne.jp/" target="_blank") はてな
+              | のサービスである
+              br
+              a(href="http://b.hatena.ne.jp/" target="_blank") はてなブックマーク
+              | の情報を利用しています
+          .about-box.center
+            a(href="https://github.com/webken/bukuma-diver" target="_blank")
+              i.fa.fa-github
+            p
+              | ブクマダイバーのソースコードは
+              br
+              a(href="https://github.com/webken/bukuma-diver" target="_blank") Githubで公開
+              | しています
 
-    #footer
-      #about
-        .footer-box.center
-          a(href="http://b.hatena.ne.jp/" target="_blank")
-            i.icon-hatebu
-          p
-            | ブクマダイバーは
-            a(href="http://www.hatena.ne.jp/" target="_blank") はてな
-            | のサービスである
-            br
-            a(href="http://b.hatena.ne.jp/" target="_blank") はてなブックマーク
-            | の情報を利用しています
-        .footer-box.center
-          a(href="https://github.com/webken/bukuma-diver" target="_blank")
-            i.fa.fa-github
-          p
-            | ブクマダイバーの
-            br
-            | ソースコードは
-            a(href="https://github.com/webken/bukuma-diver" target="_blank") Githubで公開
-            | しています
-      #webken-footer(v-html="footerContent")
+    #footer(v-html="footerContent")
