@@ -4,17 +4,12 @@ header.main-header.fixed.hotentry-header
     h1.main-title ホットエントリー
   ul.header-states
     li.header-state(v-repeat="categories" v-class="active: active")
-      a.header-category(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'" v-on="click: moveToCategory"){{name}}
+      a.header-category(href="#{{name}}" v-style="border-bottom-color: active ? color : 'white'" v-on="click: moveToCategory") {{name}}
 
 .main-body
   loading-circle(v-if="loading")
   ul.hotentries(v-if="!loading")
-    li.hotentry.margin-5unit(v-repeat="categories" v-attr="id: name")
-      h2.hotentry-category(v-style="border-bottom-color: color") {{name}}
-      ul
-        li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1" v-on="click: showMorePages($index)")
-      .center.padding-6unit-0unit
-        a.button.button-default.padding-2unit-4unit(v-if="hasMore" v-on="click: showMorePages($index)") もっと見る...
+    li.hotentry.margin-5unit(v-repeat="categories" v-component="category")
 </template>
 
 <script lang="coffee">
@@ -33,14 +28,10 @@ _ = require 'lodash'
 BukumaDiver = require '../bukuma_diver'
 module.exports =
   components:
-    page: require './_page.vue'
+    category: require './_category.vue'
   data: ->
     { categories: [], loading: true, _headerHeight: null }
   methods:
-    showMorePages: (index)->
-      category = @categories[index]
-      category.pages = category.pages.concat(@_hiddenPages[index])
-      category.hasMore = false
     moveToCategory: (hashOrEvent)->
       hash =
         if hashOrEvent instanceof MouseEvent
@@ -59,7 +50,7 @@ module.exports =
         c.color = CATEGORY_COLORS[c.name]
         c.active = false
         c.hasMore = true
-        @_hiddenPages[i] = c.pages.splice(if c.name == '総合' then 10 else 5)
+        c._hiddenPages = c.pages.splice(if c.name == '総合' then 10 else 5)
       @categories = categories
       @loading = false
       @$pushMainContent =>
