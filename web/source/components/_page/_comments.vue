@@ -11,8 +11,13 @@
 
   ul.comments(v-if="!noComment")
     li.comment(v-repeat="comments" v-component="comment" v-with="eid: eid")
-  .comment-empty.center-flexbox(v-if="noComment")
+  .comment-state.center-flexbox(v-if="noComment")
     .message まだブックマークコメントがありません
+  .comment-state.center-flexbox(v-if="error")
+    .message.error
+      | コメントの読み込みに失敗しました
+      .center.margin-2unit-0unit
+        a.button.button-light.padding-2unit-4unit(v-on="click: fetch") リトライ
 </template>
 
 <script lang="coffee">
@@ -20,6 +25,7 @@ BukumaDiver = require '../../bukuma_diver'
 _ = require 'lodash'
 
 PENDING_THRESHOULD = 2000
+ERROR = -1
 PENDING = 0
 LOADING = 1
 LOADED = 2
@@ -35,12 +41,16 @@ module.exports =
     pending: -> @state == PENDING
     loading: -> @state == LOADING
     loaded: -> @state == LOADED
+    error: -> @state == ERROR
     isEmpty: -> @comments.length == 0
     noComment: -> @loaded and @isEmpty
   methods:
     fetch: ->
       @state = LOADING
-      BukumaDiver.comments(@url, (err, {@eid,@comments})=> @state = LOADED)
+      BukumaDiver.comments @url, (err, res)=>
+        return @state = ERROR if err
+        {@eid, @comments} = res
+        @state = LOADED
     wasSeen: ->
       {top, bottom} = @$el.getBoundingClientRect()
       0 < bottom and top < (window.innerHeight || document.documentElement.clientHeight)

@@ -32,7 +32,8 @@ module.exports = class BukumaDiver
   @comments: (url, callback)->
     jsonp(
       "http://b.hatena.ne.jp/entry/jsonlite/?url=#{encodeURIComponent url}",
-      (err, {eid, bookmarks})->
+      (err, res)->
+        {eid, bookmarks} = res if res
         callback(err, eid: eid, comments: _.reject(bookmarks, comment: ''))
     )
 
