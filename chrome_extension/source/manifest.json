@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "ブクマダイバー Google Chrome 拡張",
-  "description": "はてなブックマークをより身近に。ブクマダイバーをより便利に使える拡張です。",
-  "version": "1.0",
+  "description": "面白いページを1匹見つけたら裏に100匹潜んでいると考えろ！良質なコンテンツを芋づる式に発掘していく装置、ブクマダイバー！の拡張機能！",
+  "version": "0.0.1",
   "icons": {
     "16": "image/icon16.png",
     "48": "image/icon48.png",
@@ -22,7 +22,6 @@
     "keyword": "b"
   },
   "permissions": [
-    "tabs",
-    "https://www.google.co.jp/"
+    "tabs"
   ]
 }
