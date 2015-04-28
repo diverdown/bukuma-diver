@@ -1,6 +1,22 @@
 #main {
   @include flex(1);
   min-height: 500px;
+  @include flexbox((
+                      display: box,
+                      box-orient: vertical
+                    ), $version: 1);
+  @include flexbox((
+                      display: flexbox,
+                      flex-direction: column
+                    ), $version: 2);
+  @include flexbox((
+                      display: flex,
+                      flex-direction: column
+                    ));
+}
+
+#current-view {
+  @include flex(1);
 }
 
 $bookmark-color: #15A4FA;

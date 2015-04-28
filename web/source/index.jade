@@ -12,11 +12,11 @@ html
   body#app(v-class="modal-open: isModalOpen" v-on="keyup: closeModal | key esc")
     #modal(v-component="modal" v-show="isModalOpen" v-events="closeModal: closeModal")
 
-    .top-align-flexbox(v-style="min-height: sidebarHeight")
+    .stretch-flexbox(v-style="min-height: sidebarHeight")
       #sidebar-wrapper
         nav#sidebar(v-component="sidebar")
       main#main
-        div(v-component="{{currentView}}" v-ref="main")
+        #current-view(v-component="{{currentView}}" v-ref="main")
         #about
           .about-box.center
             a(href="http://b.hatena.ne.jp/" target="_blank")

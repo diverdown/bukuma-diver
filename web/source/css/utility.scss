@@ -88,21 +88,21 @@ li.draggable.before:before {
                     ));
 }
 
-.top-align-flexbox {
+.stretch-flexbox {
   @include flexbox((
                       display: box,
                       box-orient: inline-axis,
-                      box-align: start
+                      box-align: stretch
                     ), $version: 1);
   @include flexbox((
                       display: flexbox,
                       flex-direction: row,
-                      flex-align: start
+                      flex-align: stretch
                     ), $version: 2);
   @include flexbox((
                       display: flex,
                       flex-direction: row,
-                      align-items: flex-start
+                      align-items: stretch
                     ));
 }
 
