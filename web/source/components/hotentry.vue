@@ -55,7 +55,7 @@ module.exports =
       @loading = false
       @$pushMainContent =>
         @_headerHeight = document.querySelector('.hotentry-header').clientHeight
-        if hash = document.location.hash
+        if hash = decodeURIComponent(document.location.hash)
           @moveToCategory(hash)
         else
           @_activateCurrentCategory()
