@@ -45,12 +45,11 @@ module.exports =
 
   created: ->
     BukumaDiver.hotEntries (err, categories)=>
-      @_hiddenPages = []
       for c, i in categories
         c.color = CATEGORY_COLORS[c.name]
         c.active = false
         c.hasMore = true
-        c._hiddenPages = c.pages.splice(if c.name == '総合' then 10 else 5)
+        c.hiddenPages = c.pages.splice(if c.name == '総合' then 10 else 5)
       @categories = categories
       @loading = false
       @$pushMainContent =>

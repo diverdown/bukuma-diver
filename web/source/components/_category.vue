@@ -11,7 +11,7 @@ module.exports =
   components:
     page: require './_page.vue'
   methods:
-    showMorePages: (index)->
-      @pages.concat(@_hiddenPages)
+    showMorePages: ->
+      @pages = @pages.concat(@hiddenPages)
       @hasMore = false
 </script>
