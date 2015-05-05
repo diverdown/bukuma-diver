@@ -81,7 +81,6 @@ window.onload = Raven.wrap ->
     data:
       canonicalPath: location.pathname
       currentView: ''
-      mainParams: {}
       isModalOpen: false
       isSidebarActive: false
       transitionEnd: false
@@ -91,9 +90,6 @@ window.onload = Raven.wrap ->
     computed:
       hasActiveContent: -> @isModalOpen || @isSidebarActive
     methods:
-      search: (q)->
-        @mainParams = {q: q}
-        @currentView = 'search-result'
       scrollTop: -> scrollTo(scrollX, 0)
       closeModal: ->
         @isModalOpen = false

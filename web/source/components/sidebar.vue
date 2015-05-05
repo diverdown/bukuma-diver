@@ -9,8 +9,8 @@ header#sidebar-top.center-flexbox
     img.favicon(src="/image/hatenabookmark-logo.png" alt="はてなブックマーク")
     | ホットエントリー
   #search-box
-    input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: $transit('/pages/?q='+query) | key enter")
-    i.fa.fa-search(v-on="click: $transit('/pages/?q='+query)")
+    input(v-model="query" type="text" placeholder="キーワードではてブ検索" v-on="keyup: search | key enter")
+    i.fa.fa-search(v-on="click: search")
 
 #sidebar-bottom
   .margin-6unit-0unit(v-component="favorites" v-with="favorites: favorites")
@@ -39,4 +39,6 @@ module.exports =
     recommends: require './sidebar/_recommends.vue'
   data: ->
     chrome: navigator.userAgent.toLowerCase().indexOf('chrome') != -1
+  methods:
+    search: -> @$transit("/pages/?q=#{@query}") if @query
 </script>
