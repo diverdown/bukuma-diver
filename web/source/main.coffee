@@ -79,6 +79,7 @@ window.onload = Raven.wrap ->
   app = new Vue
     el: '#app'
     data:
+      canonicalPath: location.pathname
       currentView: ''
       mainParams: {}
       isModalOpen: false
@@ -133,11 +134,13 @@ window.onload = Raven.wrap ->
   page '*', (ctx, next)->
     ctx.params = _.merge(qs.parse(ctx.querystring), ctx.params)
     ga 'send', 'pageview', ctx.path
+    app.canonicalPath = ctx.canonicalPath
     app.isSidebarActive = false
     next()
 
   page '/', ->
     app.currentView = 'hotentry'
+    app.canonicalPath = '/'
 
   updateAndSearch = (view)->
     (ctx, next)->
@@ -150,5 +153,8 @@ window.onload = Raven.wrap ->
   page Site.pathTemplate, updateAndSearch('domain')
 
   page Query.pathTemplate, updateAndSearch('search-result')
+
+  # push root path if not found
+  page '*', -> page('/')
 
   page()
