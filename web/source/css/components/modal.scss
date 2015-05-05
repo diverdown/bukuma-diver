@@ -11,10 +11,13 @@
 
 #modal-panel {
   position: relative;
-  width: 720px;
   min-height: 300px;
   background-color: $bg-color;
   margin: 28px auto;
   border: 1px solid rgba(0,0,0,0);
   @include border-radius(3px);
+  width: 720px;
+  @media screen and (max-width: $device-width-threshould) {
+    width: 95%;
+  }
 }

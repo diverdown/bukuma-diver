@@ -1,4 +1,6 @@
 #footer {
+  position: relative;
+  z-index: 1;
   @include unit-padding(10 3 0);
   background-color: $footer-bg-color;
   font-size: 0.9em;

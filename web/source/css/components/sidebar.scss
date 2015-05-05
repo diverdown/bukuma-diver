@@ -1,6 +1,18 @@
 #sidebar-wrapper {
   width: $sidebar-width;
+
+  @media screen and (max-width: $device-width-threshould) {
+    overflow-y: auto;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }
+
 #sidebar {
   width: $sidebar-width;
   min-height: 400px;

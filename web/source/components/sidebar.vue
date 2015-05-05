@@ -33,10 +33,10 @@ header#sidebar-top.center-flexbox
 
 <script lang="coffee">
 module.exports =
-  data: ->
-    chrome: navigator.userAgent.toLowerCase().indexOf('chrome') != -1
   components:
     favorites: require './sidebar/_favorites.vue'
     'popular-sites': require './sidebar/_popular-sites.vue'
     recommends: require './sidebar/_recommends.vue'
+  data: ->
+    chrome: navigator.userAgent.toLowerCase().indexOf('chrome') != -1
 </script>

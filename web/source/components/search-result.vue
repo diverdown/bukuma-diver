@@ -17,7 +17,7 @@ header.main-header.fixed
         a.state-default(v-on="click: $transit(query.toPath({sort: 'recent', users: 1}))") すべて
 
 loading-circle(v-if="loading")
-ul.padding-6unit(v-if="!loading")
+ul.pages(v-if="!loading")
   li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
 .center.padding-6uni-0unit(v-if="hasMore")
   a.button.button-default.padding-2unit-4unit(v-on="click: searchMore" v-if="!loading") もっと見る...

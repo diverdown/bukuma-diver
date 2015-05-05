@@ -1,10 +1,10 @@
 <template lang="jade">
 .card
-  .card-head(v-if="withDomain")
+  .card-head.center-flexbox(v-if="withDomain")
     a(v-on="click: openModal(domain)")
       img.favicon(v-attr="src: domain | favicon")
       | {{domain}}
-    button.right.small(v-on="click: openModal(domain)") 人気ページを見る
+    button.small.pc-only(v-on="click: openModal(domain)") 人気ページを見る
   .card-body
     .center-flexbox.padding-1unt-0unit
       a.bookmark-count(href="{{url | hatebuEntry}}" target="_blank")

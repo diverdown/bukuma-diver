@@ -1,5 +1,7 @@
 #main {
+  background-color: $bg-color;
   @include flex(1);
+  z-index: 2;
   min-height: 500px;
   @include flexbox((
                       display: box,
@@ -13,6 +15,17 @@
                       display: flex,
                       flex-direction: column
                     ));
+
+  @media screen and (max-width: $device-width-threshould) {
+    @include transform(translateX(0));
+    @include transition(transform .2s ease-in-out);
+    &.swiped-out {
+      @include transform(translateX($sidebar-width));
+      &.end {
+        z-index: 0;
+      }
+    }
+  }
 }
 
 #current-view {
@@ -34,18 +47,22 @@ $bookmark-color: #15A4FA;
   }
 }
 
-/* $button-color: #2FA8E7; */
+
+@mixin button($base-color) {
+  border: 1px solid $button-color;
+  color: $button-color;
+  &:hover {
+    background-color: $button-color + #aaa;
+  }
+}
+
 $button-color: #F0BA32;
 button {
   cursor: pointer;
-  border: 1px solid $button-color;
   @include border-radius(2px);
   background-color: white;
-  color: $button-color;
   padding: 0.2em 0.4em;
-  &:hover {
-    background-color: #FFF8E9;
-  }
+  @include button($button-color);
 }
 
 $button-color: #8BA3CF;
@@ -92,6 +109,12 @@ $button-shadow-color: #8698BA;
   @include unit-padding(3 4 2);
   font-size: 12px;
 
+  > a {
+    @include flex(1);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .favicon {
     position: relative;
     top: 4px;
@@ -118,6 +141,7 @@ $button-shadow-color: #8698BA;
 }
 
 $main-side-padding-unit: 6;
+$mobile-main-side-padding-unit: 3;
 
 .main-header {
   @include box-shadow(0px 1px 1px 0px $shadow-color);
@@ -125,13 +149,19 @@ $main-side-padding-unit: 6;
   &.fixed {
     top: 0;
     width: calc(100% - #{$sidebar-width});
-    z-index: 1;
+    @media screen and (max-width: $device-width-threshould) {
+      width: 100%;
+    }
+    z-index: 2;
   }
 }
 
 .main-title-box {
   height: $title-height;
   @include unit-padding(0 $main-side-padding-unit);
+  @media screen and (max-width: $device-width-threshould) {
+    @include unit-padding(0 $mobile-main-side-padding-unit);
+  }
 }
 
 .main-title {
@@ -150,12 +180,16 @@ $main-side-padding-unit: 6;
 
 .header-states {
   @include generic-flexbox;
+  @include flex-wrap(wrap);
   border-top: 1px solid $border-color;
 }
 
 .header-state {
   @include generic-flexbox;
   @include flex(1);
+  @media screen and (max-width: 620px) {
+    @include flex-basis(33%);
+  }
   text-align: center;
   cursor: pointer;
   font-size: 12px;
@@ -191,6 +225,9 @@ $main-side-padding-unit: 6;
 
 .main-body {
   @include unit-padding(0 $main-side-padding-unit);
+  @media screen and (max-width: $device-width-threshould) {
+    @include unit-padding(0 $mobile-main-side-padding-unit);
+  }
 }
 
 .social-buttons {
@@ -226,5 +263,28 @@ $main-side-padding-unit: 6;
     &.fa-twitter { background-color: #00ACEE; }
     &.fa-facebook { background-color: #3B5998; }
     &.fa-google-plus { background-color: #DC4A36; }
+  }
+}
+
+.pages {
+  @include unit-padding(6);
+  @media screen and (max-width: $device-width-threshould) {
+    @include unit-padding(3);
+  }
+}
+
+#mobile-buttons {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  @include unit-padding(2);
+  @media screen and (min-width: $device-width-threshould) {
+    display: none;
+  }
+  > button {
+    font-size: 18px;
+    @include unit-margin(0 0 0 2);
+    @include button(#2FA8E7);
   }
 }

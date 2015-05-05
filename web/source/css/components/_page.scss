@@ -6,4 +6,8 @@
     &:link { color: $link-color; }
     &:visited { color: $visited-link-color; }
   }
+  @media screen and (max-width: $device-width-threshould) {
+    font-size: 16px;
+    line-height: 18px;
+  }
 }

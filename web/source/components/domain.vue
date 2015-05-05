@@ -21,7 +21,7 @@ header.main-header(v-class="fixed: fixedHeader")
       li.header-state(v-class="active: params.sort == 'eid'")
         a.state-default(v-on="click: update({sort: 'eid'})") すべて
 loading-circle(v-if="loading")
-ul.padding-6unit(v-if="!loading")
+ul.pages(v-if="!loading")
   li.margin-4unit(v-repeat="pages" v-component="page")
 </template>
 

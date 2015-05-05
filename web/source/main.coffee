@@ -12,11 +12,55 @@ window.onload = Raven.wrap ->
   BukumaDiver = require './bukuma_diver'
   stickifier = require 'stickifier'
 
-  window.addEventListener 'scroll', stickifier(
+  STICK_THRESHOULD_WIDTH = 520
+  onScroll = stickifier(
     target: -> document.querySelector('#sidebar'),
     lowerBound: 0,
     bottomBarrier: -> document.querySelector('#footer')
     wait: 100
+  )
+  [start, move] = do ->
+    x = 0
+    y = 0
+    start = (e)-> x = e.touches[0].clientX
+    move = _.throttle(
+      (e)->
+        newx = e.touches[0].clientX
+        dx = newx - x
+        app.isSidebarActive = true if dx > 60
+        x = newx
+      100
+    )
+    return [start, move]
+  document.addEventListener 'touchstart', start
+  document.addEventListener 'touchmove', move
+  if window.innerWidth > STICK_THRESHOULD_WIDTH
+    window.addEventListener 'scroll', onScroll
+
+  window.addEventListener 'resize', _.throttle(
+    do ->
+      oldWidth = window.innerWidth
+      y = 0
+      ->
+        currentWidth = window.innerWidth
+        stateChanged = (currentWidth - STICK_THRESHOULD_WIDTH)*(oldWidth - STICK_THRESHOULD_WIDTH) < 0
+        sidebar = document.querySelector('#sidebar')
+
+        if stateChanged
+          if currentWidth > STICK_THRESHOULD_WIDTH
+            main = document.querySelector('#main')
+            y -= main.getBoundingClientRect().top
+            sidebar.style.cssText = "position: absolute; top: #{y}px"
+            app.isSidebarActive = false
+            window.addEventListener 'scroll', onScroll
+          else
+            document.querySelector('#sidebar-wrapper').scrollTop = -y
+            sidebar.style.cssText = ''
+            window.removeEventListener 'scroll', onScroll
+
+        oldWidth = currentWidth
+        y = sidebar.getBoundingClientRect().top
+    100
   )
 
   Vue.config.debug = (process.env.NODE_ENV == 'development')
@@ -44,22 +88,51 @@ window.onload = Raven.wrap ->
       main.style.paddingTop = "#{height}px"
       callback() if callback
 
+  e = document.createEvent('MouseEvents')
+  e.initEvent('scroll', false, true)
+
   app = new Vue
     el: '#app'
     data:
       currentView: ''
       mainParams: {}
       isModalOpen: false
+      isSidebarActive: false
+      transitionEnd: false
       footerContent: ''
       sidebarHeight: 0
+      scrollEvent: e
+    computed:
+      hasActiveContent: -> @isModalOpen || @isSidebarActive
     methods:
       search: (q)->
         @mainParams = {q: q}
         @currentView = 'search-result'
+      scrollTop: do ->
+        iy = null
+        dy = -10
+        ->
+          iy = iy || scrollY
+          dy *= (if scrollY > (iy/2) then 1.1 else 0.91)
+          if scrollY > 0
+            scrollTo(scrollX, scrollY + dy)
+            requestAnimationFrame(@scrollTop.bind(@))
+          else
+            iy = null
+            dy = -10
       closeModal: ->
         @isModalOpen = false
       toggleModal: ->
         @isModalOpen = !@isModalOpen
+      closeSidebar: (e)->
+        return unless e.target.id == 'sidebar-wrapper'
+        @isSidebarActive = false
+        false
+      toggleSidebar: ->
+        @transitionEnd = false
+        @isSidebarActive = !@isSidebarActive
+      propagateScroll: ->
+        window.dispatchEvent(@scrollEvent)
     components: {
       'sidebar': require './components/sidebar.vue'
       'hotentry': require './components/hotentry.vue'
@@ -72,8 +145,10 @@ window.onload = Raven.wrap ->
       BukumaDiver.footer (err, @footerContent)=>
 
   app.$on 'openModal', (domain)->
+    return if window.innerWidth < STICK_THRESHOULD_WIDTH
     @isModalOpen = true
     @$broadcast 'updateModal', domain
+
   app.$on 'openSite', (page)->
     RecommendCollection.countUp(page)
 
@@ -84,6 +159,7 @@ window.onload = Raven.wrap ->
   page '*', (ctx, next)->
     ctx.params = _.merge(qs.parse(ctx.querystring), ctx.params)
     ga 'send', 'pageview', ctx.path
+    app.isSidebarActive = false
     next()
 
   page '/', ->

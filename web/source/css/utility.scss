@@ -205,3 +205,15 @@ $bookmark-color: #15A4FA;
     font-size: 14px;
   }
 }
+
+.mobile-only {
+  @media screen and (min-width: $device-width-threshould) {
+    display: none;
+  }
+}
+
+.pc-only {
+  @media screen and (max-width: $device-width-threshould) {
+    display: none;
+  }
+}
