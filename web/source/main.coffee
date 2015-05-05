@@ -19,21 +19,6 @@ window.onload = Raven.wrap ->
     bottomBarrier: -> document.querySelector('#footer')
     wait: 100
   )
-  [start, move] = do ->
-    x = 0
-    y = 0
-    start = (e)-> x = e.touches[0].clientX
-    move = _.throttle(
-      (e)->
-        newx = e.touches[0].clientX
-        dx = newx - x
-        app.isSidebarActive = true if dx > 60
-        x = newx
-      100
-    )
-    return [start, move]
-  document.addEventListener 'touchstart', start
-  document.addEventListener 'touchmove', move
   if window.innerWidth > STICK_THRESHOULD_WIDTH
     window.addEventListener 'scroll', onScroll
 
