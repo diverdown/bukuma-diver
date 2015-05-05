@@ -279,11 +279,8 @@ $mobile-main-side-padding-unit: 3;
   right: 0;
   z-index: 1000;
   @include unit-padding(2);
-  @media screen and (min-width: $device-width-threshould) {
-    display: none;
-  }
   > button {
-    font-size: 18px;
+    font-size: 26px;
     @include unit-margin(0 0 0 2);
     @include button(#2FA8E7);
   }
