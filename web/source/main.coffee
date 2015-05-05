@@ -93,18 +93,7 @@ window.onload = Raven.wrap ->
       search: (q)->
         @mainParams = {q: q}
         @currentView = 'search-result'
-      scrollTop: do ->
-        iy = null
-        dy = -10
-        ->
-          iy = iy || scrollY
-          dy *= (if scrollY > (iy/2) then 1.1 else 0.91)
-          if scrollY > 0
-            scrollTo(scrollX, scrollY + dy)
-            requestAnimationFrame(@scrollTop.bind(@))
-          else
-            iy = null
-            dy = -10
+      scrollTop: -> scrollTo(scrollX, 0)
       closeModal: ->
         @isModalOpen = false
       toggleModal: ->
