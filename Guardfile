@@ -31,6 +31,7 @@ directories %w(web api spec)
 #                          installed the spring binstubs per the docs)
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
+system('NODE_ENV=test gulp build')
 
 guard :rspec, cmd: "bundle exec rspec" do
   require "guard/rspec/dsl"
@@ -47,4 +48,12 @@ guard :rspec, cmd: "bundle exec rspec" do
   # Ruby files
   ruby = dsl.ruby
   dsl.watch_spec_files_for(ruby.lib_files)
+
+  watch(%r{^web/source/.+}) do
+    if system('NODE_ENV=test gulp build')
+      rspec.spec_dir
+    else
+      raise 'Build Error'
+    end
+  end
 end
