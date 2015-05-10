@@ -1,8 +1,8 @@
 require 'rspec'
-require File.expand_path('../../development-proxy.rb', __FILE__)
-require File.expand_path('../../api/app.rb', __FILE__)
-
 require 'capybara/rspec'
+require 'faraday'
+require 'webmock/rspec'
+require_relative 'support/fake_hatena_bookmark'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -10,17 +10,13 @@ Capybara.register_driver :selenium_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
-Capybara.javascript_driver = ENV['TRAVIS'] ? :selenium : :selenium_chrome
-
-Capybara.app = Rack::Builder.new do
-  map '/api' do
-    run Sinatra::Application
-  end
-
-  map '/' do
-    run DevelopmentProxy
-  end
+Capybara.configure do |config|
+  config.javascript_driver = ENV['TRAVIS'] ? :selenium : :selenium_chrome
+  config.server_port = 50_000
+  config.app = Rack::Builder.parse_file(File.expand_path('../../config.ru', __FILE__))[0]
 end
+
+WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|
   config.include Capybara::DSL
@@ -43,4 +39,9 @@ RSpec.configure do |config|
   config.profile_examples = 10
   config.order = :random
   Kernel.srand config.seed
+
+  config.before :each do
+    stub_request(:any, /b.hatena.ne.jp/).to_rack(FakeHatenaBookmark)
+    allow_any_instance_of(Sinatra::Application).to receive(:site_title) { 'サイト名' }
+  end
 end

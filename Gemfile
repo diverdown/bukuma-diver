@@ -26,6 +26,9 @@ group :development do
   gem 'foreman'
   gem 'compass'
   gem 'rack-livereload'
+  gem 'guard-rspec'
+  gem 'terminal-notifier'
+  gem 'terminal-notifier-guard'
 end
 
 group :development, :test do
@@ -35,6 +38,11 @@ group :development, :test do
   gem 'rspec'
   gem 'capybara'
   gem 'selenium-webdriver'
+end
+
+group :test do
+  gem 'webmock'
+  gem 'ffaker'
 end
 
 group :deployment do

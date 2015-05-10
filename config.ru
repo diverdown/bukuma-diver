@@ -1,4 +1,4 @@
-if ENV['RACK_ENV'] != 'development'
+unless %w{test development}.include? ENV['RACK_ENV']
   raise 'Invalid RACK_ENV'
 end
 
