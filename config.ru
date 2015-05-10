@@ -2,6 +2,8 @@ if ENV['RACK_ENV'] != 'development'
   raise 'Invalid RACK_ENV'
 end
 
+$stdout.sync = true
+
 require 'dotenv'
 Dotenv.load(".env.#{ENV['RACK_ENV']}")
 
