@@ -1,13 +1,16 @@
 language: ruby
 rvm:
-  - "2.2.1"
+- 2.2.2
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 install:
-  - bundle install
-  - npm install -g bower gulp coffee-script
-  - npm install
-  - bower install
-  - gulp build
+- bundle install
+- npm install -g bower gulp coffee-script
+- npm install
+- bower install
+- NODE_ENV=test gulp build
 script: export DISPLAY=:99.0 && bundle exec rspec spec
+notifications:
+  webhooks:
+    secure: O7ychoHjEojIyyYWCI6im+H1vuFXmc4A2vBs9XrfH7IJP2GL5s+K8xuvNnzSIrtl0mq3ESWfUByMgAWFDPsiwvAV17p4qsfKWwERFuIC43G2xXSDcc25TcCyjgvYhvW1riKu8M4kgpHwi51ubECgu5sK0ryr16gbMDvEtT6A3Gs=
