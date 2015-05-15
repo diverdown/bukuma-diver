@@ -11,6 +11,8 @@ window.onload = Raven.wrap ->
   Query = require './query'
   BukumaDiver = require './bukuma_diver'
   stickifier = require 'stickifier'
+  ua = require 'universal-analytics'
+  visitor = ua('UA-33212904-13')
 
   STICK_THRESHOULD_WIDTH = 520
   onScroll = stickifier(
@@ -129,7 +131,7 @@ window.onload = Raven.wrap ->
 
   page '*', (ctx, next)->
     ctx.params = _.merge(qs.parse(ctx.querystring), ctx.params)
-    ga 'send', 'pageview', ctx.path
+    visitor.pageview(ctx.path).send()
     app.canonicalPath = ctx.canonicalPath
     app.isSidebarActive = false
     next()

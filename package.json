@@ -44,6 +44,7 @@
     "run-sequence": "^1.0.2",
     "stickifier": "git+https://gist.github.com/en30/24d4c5b901f453774358",
     "superagent": "^0.21.0",
+    "universal-analytics": "^0.3.6",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "vueify": "^1.1.0"
