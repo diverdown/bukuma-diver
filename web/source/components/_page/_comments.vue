@@ -63,12 +63,12 @@ module.exports =
     # to wait rendering and get appropriate position
     @$root.constructor.nextTick =>
       return @fetch() if @wasSeen()
-      @_loadCommentIfInsideWindow = _.throttle(
+      @_loadCommentIfInsideWindow = _.debounce(
         =>
           if @wasSeen()
             @fetch()
             @unbindScroll()
-        500
+        100
       )
       @bindScroll()
   beforeDestroy: ->
