@@ -17,7 +17,7 @@ window.onload = Raven.wrap ->
     target: -> document.querySelector('#sidebar'),
     lowerBound: 0,
     bottomBarrier: -> document.querySelector('#footer')
-    wait: 100
+    wait: 20
   )
   if window.innerWidth > STICK_THRESHOULD_WIDTH
     window.addEventListener 'scroll', onScroll
