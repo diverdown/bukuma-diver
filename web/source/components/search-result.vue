@@ -2,7 +2,7 @@
 header.main-header.fixed
   .center-flexbox.main-title-box
     h1.main-title 「{{query.query}}」の検索結果
-    i.fa.fa-heart.large.clickable(v-on="click: toggleFavorite" v-class="favorited: query.favorited")
+    i.fa.large.clickable(v-on="click: toggleFavorite" v-class="favorited: query.favorited, fa-heart: query.favorited, fa-heart-o: !query.favorited")
     i.fa.fa-share-alt.large.margin-0unit-1unit.clickable(v-on="click: $.socialButtons.toggle()")
 
   div(v-ref="socialButtons" v-component="social-buttons" v-with="title: socialTitle")
