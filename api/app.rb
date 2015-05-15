@@ -171,7 +171,6 @@ delete '/favorites' do
 end
 
 Sinatra::Application.each_route.group_by(&:path).each do |path, routes|
-  puts path, routes.map(&:verb).join(',').upcase
   options path do
     headers(
       'Access-Control-Allow-Methods': routes.map(&:verb).join(',').upcase,
