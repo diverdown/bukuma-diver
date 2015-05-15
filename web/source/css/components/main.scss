@@ -178,6 +178,20 @@ $mobile-main-side-padding-unit: 3;
   }
 }
 
+.main-sub-title {
+  font-size: 10px;
+  color: #aaa;
+  border-top: 1px solid $border-color;
+  @include unit-padding(1 $main-side-padding-unit);
+}
+
+.total-bookmark-count {
+  color: $bookmark-color;
+  font-size: 16px;
+  @include unit-margin(0 1);
+}
+
+
 .header-states {
   @include generic-flexbox;
   @include flex-wrap(wrap);

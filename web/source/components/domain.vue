@@ -4,13 +4,13 @@ header.main-header(v-class="fixed: fixedHeader")
     h1.main-title.center-flexbox
       img.favicon(v-attr="src: site.domain | favicon")
       a(href="http://{{site.domain}}" target="_blank" title="{{site.name}}") {{site.name}}
-    .bookmark-count
-      .number {{totalBookmarkCount}}
-      | users
     i.fa.fa-heart.large.margin-0unit-1unit.clickable(v-on="click: toggleFavorite" v-class="favorited: site.favorited")
     i.fa.fa-share-alt.large.margin-0unit-1unit.clickable(v-on="click: $.socialButtons.toggle()")
-
   div(v-ref="socialButtons" v-component="social-buttons" v-with="title: socialTitle")
+  .main-sub-title
+    | total
+    span.total-bookmark-count {{totalBookmarkCount}}
+    | users
 
   nav
     ul.header-states
