@@ -160,14 +160,14 @@ post '/favorites' do
   halt 400 unless PublicSuffix.valid?(params[:domain])
   created = redis.sadd params[:domain], request.host
   redis.zincrby 'popular_sites', 1, params[:domain] if created
-  200
+  201
 end
 
 delete '/favorites' do
   halt 400 unless PublicSuffix.valid?(params[:domain])
   deleted = redis.srem params[:domain], request.host
   redis.zincrby 'popular_sites', -1, params[:domain] if deleted
-  200
+  204
 end
 
 Sinatra::Application.each_route.group_by(&:path).each do |path, routes|
