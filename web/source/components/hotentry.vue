@@ -36,7 +36,7 @@ module.exports =
       hash =
         if hashOrEvent instanceof MouseEvent
           hashOrEvent.preventDefault()
-          hashOrEvent.target.hash
+          decodeURIComponent(hashOrEvent.target.hash)
         else
           hashOrEvent
       category = document.querySelector(hash)
