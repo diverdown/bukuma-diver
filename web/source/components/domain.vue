@@ -54,7 +54,7 @@ module.exports =
       @params[k] = v for k,v of params
       @site = Site.find(@params)
       BukumaDiver.searchByDomain @params, (err, res)=>
-        unless @$el
+        return if !@$el or @params.domain != params.domain
         {name, @totalBookmarkCount, @pages} = res
         @loading = false
         @site.name = name
