@@ -45,6 +45,7 @@ module.exports =
 
   created: ->
     BukumaDiver.hotEntries (err, categories)=>
+      return unless @$el
       for c, i in categories
         c.color = CATEGORY_COLORS[c.name]
         c.active = false

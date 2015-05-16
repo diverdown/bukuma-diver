@@ -48,6 +48,7 @@ module.exports =
     fetch: ->
       @state = LOADING
       BukumaDiver.comments @url, (err, res)=>
+        return unless @$el
         return @state = ERROR if err
         {@eid, @comments} = res
         @state = LOADED

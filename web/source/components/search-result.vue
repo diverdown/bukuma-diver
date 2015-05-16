@@ -48,11 +48,14 @@ module.exports =
       @loading = true
       @params[k] = v for k,v of params
       @query = Query.find(@params)
-      BukumaDiver.search @params, (err, @pages)=>
+      BukumaDiver.search @params, (err, res)=>
+        return unless @$el
+        @pages = res
         @loading = false
         @$pushMainContent()
     searchMore: ->
       BukumaDiver.search _.merge({of: @pages.length}, @params), (err, res)=>
+        return unless @$el
         @pages = @pages.concat(res)
         @hasMore = false if res.length == 0
     toggleFavorite: -> @query.toggleFavorite()

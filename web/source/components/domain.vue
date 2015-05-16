@@ -53,7 +53,9 @@ module.exports =
       @loading = true
       @params[k] = v for k,v of params
       @site = Site.find(@params)
-      BukumaDiver.searchByDomain @params, (err, {name, @totalBookmarkCount, @pages})=>
+      BukumaDiver.searchByDomain @params, (err, res)=>
+        unless @$el
+        {name, @totalBookmarkCount, @pages} = res
         @loading = false
         @site.name = name
         @$pushMainContent() if @fixedHeader
