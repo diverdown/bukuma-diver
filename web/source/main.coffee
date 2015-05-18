@@ -64,9 +64,9 @@ window.onload = Raven.wrap ->
   Vue.filter 'u', encodeURIComponent
 
   Vue.prototype.$transit = (path)->
+    # to easily migrate to client side routing
     return if path == window.location.pathname + window.location.search
-    window.scrollTo(0, 0)
-    page(path)
+    location.href = path
 
   Vue.prototype.$pushMainContent = (callback)->
     Vue.nextTick ->
