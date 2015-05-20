@@ -13,6 +13,7 @@ module.exports = class BukumaDiver
   [get, post, del] = ['get', 'post', 'del'].map(bindedMethod)
 
   BUKUMA_DIVER_API_URL = process.env.BUKUMA_DIVER_API_URL
+  COMMENT_API_URL = process.env.COMMENT_API_URL
 
   @hotEntries: (callback)->
     get "#{BUKUMA_DIVER_API_URL}/hotentries", null, callback
@@ -31,7 +32,7 @@ module.exports = class BukumaDiver
 
   @comments: (url, callback)->
     jsonp(
-      "http://b.hatena.ne.jp/entry/jsonlite/?url=#{encodeURIComponent url}",
+      "#{COMMENT_API_URL}/?url=#{encodeURIComponent url}",
       (err, res)->
         res = {eid: res.eid, comments: _.reject(res.bookmarks, comment: '')} unless err
         callback(err, res)
