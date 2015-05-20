@@ -1,4 +1,4 @@
-describe 'Hotentry', js: true do
+describe 'Hotentry', :js do
   context 'when one visits root path with category hash' do
     before do
       visit "/##{URI.encode_www_form_component '世の中'}"
