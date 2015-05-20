@@ -11,13 +11,14 @@ class FakeHatenaBookmark < Sinatra::Base
 
   post '/xmlrpc' do
     content_type :xml
-    Nokogiri::XML::Builder.new do |xml|
+    builder = Nokogiri::XML::Builder.new do |xml|
       xml.root {
         xml.value {
-          xml.int 100
+          xml.int TOTAL_BOOKMARK_COUNT
         }
       }
     end
+    builder.to_xml
   end
 
   private
