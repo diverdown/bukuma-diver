@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'nokogiri'
 require 'ffaker'
 class FakeHatenaBookmark < Sinatra::Base
+  TOTAL_BOOKMARK_COUNT = 100
   %w{/hotentry* /entrylist /search/text}.each do |path|
     get path do
       content_type :xml

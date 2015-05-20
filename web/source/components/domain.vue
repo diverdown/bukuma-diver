@@ -15,11 +15,11 @@ header.main-header(v-class="fixed: fixedHeader")
   nav
     ul.header-states
       li.header-state(v-class="active: params.sort == 'count'")
-        a.state-default(v-on="click: update({sort: 'count'})") 人気順
+        a.state-default(href="javascript:void(0)" v-on="click: update({sort: 'count'})") 人気順
       li.header-state(v-class="active: params.sort == 'recent'")
-        a.state-default(v-on="click: update({sort: 'recent'})") 新着順
+        a.state-default(href="javascript:void(0)" v-on="click: update({sort: 'recent'})") 新着順
       li.header-state(v-class="active: params.sort == 'eid'")
-        a.state-default(v-on="click: update({sort: 'eid'})") すべて
+        a.state-default(href="javascript:void(0)" v-on="click: update({sort: 'eid'})") すべて
 loading-circle(v-if="loading")
 ul.pages(v-if="!loading")
   li.margin-4unit(v-repeat="pages" v-component="page")
@@ -28,7 +28,7 @@ ul.pages(v-if="!loading")
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
 Site = require '../site'
-
+_ = require 'lodash'
 module.exports =
   components:
     'social-buttons': require './_social_buttons.vue'
@@ -48,7 +48,7 @@ module.exports =
       if @globalUpdate
         @$transit(@site.toPath(params))
       else
-        @search(params)
+        @search(_.merge(@params, params))
     search: (params = {})->
       @loading = true
       @params[k] = v for k,v of params
