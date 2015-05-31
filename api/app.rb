@@ -118,7 +118,7 @@ get '/hotentries' do
     results = []
     Hatena::Bookmark::Category.all.each_with_index.map do |c, i|
       Thread.new do
-        results[i] = { name: c.name, pages: client.hotentry(c) }
+        results[i] = { id: c.id, name: c.name, pages: client.hotentry(c) }
       end
     end.each(&:join)
     Oj.dump results

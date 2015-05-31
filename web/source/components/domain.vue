@@ -23,12 +23,16 @@ header.main-header(v-class="fixed: fixedHeader")
 loading-circle(v-if="loading")
 ul.pages(v-if="!loading")
   li.margin-4unit(v-repeat="pages" v-component="page")
+.center.padding-6uni-0unit(v-if="hasMore")
+  a.button.button-default.padding-2unit-4unit(href="{{hatebuLink}}" target="_blank") はてブでもっと見る
+
 </template>
 
 <script lang="coffee">
 BukumaDiver = require '../bukuma_diver'
 Site = require '../site'
 _ = require 'lodash'
+MAX_PAGES = 30
 module.exports =
   components:
     'social-buttons': require './_social_buttons.vue'
@@ -42,7 +46,9 @@ module.exports =
     loading: true
     fixedHeader: true
   computed:
+    hasMore: -> @pages.length == MAX_PAGES
     socialTitle: -> "ブクマダイバー - #{@site.domain}のブクマ"
+    hatebuLink: -> "http://b.hatena.ne.jp/entrylist?sort=#{@params.sort}&url=#{@site.domain}&of=#{MAX_PAGES}"
   methods:
     update: (params)->
       if @globalUpdate

@@ -9,21 +9,10 @@ header.main-header.fixed.hotentry-header
 .main-body
   loading-circle(v-if="loading")
   ul.hotentries(v-if="!loading")
-    li.hotentry.margin-5unit(v-repeat="categories" v-component="category")
+    li.hotentry(v-repeat="categories" v-component="category" v-ref="categories")
 </template>
 
 <script lang="coffee">
-CATEGORY_COLORS =
-  '総合': '#008FDE'
-  '世の中': '#A88357'
-  '政治と経済': '#A88357'
-  '暮らし': '#228C7D'
-  '学び': '#228C7D'
-  'テクノロジー': '#00A5DE'
-  'おもしろ': '#F5AC0F'
-  'エンタメ': '#F5AC0F'
-  'アニメとゲーム': '#F5AC0F'
-
 _ = require 'lodash'
 BukumaDiver = require '../bukuma_diver'
 module.exports =
@@ -46,11 +35,6 @@ module.exports =
   created: ->
     BukumaDiver.hotEntries (err, categories)=>
       return unless @$el
-      for c, i in categories
-        c.color = CATEGORY_COLORS[c.name]
-        c.active = false
-        c.hasMore = true
-        c.hiddenPages = c.pages.splice(if c.name == '総合' then 10 else 5)
       @categories = categories
       @loading = false
       @$pushMainContent =>
@@ -64,14 +48,8 @@ module.exports =
     @_activateCurrentCategory = _.throttle(
       =>
         return unless @_headerHeight
-        c.active = false for c in @categories
-        for i in [(@categories.length-1)..0] by -1
-          c = @categories[i]
-          {top, bottom} = document.querySelector("##{c.name}").getBoundingClientRect()
-          if top <= @_headerHeight
-            history.pushState(null, null, "##{c.name}")
-            c.active = true
-            break
+        @$.categories.forEach (c)=>
+          c.updateActiveState(headerHeight: @_headerHeight)
       200
     )
     window.addEventListener 'scroll', @_activateCurrentCategory

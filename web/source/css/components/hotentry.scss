@@ -2,3 +2,7 @@
   color: #60656D;
   @include unit-padding(4 0);
 }
+
+.hotentry {
+  @include unit-padding(5 0);
+}
