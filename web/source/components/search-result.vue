@@ -20,7 +20,7 @@ loading-circle(v-if="loading")
 ul.pages(v-if="!loading")
   li.margin-4unit(v-repeat="pages" v-component="page" v-with="withDomain: 1")
 .center.padding-6uni-0unit(v-if="hasMore")
-  a.button.button-default.padding-2unit-4unit(v-on="click: searchMore" v-if="!loading") もっと見る...
+  a.button.button-default.padding-2unit-4unit(v-on="click: searchMore" v-if="!loading") もっと見る
 
 </template>
 

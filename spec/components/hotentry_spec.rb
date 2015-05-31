@@ -34,7 +34,7 @@ describe 'Hotentry', :js do
       it 'shows more pages of the category' do
         expect {
           within '.hotentry:first-child' do
-            click_on('もっと見る...')
+            click_on('もっと見る')
           end
         }.to change { all(:css, '.hotentry:first-child li').count }
       end

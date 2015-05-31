@@ -3,7 +3,7 @@ h2.hotentry-category(v-attr="id: name") {{name}}
 ul
   li.margin-4unit(v-repeat="shownPages" v-component="page" v-with="withDomain: 1")
 .center.padding-6unit-0unit
-  a.button.button-default.padding-2unit-4unit(href="javascript:void(0)" v-if="hasMore" v-on="click: showMorePages") もっと見る...
+  a.button.button-default.padding-2unit-4unit(href="javascript:void(0)" v-if="hasMore" v-on="click: showMorePages") もっと見る
   a.button.button-default.padding-2unit-4unit(href="{{hatebuLink}}" v-if="!hasMore" target="_blank" title="はてブで{{name}}") はてブでもっと見る
 </template>
 
