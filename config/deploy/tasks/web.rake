@@ -4,7 +4,7 @@ namespace :web do
       within release_path do
         execute :npm, 'install', '--silent', '--no-spin'
         execute :bower, 'install', '--quiet', '--config.interactive=false'
-        with(node_env: 'production', dotenv_file: "#{shared_path}/.env.#{fetch :env}") do
+        with(node_env: fetch(:env), dotenv_file: "#{shared_path}/.env.#{fetch :env}") do
           execute :gulp
         end
       end

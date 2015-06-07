@@ -83,7 +83,7 @@ gulp.task 'css', ->
       console.log error.message
       @emit 'end'
     )
-    .pipe compass(css: "#{WEB_BUILD_PATH}/css", sass: "#{WEB_SOURCE_PATH}/css")
+    .pipe compass(bundle_exec: true, css: "#{WEB_BUILD_PATH}/css", sass: "#{WEB_SOURCE_PATH}/css")
     .pipe minifyCSS(aggressiveMerging: false, restructuring: false)
     .pipe gulp.dest "#{WEB_BUILD_PATH}/css/"
     .pipe livereload()
