@@ -24,12 +24,14 @@ env = process.env.NODE_ENV || (process.env.NODE_ENV = 'development')
 require('dotenv').config(path: ".env.#{env}")
 
 WEB_PATH = 'web'
-WEB_BUILD_PATH  = "#{WEB_PATH}/build"
+WEB_BUILD_PATH  = "#{WEB_PATH}/build/#{env}"
 WEB_SOURCE_PATH = "#{WEB_PATH}/source"
 EXTENSION_PATH = './chrome_extension'
+EXTENSION_BUILD_PATH = "#{EXTENSION_PATH}/build/#{env}"
+EXTENSION_SOURCE_PATH = "#{EXTENSION_PATH}/source"
 
 gulp.task 'clean', (callback)->
-  del [WEB_BUILD_PATH, "#{EXTENSION_PATH}/build"], callback
+  del [WEB_BUILD_PATH, EXTENSION_BUILD_PATH], callback
   null
 
 gulp.task 'html', ->
@@ -89,19 +91,19 @@ gulp.task 'css', ->
 gulp.task 'extension', ->
   merge(
     gulp
-      .src "#{EXTENSION_PATH}/source/*.json"
-      .pipe gulp.dest "#{EXTENSION_PATH}/build/"
+      .src "#{EXTENSION_SOURCE_PATH}/*.json"
+      .pipe gulp.dest EXTENSION_BUILD_PATH
 
     gulp
-      .src "#{EXTENSION_PATH}/source/image/*"
-      .pipe gulp.dest "#{EXTENSION_PATH}/build/image/"
-    browserify(entries: [ "#{EXTENSION_PATH}/source/background.coffee"])
+      .src "#{EXTENSION_SOURCE_PATH}/image/*"
+      .pipe gulp.dest "#{EXTENSION_BUILD_PATH}/image/"
+    browserify(entries: [ "#{EXTENSION_SOURCE_PATH}/background.coffee"])
       .transform coffeeify
       .transform envify()
       .bundle()
       .pipe plumber()
       .pipe source 'background.js'
-      .pipe gulp.dest "#{EXTENSION_PATH}/build/"
+      .pipe gulp.dest "#{EXTENSION_BUILD_PATH}/"
   )
 
 MANIFEST_PATH = "./rev-manifest.json"
@@ -148,7 +150,7 @@ gulp.task 'watch', ['build'], ->
   gulp.watch "#{WEB_SOURCE_PATH}/image/**/*.{png,jpeg,gif}", ['image']
   gulp.watch "#{WEB_SOURCE_PATH}/font/**/*.{eot,woff,ttf,svg}", ['font']
   gulp.watch 'bower_components/**/*.js', ['js']
-  gulp.watch "#{EXTENSION_PATH}/**/*.{coffee,json,png,jpeg,gif}", ['extension']
+  gulp.watch "#{EXTENSION_SOURCE_PATH}/**/*.{coffee,json,png,jpeg,gif}", ['extension']
 
 gulp.task 'build', ['html', 'js', 'css', 'image', 'font', 'extension']
 gulp.task 'default', -> runSequence 'clean', 'build', 'revision'

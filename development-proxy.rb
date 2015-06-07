@@ -20,5 +20,5 @@ class DevelopmentProxy < Sinatra::Base
   use Rack::LiveReload if development?
   use Rack::DevelopmentProxy
 
-  set :public_folder, File.dirname(__FILE__) + '/web/build'
+  set :public_folder, File.dirname(__FILE__) + "/web/build/#{ENV['RACK_ENV']}"
 end

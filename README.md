@@ -29,9 +29,6 @@ $ bundle
 ```sh
 # APIサーバ、ファイルの変更監視とビルド用のgulpを起動
 foreman start
-```
-
-テスト時
-```sh
+# 変更がある度にテストを走らせたい場合更に
 bundle exec guard
 ```

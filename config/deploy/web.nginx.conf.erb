@@ -8,7 +8,7 @@ server {
     gzip_static on;
     add_header Cache-Control public;
 
-    root <%= current_path %>/web/build;
+    root <%= current_path %>/web/build/<%= fetch :env %>;
     location ~ ^/(css|js|image|font)/ {
       expires max;
     }
