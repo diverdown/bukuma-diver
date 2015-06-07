@@ -58,7 +58,12 @@ set :ssh_options, {
 
 set :slack_webhook, ENV['SLACK_WEBHOOK_URL']
 
+set :ci_client, 'travis'
+set :ci_repository, "webken/#{fetch :application}"
+
 after 'nginx:setup', 'nginx:restart'
+
+before 'deploy', 'ci:verify'
 
 before 'deploy:check', 'dotenv:upload'
 after 'deploy:publishing', 'deploy:restart'

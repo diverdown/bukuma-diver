@@ -51,4 +51,5 @@ group :deployment do
   gem 'sshkit-sudo'
   gem 'capistrano-rbenv'
   gem 'slackistrano', require: false
+  gem 'capistrano-ci'
 end
