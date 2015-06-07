@@ -13,6 +13,7 @@ gem 'faraday-http-cache'
 gem 'dotenv'
 gem 'unindent'
 gem 'rack-parser'
+gem 'compass'
 
 group :production, :staging do
   gem 'redis'
@@ -24,7 +25,6 @@ end
 
 group :development do
   gem 'foreman'
-  gem 'compass'
   gem 'rack-livereload'
   gem 'guard-rspec'
   gem 'terminal-notifier'

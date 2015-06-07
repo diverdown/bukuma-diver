@@ -1,11 +1,10 @@
 namespace :web do
-  task :update do
+  task :build do
     on roles(:web) do
-      system("NODE_ENV=#{fetch :env} gulp")
-      if $? == 0
-        upload! "web/build/#{fetch :env}", "#{current_path}/web", recursive: true
-      else
-        raise "Build Error"
+      within "#{release_path}/web/" do
+        execute :npm, 'install', '--silent', '--no-spin'
+        execute :bower, 'install'
+        with(node_env: 'production') { execute :gulp }
       end
     end
   end
