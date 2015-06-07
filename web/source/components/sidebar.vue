@@ -13,11 +13,11 @@ header#sidebar-top.center-flexbox
     i.fa.fa-search(v-on="click: search")
 
 #sidebar-bottom
-  .margin-6unit-0unit(v-component="favorites" v-with="favorites: favorites")
+  #favorites.margin-6unit-0unit(v-component="favorites" v-with="favorites: favorites")
 
-  .margin-6unit-0unit(v-component="recommends" v-with="favorites: favorites")
+  #recommends.margin-6unit-0unit(v-component="recommends" v-with="favorites: favorites")
 
-  .margin-6unit-0unit(v-component="popular-sites")
+  #popular-sites.margin-6unit-0unit(v-component="popular-sites")
 
   .extensions
     h2 拡張機能
