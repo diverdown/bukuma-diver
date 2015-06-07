@@ -21,7 +21,7 @@ runSequence= require 'run-sequence'
 fs         = require 'fs'
 
 env = process.env.NODE_ENV || (process.env.NODE_ENV = 'development')
-require('dotenv').config(path: ".env.#{env}")
+require('dotenv').config(path: process.env.DOTENV_FILE || ".env.#{env}")
 
 WEB_PATH = 'web'
 WEB_BUILD_PATH  = "#{WEB_PATH}/build/#{env}"
