@@ -50,12 +50,7 @@ describe 'Sidebar', js: true do
     end
 
     after do
-      within '#favorites' do
-        all('.site').each do |el|
-          el.hover
-          el.find('.fa-close').click
-        end
-      end
+      page.execute_script('localforage.clear()')
     end
 
     shared_examples_for 'watch list item' do
@@ -155,8 +150,8 @@ describe 'Sidebar', js: true do
         it 'adds more items' do
           within '#popular-sites' do
             click_on 'もっと見る'
-            Timeout.timeout(Capybara.default_wait_time) do
-              loop until all('.site').count == 20
+            Timeout.timeout(10 * Capybara.default_wait_time) do
+              loop while all('.site').count == 20
             end
           end
         end

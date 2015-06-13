@@ -1,4 +1,7 @@
 localforage = require 'localforage'
+if process.env.NODE_ENV == 'test'
+  window.localforage = localforage
+
 module.exports = class LocalStorable
   @all: ->
     @_collection
